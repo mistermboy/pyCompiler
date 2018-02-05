@@ -1,4 +1,4 @@
-package exp;
+package main;
 
 public class Variable implements Expression {
 

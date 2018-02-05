@@ -1,9 +1,5 @@
 package main;
 
-import exp.Arithmetic;
-import exp.Expression;
-import exp.Variable;
-
 public class Assignment implements Statement {
 
 	private Expression left;

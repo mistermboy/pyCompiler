@@ -1,4 +1,4 @@
-package ast;
+package main;
 
 public interface ASTNode {
 

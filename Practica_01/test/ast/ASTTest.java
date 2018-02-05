@@ -1,18 +1,20 @@
 package ast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
+import main.ASTNode;
+import main.Arithmetic;
 import main.Assignment;
+import main.IntLiteral;
 import main.Program;
 import main.Read;
 import main.Statement;
+import main.UnaryMinus;
+import main.Variable;
 import main.Write;
-import introspector.model.IntrospectorModel;
-import java.util.*;
-
-import exp.Arithmetic;
-import exp.IntLiteral;
-import exp.UnaryMinus;
-import exp.Variable;
 
 public class ASTTest {
 

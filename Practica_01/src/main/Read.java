@@ -1,6 +1,4 @@
 package main;
-import exp.Expression;
-import exp.Variable;
 
 public class Read implements Statement {
 

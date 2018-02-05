@@ -1,8 +1,5 @@
 package main;
 
-import exp.Expression;
-import exp.Variable;
-
 public class Write implements Statement {
 
 	private Expression write;
