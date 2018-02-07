@@ -7,20 +7,39 @@ public class Arithmetic implements Expression {
 	private Expression left;
 	private Expression right;
 
+	private int row = ASTNode.DEFAULT_ROW_COLUMN;
+	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+
 	public Arithmetic(int i, int j, IntLiteral intLiteral, String string, Variable variable) {
-		// TODO Auto-generated constructor stub
+		this.row = i;
+		this.column = j;
+		this.left = intLiteral;
+		this.operator = string;
+		this.right = variable;
 	}
 
 	public Arithmetic(int i, int j, Arithmetic arithmetic, String string, Arithmetic arithmetic2) {
-		// TODO Auto-generated constructor stub
+		this.row = i;
+		this.column = j;
+		this.left = arithmetic;
+		this.operator = string;
+		this.right = arithmetic2;
 	}
 
 	public Arithmetic(int i, int j, Arithmetic arithmetic, String string, Variable variable) {
-		// TODO Auto-generated constructor stub
+		this.row = i;
+		this.column = j;
+		this.left = arithmetic;
+		this.operator = string;
+		this.right = variable;
 	}
 
 	public Arithmetic(int i, int j, UnaryMinus unaryMinus, String string, IntLiteral intLiteral) {
-		// TODO Auto-generated constructor stub
+		this.row = i;
+		this.column = j;
+		this.left = intLiteral;
+		this.operator = string;
+		this.right = intLiteral;
 	}
 
 	/**
@@ -66,6 +85,25 @@ public class Arithmetic implements Expression {
 	 */
 	public void setRight(Expression right) {
 		this.right = right;
+	}
+
+	@Override
+	public int getLine() {
+		return this.row;
+	}
+
+	@Override
+	public int getColumn() {
+		return this.column;
+	}
+
+	@Override
+	public String toString() {
+		String cad = "";
+		cad += this.left.toString() + "";
+		cad += this.operator + "";
+		cad += this.right.toString() + "";
+		return cad;
 	}
 
 }

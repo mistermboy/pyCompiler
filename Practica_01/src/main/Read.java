@@ -4,8 +4,13 @@ public class Read implements Statement {
 
 	private Expression read;
 
+	private int row = ASTNode.DEFAULT_ROW_COLUMN;
+	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+
 	public Read(int i, int j, Variable variable) {
-		// TODO Auto-generated constructor stub
+		this.row = i;
+		this.column = j;
+		this.read = variable;
 	}
 
 	/**
@@ -21,6 +26,22 @@ public class Read implements Statement {
 	 */
 	public void setRead(Expression read) {
 		this.read = read;
+	}
+
+	@Override
+	public int getLine() {
+		return this.row;
+	}
+
+	@Override
+	public int getColumn() {
+		return this.column;
+	}
+
+	@Override
+	public String toString() {
+		return read.toString();
+
 	}
 
 }
