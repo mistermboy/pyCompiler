@@ -149,7 +149,12 @@ void				{this.yylval = yytext();
 
 "}"				{  this.yylval =  yytext();
          			  return '}'; }    
-    			    		  
+         			  
+";"				{  this.yylval =  yytext();
+         			  return ';'; }    
+
+","				{  this.yylval =  yytext();
+         			  return ','; }    
 // * Other
 .			{ System.err.println ("Lexical error at line " 	+ this.getLine() + " and column "+getColumn()+":\n\tUnknow character \'"+ yycharat(0)+"\'."); }		
 				
