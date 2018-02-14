@@ -20,8 +20,9 @@ _qwerty
 qwerty
 _qwerty123
 qwer_ty3
-
+.
 2.
 12.3
 .5
 12.3 34.12E-3 2. 3e3
+'a' 'b' 'M'
