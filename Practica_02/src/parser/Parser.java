@@ -22,6 +22,8 @@ public class Parser {
 	public final static int VOID = 269;
 	
 	public final static int IDENT = 270;
+	
+	public final static int REAL_CONSTANT = 271;
 
 	private Scanner scanner;
 
