@@ -7,4 +7,8 @@
 #asdsadsa
 324324
 
+input
+
 """ Identifiers """
+
+input print def while if else int double char struct return void

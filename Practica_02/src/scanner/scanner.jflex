@@ -47,20 +47,49 @@ CommentV2 = \"""~\"""
 %%
 // ************  Acciones ********************
 
-// * Constante Entera
+// * THINGS TO IGNORE
 
 {Rubbish}			{}
 {CommentV1}			{}
 {CommentV2}			{}
 
+// * RESERVATED WORDS
+
+input				{this.yylval = yytext();
+						return Parser.INPUT;}
+print				{this.yylval = yytext();
+						return Parser.PRINT;}
+def					{this.yylval = yytext();
+						return Parser.DEF;}
+while				{this.yylval = yytext();
+						return Parser.WHILE;}
+if					{this.yylval = yytext();
+						return Parser.IF;}
+else				{this.yylval = yytext();
+						return Parser.ELSE;}
+int					{this.yylval = yytext();
+						return Parser.INT;}
+double				{this.yylval = yytext();
+						return Parser.DOUBLE;}
+char				{this.yylval = yytext();
+						return Parser.CHAR;}
+struct				{this.yylval = yytext();
+						return Parser.STRUCT;}
+return				{this.yylval = yytext();
+						return Parser.RETURN;}
+void				{this.yylval = yytext();
+						return Parser.VOID;}							
+					
+
  
+// * Constants
 
 {ConstanteEntera}	{ this.yylval = new Integer(yytext());
          			  return Parser.INT_CONSTANT;  }
   			  
          		
 		  
-// * Cualquier otro carácter
+// * Other
 .			{ System.err.println ("Lexical error at line " 	+ this.getLine() + " and column "+getColumn()+":\n\tUnknow character \'"+ yycharat(0)+"\'."); }		
 				
 			
