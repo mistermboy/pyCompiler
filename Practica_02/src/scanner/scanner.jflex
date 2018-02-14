@@ -39,7 +39,7 @@ public Object getYylval() {
 // ************  Patrones (macros) ********************
 ConstanteEntera = [0-9]*
 Rubbish = [ \t\n\r]
-Comment = #~
+CommentV1 = #~\n
 
 
 %%
@@ -47,8 +47,10 @@ Comment = #~
 
 // * Constante Entera
 
-{Rubbish}			{}  
-{Comment}			{} 
+{Rubbish}			{}
+{CommentV1}			{}
+
+ 
 
 {ConstanteEntera}	{ this.yylval = new Integer(yytext());
          			  return Parser.INT_CONSTANT;  }
