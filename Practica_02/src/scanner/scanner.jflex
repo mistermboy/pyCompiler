@@ -53,7 +53,7 @@ CommentV2 = \"""~\"""
 {CommentV1}			{}
 {CommentV2}			{}
 
-// * RESERVATED WORDS
+// * RESERVED WORDS
 
 input				{this.yylval = yytext();
 						return Parser.INPUT;}
