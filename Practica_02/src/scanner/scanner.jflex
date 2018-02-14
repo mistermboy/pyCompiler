@@ -40,6 +40,8 @@ public Object getYylval() {
 ConstanteEntera = [0-9]*
 Rubbish = [ \t\n\r]
 CommentV1 = #~\n
+CommentV2 = \"""~\"""	
+
 
 
 %%
@@ -49,6 +51,7 @@ CommentV1 = #~\n
 
 {Rubbish}			{}
 {CommentV1}			{}
+{CommentV2}			{}
 
  
 

@@ -1,7 +1,10 @@
-
+""" 	234 asdasdInteger
+   constant s1234234234 """
 0 123	456      444
 1231
 # One line comment!	wefwefwe
 
 #asdsadsa
 324324
+
+""" Identifiers """
