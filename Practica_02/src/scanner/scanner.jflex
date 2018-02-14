@@ -42,13 +42,14 @@ Rubbish = [ \t\n\r]
 CommentV1 = #~\n
 CommentV2 = \"""~\"""
 
-Letter = [a-zA-Z]+
-Digit  = [0-9]+
+Letter = [a-zA-Z]
+Digit  = [0-9]
 Ident = [_a-zA-Z][a-zA-Z_0-9]*
 
-	
 IntConstant = [0-9]*
-RealConstant = "."[0-9]*|[0-9]*"."[0-9]*
+Real = [.][0-9]+|[0-9]+[.][0-9]+|[0-9]+[.]
+RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
+
 
 
 
@@ -95,13 +96,15 @@ void				{this.yylval = yytext();
 
 {IntConstant}	{ this.yylval = new Integer(yytext());
          			  return Parser.INT_CONSTANT;  }
-{RealConstant}	{ this.yylval = new Double(yytext());
+
+
+{RealConstant}	{ this.yylval = yytext();
          			  return Parser.REAL_CONSTANT;  }
+
          			  
 {Ident}				{ this.yylval = yytext();
          			  return Parser.IDENT;  }        		
- 	  
-         		
+     		
 		  
 // * Other
 .			{ System.err.println ("Lexical error at line " 	+ this.getLine() + " and column "+getColumn()+":\n\tUnknow character \'"+ yycharat(0)+"\'."); }		
