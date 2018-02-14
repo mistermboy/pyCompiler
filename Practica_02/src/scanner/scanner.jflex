@@ -50,7 +50,8 @@ IntConstant = [0-9]*
 Real = [.][0-9]+|[0-9]+[.][0-9]*
 RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
 CharacterConstant = \'{Letter}\'
-
+CharacterConstantASCII = [']\\[0-9]*[']
+Character = {CharacterConstant} | {CharacterConstantASCII}
 
 
 
@@ -91,7 +92,39 @@ return				{this.yylval = yytext();
 void				{this.yylval = yytext();
 						return Parser.VOID;}							
 					
+// * OPERATORS		
 
+"+" 					{this.yylval = yytext();
+							return '+';}
+"-" 					{this.yylval = yytext();
+							return '-';}
+"*" 					{this.yylval = yytext();
+							return '*';}
+"/" 					{this.yylval = yytext();
+							return '/';}
+"%" 					{this.yylval = yytext();
+							return '%';}
+">" 					{this.yylval = yytext();
+							return '>';}
+"<" 					{this.yylval = yytext();
+							return '<';}
+">=" 					{this.yylval = yytext();
+							return Parser.GREATER;}	
+"<=" 					{this.yylval = yytext();
+							return Parser.SMALLER;}				
+"=" 					{this.yylval = yytext();
+							return '=';}	
+== 						{this.yylval = yytext();
+							return Parser.EQUALS;}
+"!=" 					{this.yylval = yytext();
+							return Parser.NEGATION;}
+"(" 					{this.yylval = yytext();
+							return '(';}
+")" 					{this.yylval = yytext();
+							return ')';}
+"!" 					{this.yylval = yytext();
+							return '!';}															
+																																																														
  
 // * Constants
 
@@ -106,11 +139,10 @@ void				{this.yylval = yytext();
 {Ident}				{ this.yylval = yytext();
          			  return Parser.IDENT;  }    
          			  
-{CharacterConstant} {  this.yylval = yytext();
+{Character} 		{  this.yylval =  yytext();
          			  return Parser.CHARACTER_CONSTANT;  }        			    		
  
-
-		  
+    			    		  
 // * Other
 .			{ System.err.println ("Lexical error at line " 	+ this.getLine() + " and column "+getColumn()+":\n\tUnknow character \'"+ yycharat(0)+"\'."); }		
 				

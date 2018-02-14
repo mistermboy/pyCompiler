@@ -24,8 +24,14 @@ public class Parser {
 	public final static int IDENT = 270;
 	
 	public final static int REAL_CONSTANT = 271;
-	public final static int CHARACTER_CONSTANT = 271;
+	public final static int CHARACTER_CONSTANT = 272;
 
+	//OPERATORS
+	public final static int GREATER = 273;
+	public final static int SMALLER = 274;
+	public final static int EQUALS = 275;
+	public final static int NEGATION = 276;
+	
 	private Scanner scanner;
 
 	public Parser(Scanner scanner) {
