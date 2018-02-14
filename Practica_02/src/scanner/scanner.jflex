@@ -126,7 +126,7 @@ void				{this.yylval = yytext();
 							return '!';}															
 																																																														
  
-// * Constants
+// * CONSTANTS
 
 {IntConstant}	{ this.yylval = new Integer(yytext());
          			  return Parser.INT_CONSTANT;  }
@@ -136,12 +136,19 @@ void				{this.yylval = yytext();
          			  return Parser.REAL_CONSTANT;  }
 
          			  
-{Ident}				{ this.yylval = yytext();
+{Ident}			{ this.yylval = yytext();
          			  return Parser.IDENT;  }    
          			  
-{Character} 		{  this.yylval =  yytext();
+{Character} 	{  this.yylval =  yytext();
          			  return Parser.CHARACTER_CONSTANT;  }        			    		
  
+// * DELIMITERS 
+
+"{"				{  this.yylval =  yytext();
+         			  return '{'; }    
+
+"}"				{  this.yylval =  yytext();
+         			  return '}'; }    
     			    		  
 // * Other
 .			{ System.err.println ("Lexical error at line " 	+ this.getLine() + " and column "+getColumn()+":\n\tUnknow character \'"+ yycharat(0)+"\'."); }		
