@@ -37,10 +37,18 @@ public Object getYylval() {
 %}
 
 // ************  Patrones (macros) ********************
-ConstanteEntera = [0-9]*
+
 Rubbish = [ \t\n\r]
 CommentV1 = #~\n
-CommentV2 = \"""~\"""	
+CommentV2 = \"""~\"""
+
+Letter = [a-zA-Z]+
+Digit  = [0-9]+
+ConstanteEntera = [0-9]*
+
+Ident = [_a-zA-Z][a-zA-Z_0-9]*
+
+	
 
 
 
@@ -86,7 +94,10 @@ void				{this.yylval = yytext();
 
 {ConstanteEntera}	{ this.yylval = new Integer(yytext());
          			  return Parser.INT_CONSTANT;  }
-  			  
+         			  
+{Ident}				{ this.yylval = yytext();
+         			  return Parser.IDENT;  }        		
+ 	  
          		
 		  
 // * Other

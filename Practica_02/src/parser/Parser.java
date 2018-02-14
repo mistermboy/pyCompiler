@@ -7,6 +7,7 @@ public class Parser {
 
 	// * Tokens
 	public final static int INT_CONSTANT = 257;
+
 	public final static int INPUT = 258;
 	public final static int PRINT = 259;
 	public final static int DEF = 260;
@@ -19,6 +20,8 @@ public class Parser {
 	public final static int STRUCT = 267;
 	public final static int RETURN = 268;
 	public final static int VOID = 269;
+	
+	public final static int IDENT = 270;
 
 	private Scanner scanner;
 

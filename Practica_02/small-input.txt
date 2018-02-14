@@ -1,3 +1,4 @@
+
 """ 	234 asdasdInteger
    constant s1234234234 """
 0 123	456      444
@@ -12,3 +13,10 @@ input
 """ Identifiers """
 
 input print def while if else int double char struct return void
+
+qwerty
+qwe_rty123
+_qwerty
+qwerty
+_qwerty123
+1qwer_ty3
