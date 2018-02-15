@@ -21,10 +21,10 @@ public class Parser {
 	public final static int RETURN = 268;
 	public final static int VOID = 269;
 	
-	public final static int IDENT = 270;
+	public final static int ID = 270;
 	
 	public final static int REAL_CONSTANT = 271;
-	public final static int CHARACTER_CONSTANT = 272;
+	public final static int CHAR_CONSTANT = 272;
 
 	//OPERATORS
 	public final static int GREATER = 273;

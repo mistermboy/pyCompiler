@@ -41,6 +41,7 @@ public Object getYylval() {
 Rubbish = [ \t\n\r]
 CommentV1 = #~\n
 CommentV2 = \"""~\"""
+CommentV3 = #~\f
 
 Letter = [a-zA-Z]
 Digit  = [0-9]
@@ -49,9 +50,10 @@ Ident = [_a-zA-Z][a-zA-Z_0-9]*
 IntConstant = [0-9]*
 Real = [.][0-9]+|[0-9]+[.][0-9]*
 RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
-CharacterConstant = \'{Letter}\'
+CharacterConstant = \'.\'
 CharacterConstantASCII = [']\\[0-9]*[']
-Character = {CharacterConstant} | {CharacterConstantASCII}
+CharacterSimbol = [']\\.[']
+Character = {CharacterConstant} | {CharacterConstantASCII} | {CharacterSimbol}
 
 
 
@@ -64,6 +66,7 @@ Character = {CharacterConstant} | {CharacterConstantASCII}
 {Rubbish}			{}
 {CommentV1}			{}
 {CommentV2}			{}
+{CommentV3}			{}
 
 // * RESERVED WORDS
 
@@ -137,10 +140,10 @@ void				{this.yylval = yytext();
 
          			  
 {Ident}			{ this.yylval = yytext();
-         			  return Parser.IDENT;  }    
+         			  return Parser.ID;  }    
          			  
 {Character} 	{  this.yylval =  yytext();
-         			  return Parser.CHARACTER_CONSTANT;  }        			    		
+         			  return Parser.CHAR_CONSTANT;  }        			    		
  
 // * DELIMITERS 
 
