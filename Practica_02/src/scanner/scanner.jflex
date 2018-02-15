@@ -133,14 +133,14 @@ void				{this.yylval = yytext();
          			  return Parser.INT_CONSTANT;  }
 
 
-{RealConstant}	{ this.yylval = yytext();
+{RealConstant}	{ this.yylval = new Double(yytext());
          			  return Parser.REAL_CONSTANT;  }
 
          			  
 {Ident}			{ this.yylval = yytext();
          			  return Parser.ID;  }    
          			  
-{Character} 	{  this.yylval =  yytext();
+{Character} 	{  this.yylval = yytext();
          			  return Parser.CHAR_CONSTANT;  }        			    		
  
 // * DELIMITERS 
