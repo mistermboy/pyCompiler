@@ -1,5 +1,2 @@
-/ast/
-/demo/
-/main/
-/parser/
 /scanner/
+/parser/

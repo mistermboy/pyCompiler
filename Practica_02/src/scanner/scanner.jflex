@@ -49,10 +49,8 @@ Ident = [_a-zA-Z][a-zA-Z_0-9]*
 IntConstant = [0-9]*
 Real = [.][0-9]+|[0-9]+[.][0-9]*
 RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
-CharacterConstant = \'.\'
-CharacterConstantASCII = [']\\[0-9]*[']
-CharacterSimbol = [']\\.[']
-Character = {CharacterConstant} | {CharacterConstantASCII} | {CharacterSimbol}
+Character = \'.\'
+CharacterASCII = [']\\[0-9]*[']
 
 
 
@@ -140,8 +138,17 @@ void				{this.yylval = yytext();
 {Ident}			{ this.yylval = yytext();
          			  return Parser.ID;  }    
          			  
-{Character} 	{  this.yylval = yytext();
-         			  return Parser.CHAR_CONSTANT;  }        			    		
+'\\n'			{ this.yylval = new Character('\n');
+         			  return Parser.CHAR_CONSTANT;  }
+         			  
+'\\t'			{ this.yylval = new Character('\t');
+         			  return Parser.CHAR_CONSTANT;  }
+         			  
+{CharacterASCII} 	{  this.yylval = (char) Integer.parseInt(yytext().replace("'","").replace("\\",""));
+         			  return Parser.CHAR_CONSTANT;  }
+         			        			  
+{Character}			{ this.yylval = (char) yytext().charAt(1);
+         			  return Parser.CHAR_CONSTANT;  }                    			          			    		
  
 // * DELIMITERS 
 
