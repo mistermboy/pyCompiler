@@ -39,9 +39,8 @@ public Object getYylval() {
 // ************  Patrones (macros) ********************
 
 Rubbish = [ \t\n\r]
-CommentV1 = #~\n
+CommentV1 = #.*
 CommentV2 = \"""~\"""
-CommentV3 = #~\f
 
 Letter = [a-zA-Z]
 Digit  = [0-9]
@@ -66,7 +65,6 @@ Character = {CharacterConstant} | {CharacterConstantASCII} | {CharacterSimbol}
 {Rubbish}			{}
 {CommentV1}			{}
 {CommentV2}			{}
-{CommentV3}			{}
 
 // * RESERVED WORDS
 
