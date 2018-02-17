@@ -25,9 +25,6 @@ public class Parser {
 	
 	public final static int REAL_CONSTANT = 271;
 	public final static int CHAR_CONSTANT = 272;
-	public final static int CHAR_CONSTANT_N = 273;
-	public final static int CHAR_CONSTANT_T = 274;
-	public final static int CHAR_CONSTANT_ASCII = 275;
 
 	//OPERATORS
 	public final static int GREATER = 276;
