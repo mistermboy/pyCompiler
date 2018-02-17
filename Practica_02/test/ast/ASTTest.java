@@ -3,18 +3,18 @@ package ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import ast.ASTNode;
+import ast.Arithmetic;
+import ast.Assignment;
+import ast.IntLiteral;
+import ast.Program;
+import ast.Read;
+import ast.Statement;
+import ast.UnaryMinus;
+import ast.Variable;
+import ast.Write;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
-import main.ASTNode;
-import main.Arithmetic;
-import main.Assignment;
-import main.IntLiteral;
-import main.Program;
-import main.Read;
-import main.Statement;
-import main.UnaryMinus;
-import main.Variable;
-import main.Write;
 
 public class ASTTest {
 
