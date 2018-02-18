@@ -1,0 +1,168 @@
+   0  $accept : funcion $end
+
+   1  funcion : DEF ID '(' params ')' ':' retorno
+
+   2  retorno : tipo
+   3          | VOID
+
+   4  params : param ',' params
+   5         | param
+
+   6  param : ID ':' tipo
+
+   7  tipo : INT
+   8       | DOUBLE
+   9       | CHAR
+
+state 0
+	$accept : . funcion $end  (0)
+
+	DEF  shift 1
+	.  error
+
+	funcion  goto 2
+
+
+state 1
+	funcion : DEF . ID '(' params ')' ':' retorno  (1)
+
+	ID  shift 3
+	.  error
+
+
+state 2
+	$accept : funcion . $end  (0)
+
+	$end  accept
+
+
+state 3
+	funcion : DEF ID . '(' params ')' ':' retorno  (1)
+
+	'('  shift 4
+	.  error
+
+
+state 4
+	funcion : DEF ID '(' . params ')' ':' retorno  (1)
+
+	ID  shift 5
+	.  error
+
+	params  goto 6
+	param  goto 7
+
+
+state 5
+	param : ID . ':' tipo  (6)
+
+	':'  shift 8
+	.  error
+
+
+state 6
+	funcion : DEF ID '(' params . ')' ':' retorno  (1)
+
+	')'  shift 9
+	.  error
+
+
+state 7
+	params : param . ',' params  (4)
+	params : param .  (5)
+
+	','  shift 10
+	')'  reduce 5
+
+
+state 8
+	param : ID ':' . tipo  (6)
+
+	INT  shift 11
+	DOUBLE  shift 12
+	CHAR  shift 13
+	.  error
+
+	tipo  goto 14
+
+
+state 9
+	funcion : DEF ID '(' params ')' . ':' retorno  (1)
+
+	':'  shift 15
+	.  error
+
+
+state 10
+	params : param ',' . params  (4)
+
+	ID  shift 5
+	.  error
+
+	params  goto 16
+	param  goto 7
+
+
+state 11
+	tipo : INT .  (7)
+
+	.  reduce 7
+
+
+state 12
+	tipo : DOUBLE .  (8)
+
+	.  reduce 8
+
+
+state 13
+	tipo : CHAR .  (9)
+
+	.  reduce 9
+
+
+state 14
+	param : ID ':' tipo .  (6)
+
+	.  reduce 6
+
+
+state 15
+	funcion : DEF ID '(' params ')' ':' . retorno  (1)
+
+	INT  shift 11
+	DOUBLE  shift 12
+	CHAR  shift 13
+	VOID  shift 17
+	.  error
+
+	retorno  goto 18
+	tipo  goto 19
+
+
+state 16
+	params : param ',' params .  (4)
+
+	.  reduce 4
+
+
+state 17
+	retorno : VOID .  (3)
+
+	.  reduce 3
+
+
+state 18
+	funcion : DEF ID '(' params ')' ':' retorno .  (1)
+
+	.  reduce 1
+
+
+state 19
+	retorno : tipo .  (2)
+
+	.  reduce 2
+
+
+28 terminals, 6 nonterminals
+10 grammar rules, 20 states
