@@ -44,7 +44,7 @@ prog: variables
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' definiciones '}';
+funcion: DEF ID '(' params ')' ':' retorno '{' definicion '}';
 
 retorno:  tipo 
 		|  VOID
@@ -55,8 +55,13 @@ params: param ',' params;
 		|
 		;
 
-param: ID ':' tipo;
+param:  ID ':' tipo;
 
+
+
+//	 *********  STRUCTS  *********
+
+struct: variable ':' STRUCT '{' definiciones '}' ';'
 
 
 // *********  DEFINICIONES  *********
@@ -65,10 +70,18 @@ definiciones: definicion
 			| definicion definiciones
 			;
 			
-definicion: variables
-			| array 
+definicion: variables | array
 			; 
-			
+	
+//  *********  ARRAYS  *********
+
+array:  ID ':'  dimension tipo ';' //OJO CON EL TIPO QUE ESTÁ MAL, falta el STRUCT y puede que alguno más
+
+dimension: dim 
+		| dim dimension ;
+
+dim: '['INT_CONSTANT']'	;			
+
 
 //  *********  VARIABLES  *********
 		
@@ -76,19 +89,8 @@ variables :  variable ':' tipo ';';
 	
 variable: ID 
 		| ID ',' variable;
-			
-   
-
-				   
-//  *********  ARRAYS  *********
-
-array:  ID ':' dimension tipo ';'
-
-dimension: dim 
-		| dim dimension ;
-
-dim: '['INT_CONSTANT']'	;	   
-				   
+		
+								   
 tipo: INT 
 	| DOUBLE 
 	| CHAR

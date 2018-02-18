@@ -6,7 +6,7 @@
    3  prog : variables
    4       | funcion
 
-   5  funcion : DEF ID '(' params ')' ':' retorno '{' definiciones '}'
+   5  funcion : DEF ID '(' params ')' ':' retorno '{' definicion '}'
 
    6  retorno : tipo
    7          | VOID
@@ -17,27 +17,29 @@
 
   11  param : ID ':' tipo
 
-  12  definiciones : definicion
-  13               | definicion definiciones
+  12  struct : variable ':' STRUCT '{' definiciones '}' ';'
 
-  14  definicion : variables
-  15             | array
+  13  definiciones : definicion
+  14               | definicion definiciones
 
-  16  variables : variable ':' tipo ';'
+  15  definicion : variables
+  16             | array
 
-  17  variable : ID
-  18           | ID ',' variable
+  17  array : ID ':' dimension tipo ';'
 
-  19  array : ID ':' dimension tipo ';'
+  18  dimension : dim
+  19            | dim dimension
 
-  20  dimension : dim
-  21            | dim dimension
+  20  dim : '[' INT_CONSTANT ']'
 
-  22  dim : '[' INT_CONSTANT ']'
+  21  variables : variable ':' tipo ';'
 
-  23  tipo : INT
-  24       | DOUBLE
-  25       | CHAR
+  22  variable : ID
+  23           | ID ',' variable
+
+  24  tipo : INT
+  25       | DOUBLE
+  26       | CHAR
 
 state 0
 	$accept : . programa $end  (0)
@@ -54,18 +56,18 @@ state 0
 
 
 state 1
-	funcion : DEF . ID '(' params ')' ':' retorno '{' definiciones '}'  (5)
+	funcion : DEF . ID '(' params ')' ':' retorno '{' definicion '}'  (5)
 
 	ID  shift 8
 	.  error
 
 
 state 2
-	variable : ID .  (17)
-	variable : ID . ',' variable  (18)
+	variable : ID .  (22)
+	variable : ID . ',' variable  (23)
 
 	','  shift 9
-	':'  reduce 17
+	':'  reduce 22
 
 
 state 3
@@ -102,21 +104,21 @@ state 6
 
 
 state 7
-	variables : variable . ':' tipo ';'  (16)
+	variables : variable . ':' tipo ';'  (21)
 
 	':'  shift 11
 	.  error
 
 
 state 8
-	funcion : DEF ID . '(' params ')' ':' retorno '{' definiciones '}'  (5)
+	funcion : DEF ID . '(' params ')' ':' retorno '{' definicion '}'  (5)
 
 	'('  shift 12
 	.  error
 
 
 state 9
-	variable : ID ',' . variable  (18)
+	variable : ID ',' . variable  (23)
 
 	ID  shift 2
 	.  error
@@ -131,7 +133,7 @@ state 10
 
 
 state 11
-	variables : variable ':' . tipo ';'  (16)
+	variables : variable ':' . tipo ';'  (21)
 
 	INT  shift 14
 	DOUBLE  shift 15
@@ -142,7 +144,7 @@ state 11
 
 
 state 12
-	funcion : DEF ID '(' . params ')' ':' retorno '{' definiciones '}'  (5)
+	funcion : DEF ID '(' . params ')' ':' retorno '{' definicion '}'  (5)
 	params : .  (10)
 
 	ID  shift 18
@@ -153,31 +155,31 @@ state 12
 
 
 state 13
-	variable : ID ',' variable .  (18)
-
-	.  reduce 18
-
-
-state 14
-	tipo : INT .  (23)
+	variable : ID ',' variable .  (23)
 
 	.  reduce 23
 
 
-state 15
-	tipo : DOUBLE .  (24)
+state 14
+	tipo : INT .  (24)
 
 	.  reduce 24
 
 
-state 16
-	tipo : CHAR .  (25)
+state 15
+	tipo : DOUBLE .  (25)
 
 	.  reduce 25
 
 
+state 16
+	tipo : CHAR .  (26)
+
+	.  reduce 26
+
+
 state 17
-	variables : variable ':' tipo . ';'  (16)
+	variables : variable ':' tipo . ';'  (21)
 
 	';'  shift 21
 	.  error
@@ -191,7 +193,7 @@ state 18
 
 
 state 19
-	funcion : DEF ID '(' params . ')' ':' retorno '{' definiciones '}'  (5)
+	funcion : DEF ID '(' params . ')' ':' retorno '{' definicion '}'  (5)
 
 	')'  shift 23
 	.  error
@@ -206,9 +208,9 @@ state 20
 
 
 state 21
-	variables : variable ':' tipo ';' .  (16)
+	variables : variable ':' tipo ';' .  (21)
 
-	.  reduce 16
+	.  reduce 21
 
 
 state 22
@@ -223,7 +225,7 @@ state 22
 
 
 state 23
-	funcion : DEF ID '(' params ')' . ':' retorno '{' definiciones '}'  (5)
+	funcion : DEF ID '(' params ')' . ':' retorno '{' definicion '}'  (5)
 
 	':'  shift 26
 	.  error
@@ -247,7 +249,7 @@ state 25
 
 
 state 26
-	funcion : DEF ID '(' params ')' ':' . retorno '{' definiciones '}'  (5)
+	funcion : DEF ID '(' params ')' ':' . retorno '{' definicion '}'  (5)
 
 	INT  shift 14
 	DOUBLE  shift 15
@@ -272,7 +274,7 @@ state 28
 
 
 state 29
-	funcion : DEF ID '(' params ')' ':' retorno . '{' definiciones '}'  (5)
+	funcion : DEF ID '(' params ')' ':' retorno . '{' definicion '}'  (5)
 
 	'{'  shift 31
 	.  error
@@ -285,148 +287,133 @@ state 30
 
 
 state 31
-	funcion : DEF ID '(' params ')' ':' retorno '{' . definiciones '}'  (5)
+	funcion : DEF ID '(' params ')' ':' retorno '{' . definicion '}'  (5)
 
 	ID  shift 32
 	.  error
 
 	variables  goto 33
-	definiciones  goto 34
-	definicion  goto 35
-	array  goto 36
+	definicion  goto 34
 	variable  goto 7
+	array  goto 35
 
 
-32: shift/reduce conflict (shift 37, reduce 17) on ':'
+32: shift/reduce conflict (shift 36, reduce 22) on ':'
 state 32
-	variable : ID .  (17)
-	variable : ID . ',' variable  (18)
-	array : ID . ':' dimension tipo ';'  (19)
+	array : ID . ':' dimension tipo ';'  (17)
+	variable : ID .  (22)
+	variable : ID . ',' variable  (23)
 
-	':'  shift 37
+	':'  shift 36
 	','  shift 9
 
 
 state 33
-	definicion : variables .  (14)
-
-	.  reduce 14
-
-
-state 34
-	funcion : DEF ID '(' params ')' ':' retorno '{' definiciones . '}'  (5)
-
-	'}'  shift 38
-	.  error
-
-
-state 35
-	definiciones : definicion .  (12)
-	definiciones : definicion . definiciones  (13)
-
-	ID  shift 32
-	'}'  reduce 12
-
-	variables  goto 33
-	definiciones  goto 39
-	definicion  goto 35
-	array  goto 36
-	variable  goto 7
-
-
-state 36
-	definicion : array .  (15)
+	definicion : variables .  (15)
 
 	.  reduce 15
 
 
-state 37
-	array : ID ':' . dimension tipo ';'  (19)
+state 34
+	funcion : DEF ID '(' params ')' ':' retorno '{' definicion . '}'  (5)
 
-	'['  shift 40
+	'}'  shift 37
 	.  error
 
-	dimension  goto 41
-	dim  goto 42
+
+state 35
+	definicion : array .  (16)
+
+	.  reduce 16
 
 
-state 38
-	funcion : DEF ID '(' params ')' ':' retorno '{' definiciones '}' .  (5)
+state 36
+	array : ID ':' . dimension tipo ';'  (17)
+
+	'['  shift 38
+	.  error
+
+	dimension  goto 39
+	dim  goto 40
+
+
+state 37
+	funcion : DEF ID '(' params ')' ':' retorno '{' definicion '}' .  (5)
 
 	.  reduce 5
 
 
-state 39
-	definiciones : definicion definiciones .  (13)
+state 38
+	dim : '[' . INT_CONSTANT ']'  (20)
 
-	.  reduce 13
-
-
-state 40
-	dim : '[' . INT_CONSTANT ']'  (22)
-
-	INT_CONSTANT  shift 43
+	INT_CONSTANT  shift 41
 	.  error
 
 
-state 41
-	array : ID ':' dimension . tipo ';'  (19)
+state 39
+	array : ID ':' dimension . tipo ';'  (17)
 
 	INT  shift 14
 	DOUBLE  shift 15
 	CHAR  shift 16
 	.  error
 
-	tipo  goto 44
+	tipo  goto 42
+
+
+state 40
+	dimension : dim .  (18)
+	dimension : dim . dimension  (19)
+
+	'['  shift 38
+	INT  reduce 18
+	DOUBLE  reduce 18
+	CHAR  reduce 18
+
+	dimension  goto 43
+	dim  goto 40
+
+
+state 41
+	dim : '[' INT_CONSTANT . ']'  (20)
+
+	']'  shift 44
+	.  error
 
 
 state 42
-	dimension : dim .  (20)
-	dimension : dim . dimension  (21)
+	array : ID ':' dimension tipo . ';'  (17)
 
-	'['  shift 40
-	INT  reduce 20
-	DOUBLE  reduce 20
-	CHAR  reduce 20
-
-	dimension  goto 45
-	dim  goto 42
+	';'  shift 45
+	.  error
 
 
 state 43
-	dim : '[' INT_CONSTANT . ']'  (22)
+	dimension : dim dimension .  (19)
 
-	']'  shift 46
-	.  error
+	.  reduce 19
 
 
 state 44
-	array : ID ':' dimension tipo . ';'  (19)
+	dim : '[' INT_CONSTANT ']' .  (20)
 
-	';'  shift 47
-	.  error
+	.  reduce 20
 
 
 state 45
-	dimension : dim dimension .  (21)
+	array : ID ':' dimension tipo ';' .  (17)
 
-	.  reduce 21
-
-
-state 46
-	dim : '[' INT_CONSTANT ']' .  (22)
-
-	.  reduce 22
+	.  reduce 17
 
 
-state 47
-	array : ID ':' dimension tipo ';' .  (19)
-
-	.  reduce 19
+Rules never reduced:
+	struct : variable ':' STRUCT '{' definiciones '}' ';'  (12)
+	definiciones : definicion  (13)
+	definiciones : definicion definiciones  (14)
 
 
 State 32 contains 1 shift/reduce conflict.
 
 
-33 terminals, 15 nonterminals
-26 grammar rules, 48 states
+33 terminals, 16 nonterminals
+27 grammar rules, 46 states
