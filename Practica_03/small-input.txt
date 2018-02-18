@@ -1,6 +1,7 @@
 a:int;
+b:int;
 def _A(a:int):void{
 	real: double;
-  	c1, c2: char; 
-
+  	c1, c2: char;
  }
+ c:int;

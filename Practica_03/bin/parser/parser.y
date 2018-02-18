@@ -31,16 +31,24 @@ import java.io.Reader;
 %left '+'
 %left '*'
 
-
 %%
 // * Gramática y acciones Yacc
 
 
-programa: variables funcion 
+programa : prog 
+		 | prog programa;
 
-funcion: DEF ID '(' params ')' ':' retorno '{' definiciones '}'
+prog: variables 
+	 | funcion
+	 ;
 
-retorno:  tipo |  VOID
+// *********  FUNCIONES  *********
+
+funcion: DEF ID '(' params ')' ':' retorno '{' definiciones '}';
+
+retorno:  tipo 
+		|  VOID
+		;
 
 params: param ',' params;
 		| param
@@ -49,13 +57,42 @@ params: param ',' params;
 
 param: ID ':' tipo;
 
-definiciones: variables | variables definiciones
+
+
+// *********  DEFINICIONES  *********
+
+definiciones: definicion
+			| definicion definiciones
+			;
+			
+definicion: variables
+			| array 
+			; 
+			
+
+//  *********  VARIABLES  *********
 		
 variables :  variable ':' tipo ';';
 	
-variable: ID | ID ',' variable		
+variable: ID 
+		| ID ',' variable;
+			
+   
+
 				   
-tipo: INT | DOUBLE | CHAR;
+//  *********  ARRAYS  *********
+
+array:  ID ':' dimension tipo ';'
+
+dimension: dim 
+		| dim dimension ;
+
+dim: '['INT_CONSTANT']'	;	   
+				   
+tipo: INT 
+	| DOUBLE 
+	| CHAR
+	;
          
 %%
 // * Código Java
