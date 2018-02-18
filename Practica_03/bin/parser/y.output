@@ -2,24 +2,28 @@
 
    1  programa : variables funcion
 
-   2  funcion : DEF ID '(' params ')' ':' retorno
+   2  funcion : DEF ID '(' params ')' ':' retorno '{' definiciones '}'
 
    3  retorno : tipo
    4          | VOID
 
    5  params : param ',' params
    6         | param
+   7         |
 
-   7  param : ID ':' tipo
+   8  param : ID ':' tipo
 
-   8  variables : variable ':' tipo ';'
+   9  definiciones : variables
+  10               | variables definiciones
 
-   9  variable : ID
-  10           | ID ',' variable
+  11  variables : variable ':' tipo ';'
 
-  11  tipo : INT
-  12       | DOUBLE
-  13       | CHAR
+  12  variable : ID
+  13           | ID ',' variable
+
+  14  tipo : INT
+  15       | DOUBLE
+  16       | CHAR
 
 state 0
 	$accept : . programa $end  (0)
@@ -33,11 +37,11 @@ state 0
 
 
 state 1
-	variable : ID .  (9)
-	variable : ID . ',' variable  (10)
+	variable : ID .  (12)
+	variable : ID . ',' variable  (13)
 
 	','  shift 5
-	':'  reduce 9
+	':'  reduce 12
 
 
 state 2
@@ -56,14 +60,14 @@ state 3
 
 
 state 4
-	variables : variable . ':' tipo ';'  (8)
+	variables : variable . ':' tipo ';'  (11)
 
 	':'  shift 8
 	.  error
 
 
 state 5
-	variable : ID ',' . variable  (10)
+	variable : ID ',' . variable  (13)
 
 	ID  shift 1
 	.  error
@@ -72,7 +76,7 @@ state 5
 
 
 state 6
-	funcion : DEF . ID '(' params ')' ':' retorno  (2)
+	funcion : DEF . ID '(' params ')' ':' retorno '{' definiciones '}'  (2)
 
 	ID  shift 10
 	.  error
@@ -85,7 +89,7 @@ state 7
 
 
 state 8
-	variables : variable ':' . tipo ';'  (8)
+	variables : variable ':' . tipo ';'  (11)
 
 	INT  shift 11
 	DOUBLE  shift 12
@@ -96,68 +100,69 @@ state 8
 
 
 state 9
-	variable : ID ',' variable .  (10)
+	variable : ID ',' variable .  (13)
 
-	.  reduce 10
+	.  reduce 13
 
 
 state 10
-	funcion : DEF ID . '(' params ')' ':' retorno  (2)
+	funcion : DEF ID . '(' params ')' ':' retorno '{' definiciones '}'  (2)
 
 	'('  shift 15
 	.  error
 
 
 state 11
-	tipo : INT .  (11)
+	tipo : INT .  (14)
 
-	.  reduce 11
+	.  reduce 14
 
 
 state 12
-	tipo : DOUBLE .  (12)
+	tipo : DOUBLE .  (15)
 
-	.  reduce 12
+	.  reduce 15
 
 
 state 13
-	tipo : CHAR .  (13)
+	tipo : CHAR .  (16)
 
-	.  reduce 13
+	.  reduce 16
 
 
 state 14
-	variables : variable ':' tipo . ';'  (8)
+	variables : variable ':' tipo . ';'  (11)
 
 	';'  shift 16
 	.  error
 
 
 state 15
-	funcion : DEF ID '(' . params ')' ':' retorno  (2)
+	funcion : DEF ID '(' . params ')' ':' retorno '{' definiciones '}'  (2)
+	params : .  (7)
 
 	ID  shift 17
-	.  error
+	')'  reduce 7
 
 	params  goto 18
 	param  goto 19
 
 
 state 16
-	variables : variable ':' tipo ';' .  (8)
+	variables : variable ':' tipo ';' .  (11)
 
-	.  reduce 8
+	.  reduce 11
 
 
 state 17
-	param : ID . ':' tipo  (7)
+	param : ID . ':' tipo  (8)
 
 	':'  shift 20
 	.  error
 
 
 state 18
-	funcion : DEF ID '(' params . ')' ':' retorno  (2)
+	funcion : DEF ID '(' params . ')' ':' retorno '{' definiciones '}'  (2)
 
 	')'  shift 21
 	.  error
@@ -172,7 +177,7 @@ state 19
 
 
 state 20
-	param : ID ':' . tipo  (7)
+	param : ID ':' . tipo  (8)
 
 	INT  shift 11
 	DOUBLE  shift 12
@@ -183,7 +188,7 @@ state 20
 
 
 state 21
-	funcion : DEF ID '(' params ')' . ':' retorno  (2)
+	funcion : DEF ID '(' params ')' . ':' retorno '{' definiciones '}'  (2)
 
 	':'  shift 24
 	.  error
@@ -191,22 +196,23 @@ state 21
 
 state 22
 	params : param ',' . params  (5)
+	params : .  (7)
 
 	ID  shift 17
-	.  error
+	')'  reduce 7
 
 	params  goto 25
 	param  goto 19
 
 
 state 23
-	param : ID ':' tipo .  (7)
+	param : ID ':' tipo .  (8)
 
-	.  reduce 7
+	.  reduce 8
 
 
 state 24
-	funcion : DEF ID '(' params ')' ':' . retorno  (2)
+	funcion : DEF ID '(' params ')' ':' . retorno '{' definiciones '}'  (2)
 
 	INT  shift 11
 	DOUBLE  shift 12
@@ -231,9 +237,10 @@ state 26
 
 
 state 27
-	funcion : DEF ID '(' params ')' ':' retorno .  (2)
+	funcion : DEF ID '(' params ')' ':' retorno . '{' definiciones '}'  (2)
 
-	.  reduce 2
+	'{'  shift 29
+	.  error
 
 
 state 28
@@ -242,5 +249,47 @@ state 28
 	.  reduce 3
 
 
-29 terminals, 9 nonterminals
-14 grammar rules, 29 states
+state 29
+	funcion : DEF ID '(' params ')' ':' retorno '{' . definiciones '}'  (2)
+
+	ID  shift 1
+	.  error
+
+	variables  goto 30
+	definiciones  goto 31
+	variable  goto 4
+
+
+state 30
+	definiciones : variables .  (9)
+	definiciones : variables . definiciones  (10)
+
+	ID  shift 1
+	'}'  reduce 9
+
+	variables  goto 30
+	definiciones  goto 32
+	variable  goto 4
+
+
+state 31
+	funcion : DEF ID '(' params ')' ':' retorno '{' definiciones . '}'  (2)
+
+	'}'  shift 33
+	.  error
+
+
+state 32
+	definiciones : variables definiciones .  (10)
+
+	.  reduce 10
+
+
+state 33
+	funcion : DEF ID '(' params ')' ':' retorno '{' definiciones '}' .  (2)
+
+	.  reduce 2
+
+
+31 terminals, 10 nonterminals
+17 grammar rules, 34 states

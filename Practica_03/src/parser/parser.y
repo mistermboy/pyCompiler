@@ -38,15 +38,18 @@ import java.io.Reader;
 
 programa: variables funcion 
 
-funcion: DEF ID '(' params ')' ':' retorno
+funcion: DEF ID '(' params ')' ':' retorno '{' definiciones '}'
 
 retorno:  tipo |  VOID
 
 params: param ',' params;
 		| param
+		|
 		;
 
 param: ID ':' tipo;
+
+definiciones: variables | variables definiciones
 		
 variables :  variable ':' tipo ';';
 	

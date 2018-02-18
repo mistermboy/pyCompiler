@@ -1,2 +1,6 @@
 a:int;
-def _A(a:int,b:int):void
+def _A(a:int):void{
+	real: double;
+  	c1, c2: char; 
+
+ }
