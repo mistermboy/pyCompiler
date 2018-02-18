@@ -174,44 +174,51 @@ public final static short EQUALS=275;
 public final static short NEGATION=276;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    2,    2,    1,    1,    4,    3,    3,    3,
+    0,    2,    4,    4,    3,    3,    6,    1,    7,    7,
+    5,    5,    5,
 };
 final static short yylen[] = {                            2,
-    7,    1,    1,    3,    1,    3,    1,    1,    1,
+    2,    7,    1,    1,    3,    1,    3,    4,    1,    3,
+    1,    1,    1,
 };
 final static short yydefred[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    7,    8,    9,    6,    0,    4,    3,    1,    2,
+    0,    0,    0,    0,    0,    0,    1,    0,   10,    0,
+   11,   12,   13,    0,    0,    8,    0,    0,    0,    0,
+    0,    0,    7,    0,    5,    4,    2,    3,
 };
 final static short yydgoto[] = {                          2,
-    6,   18,   14,    7,
+    3,    7,   18,   27,   14,   19,    4,
 };
-final static short yysindex[] = {                      -257,
- -266,    0,  -31, -260,  -47,  -29,  -30, -258,  -45, -260,
-    0,    0,    0,    0, -264,    0,    0,    0,    0,
+final static short yysindex[] = {                      -266,
+  -38,    0, -249,  -46, -266, -257,    0, -256,    0,  -26,
+    0,    0,    0,  -44, -254,    0,  -41,  -23,  -25, -256,
+  -37, -254,    0, -264,    0,    0,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,  -26,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,
+  -36,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  -21,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,
 };
 final static short yygindex[] = {                         0,
-    6,    0,    2,    0,
+    0,    0,    1,    0,  -17,    0,   19,
 };
-final static int YYTABLESIZE=17;
+final static int YYTABLESIZE=24;
 static short yytable[];
 static { yytable();}
 static void yytable(){
 yytable = new short[]{                         11,
-   12,   13,    1,    3,   17,   11,   12,   13,    4,    5,
-    8,    9,   15,   10,    5,   16,   19,
+   12,   13,   23,    1,   26,    5,   28,   11,   12,   13,
+    6,    8,   10,   15,   16,   17,   20,   21,   22,    6,
+   24,    9,   25,    9,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                        264,
-  265,  266,  260,  270,  269,  264,  265,  266,   40,  270,
-   58,   41,   58,   44,   41,   10,   15,
+  265,  266,   20,  270,  269,   44,   24,  264,  265,  266,
+  260,   58,  270,   40,   59,  270,   58,   41,   44,   41,
+   58,   58,   22,    5,
 };
 }
 final static short YYFINAL=2;
@@ -220,7 +227,7 @@ final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,"'('","')'","'*'","'+'","','",
-null,null,null,null,null,null,null,null,null,null,null,null,null,"':'",null,
+null,null,null,null,null,null,null,null,null,null,null,null,null,"':'","';'",
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -238,19 +245,23 @@ null,null,null,null,null,"INT_CONSTANT","INPUT","PRINT","DEF","WHILE","IF",
 "CHAR_CONSTANT","GREATER","SMALLER","EQUALS","NEGATION",
 };
 final static String yyrule[] = {
-"$accept : funcion",
+"$accept : programa",
+"programa : variables funcion",
 "funcion : DEF ID '(' params ')' ':' retorno",
 "retorno : tipo",
 "retorno : VOID",
 "params : param ',' params",
 "params : param",
 "param : ID ':' tipo",
+"variables : variable ':' tipo ';'",
+"variable : ID",
+"variable : ID ',' variable",
 "tipo : INT",
 "tipo : DOUBLE",
 "tipo : CHAR",
 };
 
-//#line 56 "../../src/parser/parser.y"
+//#line 58 "../../src/parser/parser.y"
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:
 //	- Atributos, si son variables
@@ -285,7 +296,7 @@ public void yyerror (String error) {
 public Parser(Scanner scanner) {
 	this.scanner = scanner;
 }
-//#line 225 "Parser.java"
+//#line 236 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################

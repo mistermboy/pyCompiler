@@ -36,6 +36,8 @@ import java.io.Reader;
 // * Gramática y acciones Yacc
 
 
+programa: variables funcion 
+
 funcion: DEF ID '(' params ')' ':' retorno
 
 retorno:  tipo |  VOID
@@ -46,9 +48,9 @@ params: param ',' params;
 
 param: ID ':' tipo;
 		
-//variable :  ID ',' variable 
-//		| ID ':' tipo ';'
-//		;
+variables :  variable ':' tipo ';';
+	
+variable: ID | ID ',' variable		
 				   
 tipo: INT | DOUBLE | CHAR;
          
