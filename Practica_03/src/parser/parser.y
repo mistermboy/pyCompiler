@@ -55,12 +55,14 @@ retorno:  tipo
 		|  VOID
 		;
 
-params: param ',' params;
+params:  /* empty */
 		| param
-		|
 		;
 
-param:  ID ':' tipo;
+param: par
+	| param ',' par
+
+par:  ID ':' tipo;
 
 
 // *********  DEFINICIONES  *********

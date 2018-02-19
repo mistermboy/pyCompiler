@@ -20,7 +20,9 @@ vector:[2][6]struct{
   	
 def p(): void { }
 
-def as(a:int):void{
+def _p(a:int): void { }
+
+def as(a:int,b:double,c:char):void{
 	fd,_g:char;
 }
 c:double;
