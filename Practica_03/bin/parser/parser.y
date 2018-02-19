@@ -27,6 +27,7 @@ import java.io.Reader;
 %token SMALLER
 %token EQUALS
 %token NEGATION
+%token MAIN
 
 %left '+'
 %left '*'
@@ -35,16 +36,20 @@ import java.io.Reader;
 // * Gramática y acciones Yacc
 
 
-programa : prog 
-		 | prog programa;
+programa : definiciones DEF MAIN '(' ')'':'VOID '{' '}';
 
-prog: variables 
-	 | funcion
+definiciones: definiciones definicion 
+	 | /* empty */
 	 ;
+
+
+definicion: def ';'
+			| funcion
+			;
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' definicion '}';
+funcion: DEF ID '(' params ')' ':' retorno '{' defs '}';
 
 retorno:  tipo 
 		|  VOID
@@ -58,44 +63,43 @@ params: param ',' params;
 param:  ID ':' tipo;
 
 
-
-//	 *********  STRUCTS  *********
-
-struct: variable ':' STRUCT '{' definiciones '}' ';'
-
-
 // *********  DEFINICIONES  *********
 
-definiciones: definicion
-			| definicion definiciones
-			;
-			
-definicion: variables | array
-			; 
+defs: /* empty */
+	| defs def ';'
+	;
+				
 	
-//  *********  ARRAYS  *********
-
-array:  ID ':'  dimension tipo ';' //OJO CON EL TIPO QUE ESTÁ MAL, falta el STRUCT y puede que alguno más
-
-dimension: dim 
-		| dim dimension ;
-
-dim: '['INT_CONSTANT']'	;			
+def: ids ':' tipo
 
 
-//  *********  VARIABLES  *********
+campos: ids ':' tipo ';'
 		
-variables :  variable ':' tipo ';';
-	
-variable: ID 
-		| ID ',' variable;
-		
+
+ids: ID
+	| ids ',' ID
+	;
 								   
 tipo: INT 
 	| DOUBLE 
 	| CHAR
+	|'['INT_CONSTANT']' tipo
+	| STRUCT '{' campos '}'
 	;
-         
+
+
+// *********  DEFINICIONES  *********
+
+
+//sentencias: expresion | expresion sentencias;
+
+
+/* expresion: INT_CONSTANT 
+		| ID
+		|  expresion '+' expresion
+		| expresion '*' expresion */
+	
+	         
 %%
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:

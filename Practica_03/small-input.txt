@@ -1,8 +1,8 @@
-a:int;
+a,p,s:int;
 b:int;
-def _A(a:int):void{
-  	pair: struct {
-		
-  	};
- }
- c:int;
+def as(a:int):void{
+	fd,_g:char;
+}
+c:double;
+def main():void{
+}

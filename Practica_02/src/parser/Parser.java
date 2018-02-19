@@ -31,6 +31,7 @@ public class Parser {
 	public final static int SMALLER = 277;
 	public final static int EQUALS = 278;
 	public final static int NEGATION = 279;
+	public final static int MAIN = 280;
 	
 	private Scanner scanner;
 

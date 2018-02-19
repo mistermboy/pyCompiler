@@ -89,7 +89,9 @@ struct				{this.yylval = yytext();
 return				{this.yylval = yytext();
 						return Parser.RETURN;}
 void				{this.yylval = yytext();
-						return Parser.VOID;}							
+						return Parser.VOID;}
+main				{this.yylval = yytext();
+						return Parser.MAIN;}							
 					
 // * OPERATORS		
 
