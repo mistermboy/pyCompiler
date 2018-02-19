@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Program implements ASTNode {
 
+	@SuppressWarnings("unused")
 	private List<Statement> statements;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;

@@ -13,21 +13,6 @@ public class Write implements Statement {
 		this.write = variable;
 	}
 
-	/**
-	 * @return the write
-	 */
-	public Expression getWrite() {
-		return write;
-	}
-
-	/**
-	 * @param write
-	 *            the write to set
-	 */
-	public void setWrite(Expression write) {
-		this.write = write;
-	}
-
 	@Override
 	public int getLine() {
 		return this.row;
