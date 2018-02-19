@@ -85,10 +85,10 @@ tipo: INT
 	;
 
 
-campos: /* empty */
-		|campos campo ';';
+campos: campo
+		|campos campo ;
 		
-campo:ids ':' tipo;	
+campo:ids ':' tipo ';';	
 
 // *********  DEFINICIONES  *********
 

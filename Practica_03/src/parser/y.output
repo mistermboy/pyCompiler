@@ -33,10 +33,10 @@
   21       | '[' INT_CONSTANT ']' tipo
   22       | STRUCT '{' campos '}'
 
-  23  campos :
-  24         | campos campo ';'
+  23  campos : campo
+  24         | campos campo
 
-  25  campo : ids ':' tipo
+  25  campo : ids ':' tipo ';'
 
 state 0
 	$accept : . programa $end  (0)
@@ -244,17 +244,19 @@ state 26
 
 state 27
 	tipo : STRUCT '{' . campos '}'  (22)
-	campos : .  (23)
 
-	.  reduce 23
+	ID  shift 4
+	.  error
 
-	campos  goto 33
+	ids  goto 33
+	campos  goto 34
+	campo  goto 35
 
 
 state 28
 	tipo : '[' INT_CONSTANT . ']' tipo  (21)
 
-	']'  shift 34
+	']'  shift 36
 	.  error
 
 
@@ -268,13 +270,13 @@ state 29
 	'['  shift 20
 	.  error
 
-	tipo  goto 35
+	tipo  goto 37
 
 
 state 30
 	funcion : DEF ID '(' params ')' . ':' retorno '{' defs '}'  (6)
 
-	':'  shift 36
+	':'  shift 38
 	.  error
 
 
@@ -285,30 +287,45 @@ state 31
 	ID  shift 23
 	')'  reduce 11
 
-	params  goto 37
+	params  goto 39
 	param  goto 25
 
 
 state 32
 	programa : definiciones DEF MAIN '(' ')' ':' . VOID '{' '}'  (1)
 
-	VOID  shift 38
+	VOID  shift 40
 	.  error
 
 
 state 33
-	tipo : STRUCT '{' campos . '}'  (22)
-	campos : campos . campo ';'  (24)
+	ids : ids . ',' ID  (17)
+	campo : ids . ':' tipo ';'  (25)
 
-	ID  shift 4
-	'}'  shift 39
+	':'  shift 41
+	','  shift 13
 	.  error
-
-	ids  goto 40
-	campo  goto 41
 
 
 state 34
+	tipo : STRUCT '{' campos . '}'  (22)
+	campos : campos . campo  (24)
+
+	ID  shift 4
+	'}'  shift 42
+	.  error
+
+	ids  goto 33
+	campo  goto 43
+
+
+state 35
+	campos : campo .  (23)
+
+	.  reduce 23
+
+
+state 36
 	tipo : '[' INT_CONSTANT ']' . tipo  (21)
 
 	INT  shift 16
@@ -318,99 +335,45 @@ state 34
 	'['  shift 20
 	.  error
 
-	tipo  goto 42
+	tipo  goto 44
 
 
-state 35
+state 37
 	param : ID ':' tipo .  (12)
 
 	.  reduce 12
 
 
-state 36
+state 38
 	funcion : DEF ID '(' params ')' ':' . retorno '{' defs '}'  (6)
 
 	INT  shift 16
 	DOUBLE  shift 17
 	CHAR  shift 18
 	STRUCT  shift 19
-	VOID  shift 43
+	VOID  shift 45
 	'['  shift 20
 	.  error
 
-	retorno  goto 44
-	tipo  goto 45
+	retorno  goto 46
+	tipo  goto 47
 
 
-state 37
+state 39
 	params : param ',' params .  (9)
 
 	.  reduce 9
 
 
-state 38
+state 40
 	programa : definiciones DEF MAIN '(' ')' ':' VOID . '{' '}'  (1)
 
-	'{'  shift 46
-	.  error
-
-
-state 39
-	tipo : STRUCT '{' campos '}' .  (22)
-
-	.  reduce 22
-
-
-state 40
-	ids : ids . ',' ID  (17)
-	campo : ids . ':' tipo  (25)
-
-	':'  shift 47
-	','  shift 13
+	'{'  shift 48
 	.  error
 
 
 state 41
-	campos : campos campo . ';'  (24)
-
-	';'  shift 48
-	.  error
-
-
-state 42
-	tipo : '[' INT_CONSTANT ']' tipo .  (21)
-
-	.  reduce 21
-
-
-state 43
-	retorno : VOID .  (8)
-
-	.  reduce 8
-
-
-state 44
-	funcion : DEF ID '(' params ')' ':' retorno . '{' defs '}'  (6)
-
-	'{'  shift 49
-	.  error
-
-
-state 45
-	retorno : tipo .  (7)
-
-	.  reduce 7
-
-
-state 46
-	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' . '}'  (1)
-
-	'}'  shift 50
-	.  error
-
-
-state 47
-	campo : ids ':' . tipo  (25)
+	campo : ids ':' . tipo ';'  (25)
 
 	INT  shift 16
 	DOUBLE  shift 17
@@ -419,66 +382,111 @@ state 47
 	'['  shift 20
 	.  error
 
-	tipo  goto 51
+	tipo  goto 49
 
 
-state 48
-	campos : campos campo ';' .  (24)
+state 42
+	tipo : STRUCT '{' campos '}' .  (22)
+
+	.  reduce 22
+
+
+state 43
+	campos : campos campo .  (24)
 
 	.  reduce 24
 
 
+state 44
+	tipo : '[' INT_CONSTANT ']' tipo .  (21)
+
+	.  reduce 21
+
+
+state 45
+	retorno : VOID .  (8)
+
+	.  reduce 8
+
+
+state 46
+	funcion : DEF ID '(' params ')' ':' retorno . '{' defs '}'  (6)
+
+	'{'  shift 50
+	.  error
+
+
+state 47
+	retorno : tipo .  (7)
+
+	.  reduce 7
+
+
+state 48
+	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' . '}'  (1)
+
+	'}'  shift 51
+	.  error
+
+
 state 49
+	campo : ids ':' tipo . ';'  (25)
+
+	';'  shift 52
+	.  error
+
+
+state 50
 	funcion : DEF ID '(' params ')' ':' retorno '{' . defs '}'  (6)
 	defs : .  (13)
 
 	.  reduce 13
 
-	defs  goto 52
+	defs  goto 53
 
 
-state 50
+state 51
 	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' '}' .  (1)
 
 	.  reduce 1
 
 
-state 51
-	campo : ids ':' tipo .  (25)
+state 52
+	campo : ids ':' tipo ';' .  (25)
 
 	.  reduce 25
 
 
-state 52
+state 53
 	funcion : DEF ID '(' params ')' ':' retorno '{' defs . '}'  (6)
 	defs : defs . def ';'  (14)
 
 	ID  shift 4
-	'}'  shift 53
+	'}'  shift 54
 	.  error
 
-	def  goto 54
+	def  goto 55
 	ids  goto 8
 
 
-state 53
+state 54
 	funcion : DEF ID '(' params ')' ':' retorno '{' defs '}' .  (6)
 
 	.  reduce 6
 
 
-state 54
+state 55
 	defs : defs def . ';'  (14)
 
-	';'  shift 55
+	';'  shift 56
 	.  error
 
 
-state 55
+state 56
 	defs : defs def ';' .  (14)
 
 	.  reduce 14
 
 
 34 terminals, 14 nonterminals
-26 grammar rules, 56 states
+26 grammar rules, 57 states
