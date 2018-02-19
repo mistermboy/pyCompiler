@@ -73,9 +73,6 @@ defs: /* empty */
 def: ids ':' tipo
 
 
-campos: ids ':' tipo ';'
-		
-
 ids: ID
 	| ids ',' ID
 	;
@@ -87,6 +84,11 @@ tipo: INT
 	| STRUCT '{' campos '}'
 	;
 
+
+campos: /* empty */
+		|campos campo ';';
+		
+campo:ids ':' tipo;	
 
 // *********  DEFINICIONES  *********
 

@@ -1,5 +1,13 @@
 a,p,s:int;
 b:int;
+vector:[2][5]double;
+pair: struct {
+    	integer: int;
+    	character: char;
+ };
+  	
+def p(): void { }
+
 def as(a:int):void{
 	fd,_g:char;
 }
