@@ -1,11 +1,5 @@
 package ast;
 
-public interface Statement {
-
-	int getColumn();
-
-	int getLine();
-
-	String toString();
+public interface Statement extends ASTNode {
 
 }
