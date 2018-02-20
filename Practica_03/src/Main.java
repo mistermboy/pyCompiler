@@ -19,7 +19,6 @@ public class Main {
 			System.err.println("The file "+args[0]+" could not be opened.");
 			return;
 		}
-
 		Scanner scanner = new Scanner(fr);
 		Parser parser = new Parser(scanner);
 		parser.run();	

@@ -48,21 +48,25 @@
   31            | CHAR_CONSTANT
   32            | REAL_CONSTANT
   33            | '(' expresion ')'
-  34            | '!' expresion
-  35            | expresion '*' expresion
-  36            | expresion '/' expresion
-  37            | expresion '%' expresion
-  38            | expresion '+' expresion
-  39            | expresion '-' expresion
-  40            | expresion '>' expresion
-  41            | expresion GREATER expresion
-  42            | expresion '<' expresion
-  43            | expresion SMALLER expresion
-  44            | expresion NEGATION expresion
-  45            | expresion EQUALS expresion
-  46            | expresion AND expresion
-  47            | expresion OR expresion
-  48            | expresion '=' expresion
+  34            | ID '[' expresion ']'
+  35            | expresion '.' expresion
+  36            | '(' tipo ')' expresion
+  37            | '-' expresion
+  38            | '!' expresion
+  39            | expresion '*' expresion
+  40            | expresion '/' expresion
+  41            | expresion '%' expresion
+  42            | expresion '+' expresion
+  43            | expresion '-' expresion
+  44            | expresion '>' expresion
+  45            | expresion GREATER expresion
+  46            | expresion '<' expresion
+  47            | expresion SMALLER expresion
+  48            | expresion NEGATION expresion
+  49            | expresion EQUALS expresion
+  50            | expresion AND expresion
+  51            | expresion OR expresion
+  52            | expresion '=' expresion
 
 state 0
 	$accept : . programa $end  (0)
@@ -499,12 +503,13 @@ state 54
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	'}'  reduce 27
 
-	def  goto 61
-	sentencias  goto 62
+	def  goto 62
+	sentencias  goto 63
 	ids  goto 8
-	expresion  goto 63
+	expresion  goto 64
 
 
 state 55
@@ -516,13 +521,16 @@ state 55
 state 56
 	ids : ID .  (17)
 	expresion : ID .  (29)
+	expresion : ID . '[' expresion ']'  (34)
 
+	'['  shift 65
 	GREATER  reduce 29
 	SMALLER  reduce 29
 	EQUALS  reduce 29
 	NEGATION  reduce 29
 	OR  reduce 29
 	AND  reduce 29
+	'.'  reduce 29
 	'*'  reduce 29
 	'/'  reduce 29
 	'%'  reduce 29
@@ -550,552 +558,645 @@ state 58
 
 state 59
 	expresion : '(' . expresion ')'  (33)
+	expresion : '(' . tipo ')' expresion  (36)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	INT  shift 16
+	DOUBLE  shift 17
+	CHAR  shift 18
+	STRUCT  shift 19
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
+	'['  shift 20
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
-	expresion  goto 65
+	tipo  goto 67
+	expresion  goto 68
 
 
 state 60
-	expresion : '!' . expresion  (34)
+	expresion : '!' . expresion  (38)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
-	expresion  goto 66
+	expresion  goto 69
 
 
 state 61
-	defs : defs def . ';'  (15)
+	expresion : '-' . expresion  (37)
 
-	';'  shift 67
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
 	.  error
+
+	expresion  goto 70
 
 
 state 62
-	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias . '}'  (6)
+	defs : defs def . ';'  (15)
 
-	'}'  shift 68
+	';'  shift 71
 	.  error
 
 
 state 63
-	sentencias : expresion . ';' sentencias  (28)
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
+	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias . '}'  (6)
 
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'*'  shift 75
-	'/'  shift 76
-	'%'  shift 77
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	';'  shift 83
+	'}'  shift 72
 	.  error
 
 
 state 64
-	expresion : ID .  (29)
+	sentencias : expresion . ';' sentencias  (28)
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
 
-	.  reduce 29
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'.'  shift 79
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	';'  shift 88
+	.  error
 
 
 state 65
-	expresion : '(' expresion . ')'  (33)
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	')'  shift 84
-	'*'  shift 75
-	'/'  shift 76
-	'%'  shift 77
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	.  error
-
-
-state 66
-	expresion : '!' expresion .  (34)
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'*'  shift 75
-	'/'  shift 76
-	'%'  shift 77
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 34
-	';'  reduce 34
-
-
-state 67
-	defs : defs def ';' .  (15)
-
-	.  reduce 15
-
-
-state 68
-	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias '}' .  (6)
-
-	.  reduce 6
-
-
-state 69
-	expresion : expresion GREATER . expresion  (41)
+	expresion : ID '[' . expresion ']'  (34)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
-	.  error
-
-	expresion  goto 85
-
-
-state 70
-	expresion : expresion SMALLER . expresion  (43)
-
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
-	.  error
-
-	expresion  goto 86
-
-
-state 71
-	expresion : expresion EQUALS . expresion  (45)
-
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
-	.  error
-
-	expresion  goto 87
-
-
-state 72
-	expresion : expresion NEGATION . expresion  (44)
-
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
-	.  error
-
-	expresion  goto 88
-
-
-state 73
-	expresion : expresion OR . expresion  (47)
-
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 89
 
 
-state 74
-	expresion : expresion AND . expresion  (46)
+state 66
+	expresion : ID .  (29)
+	expresion : ID . '[' expresion ']'  (34)
 
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
+	'['  shift 65
+	GREATER  reduce 29
+	SMALLER  reduce 29
+	EQUALS  reduce 29
+	NEGATION  reduce 29
+	OR  reduce 29
+	AND  reduce 29
+	')'  reduce 29
+	']'  reduce 29
+	'.'  reduce 29
+	'*'  reduce 29
+	'/'  reduce 29
+	'%'  reduce 29
+	'+'  reduce 29
+	'-'  reduce 29
+	'>'  reduce 29
+	'<'  reduce 29
+	'='  reduce 29
+	';'  reduce 29
+
+
+state 67
+	expresion : '(' tipo . ')' expresion  (36)
+
+	')'  shift 90
 	.  error
 
-	expresion  goto 90
 
+state 68
+	expresion : '(' expresion . ')'  (33)
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
 
-state 75
-	expresion : expresion '*' . expresion  (35)
-
-	INT_CONSTANT  shift 55
-	ID  shift 64
-	REAL_CONSTANT  shift 57
-	CHAR_CONSTANT  shift 58
-	'('  shift 59
-	'!'  shift 60
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	')'  shift 91
+	'.'  shift 79
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
 	.  error
 
-	expresion  goto 91
+
+state 69
+	expresion : expresion . '.' expresion  (35)
+	expresion : '!' expresion .  (38)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 38
+	']'  reduce 38
+	'.'  reduce 38
+	';'  reduce 38
 
 
-state 76
-	expresion : expresion '/' . expresion  (36)
+state 70
+	expresion : expresion . '.' expresion  (35)
+	expresion : '-' expresion .  (37)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 37
+	']'  reduce 37
+	'.'  reduce 37
+	'*'  reduce 37
+	'/'  reduce 37
+	'%'  reduce 37
+	'+'  reduce 37
+	'-'  reduce 37
+	';'  reduce 37
+
+
+state 71
+	defs : defs def ';' .  (15)
+
+	.  reduce 15
+
+
+state 72
+	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias '}' .  (6)
+
+	.  reduce 6
+
+
+state 73
+	expresion : expresion GREATER . expresion  (45)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 92
 
 
-state 77
-	expresion : expresion '%' . expresion  (37)
+state 74
+	expresion : expresion SMALLER . expresion  (47)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 93
 
 
-state 78
-	expresion : expresion '+' . expresion  (38)
+state 75
+	expresion : expresion EQUALS . expresion  (49)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 94
 
 
-state 79
-	expresion : expresion '-' . expresion  (39)
+state 76
+	expresion : expresion NEGATION . expresion  (48)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 95
 
 
-state 80
-	expresion : expresion '>' . expresion  (40)
+state 77
+	expresion : expresion OR . expresion  (51)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 96
 
 
-state 81
-	expresion : expresion '<' . expresion  (42)
+state 78
+	expresion : expresion AND . expresion  (50)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 97
 
 
-state 82
-	expresion : expresion '=' . expresion  (48)
+state 79
+	expresion : expresion '.' . expresion  (35)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
+	'-'  shift 61
 	.  error
 
 	expresion  goto 98
 
 
-state 83
-	sentencias : expresion ';' . sentencias  (28)
-	sentencias : .  (27)
+state 80
+	expresion : expresion '*' . expresion  (39)
 
 	INT_CONSTANT  shift 55
-	ID  shift 64
+	ID  shift 66
 	REAL_CONSTANT  shift 57
 	CHAR_CONSTANT  shift 58
 	'('  shift 59
 	'!'  shift 60
-	'}'  reduce 27
+	'-'  shift 61
+	.  error
 
-	sentencias  goto 99
-	expresion  goto 63
+	expresion  goto 99
+
+
+state 81
+	expresion : expresion '/' . expresion  (40)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 100
+
+
+state 82
+	expresion : expresion '%' . expresion  (41)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 101
+
+
+state 83
+	expresion : expresion '+' . expresion  (42)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 102
 
 
 state 84
+	expresion : expresion '-' . expresion  (43)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 103
+
+
+state 85
+	expresion : expresion '>' . expresion  (44)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 104
+
+
+state 86
+	expresion : expresion '<' . expresion  (46)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 105
+
+
+state 87
+	expresion : expresion '=' . expresion  (52)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 106
+
+
+state 88
+	sentencias : expresion ';' . sentencias  (28)
+	sentencias : .  (27)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	'}'  reduce 27
+
+	sentencias  goto 107
+	expresion  goto 64
+
+
+state 89
+	expresion : ID '[' expresion . ']'  (34)
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	']'  shift 108
+	'.'  shift 79
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	.  error
+
+
+state 90
+	expresion : '(' tipo ')' . expresion  (36)
+
+	INT_CONSTANT  shift 55
+	ID  shift 66
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'('  shift 59
+	'!'  shift 60
+	'-'  shift 61
+	.  error
+
+	expresion  goto 109
+
+
+state 91
 	expresion : '(' expresion ')' .  (33)
 
 	.  reduce 33
 
 
-state 85
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion GREATER expresion .  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
+state 92
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion GREATER expresion .  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
 
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'<'  shift 81
-	'='  shift 82
-	GREATER  reduce 41
-	')'  reduce 41
-	'*'  reduce 41
-	'/'  reduce 41
-	'%'  reduce 41
-	'+'  reduce 41
-	'-'  reduce 41
-	'>'  reduce 41
-	';'  reduce 41
-
-
-state 86
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion SMALLER expresion .  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'='  shift 82
-	GREATER  reduce 43
-	SMALLER  reduce 43
-	')'  reduce 43
-	'*'  reduce 43
-	'/'  reduce 43
-	'%'  reduce 43
-	'+'  reduce 43
-	'-'  reduce 43
-	'>'  reduce 43
-	'<'  reduce 43
-	';'  reduce 43
-
-
-state 87
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion EQUALS expresion .  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	OR  shift 73
-	AND  shift 74
-	'='  shift 82
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'<'  shift 86
+	'='  shift 87
 	GREATER  reduce 45
-	SMALLER  reduce 45
-	EQUALS  reduce 45
-	NEGATION  reduce 45
 	')'  reduce 45
+	']'  reduce 45
+	'.'  reduce 45
 	'*'  reduce 45
 	'/'  reduce 45
 	'%'  reduce 45
 	'+'  reduce 45
 	'-'  reduce 45
 	'>'  reduce 45
-	'<'  reduce 45
 	';'  reduce 45
 
 
-state 88
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion NEGATION expresion .  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
+state 93
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion SMALLER expresion .  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
 
-	EQUALS  shift 71
-	OR  shift 73
-	AND  shift 74
-	'='  shift 82
-	GREATER  reduce 44
-	SMALLER  reduce 44
-	NEGATION  reduce 44
-	')'  reduce 44
-	'*'  reduce 44
-	'/'  reduce 44
-	'%'  reduce 44
-	'+'  reduce 44
-	'-'  reduce 44
-	'>'  reduce 44
-	'<'  reduce 44
-	';'  reduce 44
-
-
-state 89
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion OR expresion .  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	'='  shift 82
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'='  shift 87
 	GREATER  reduce 47
 	SMALLER  reduce 47
-	EQUALS  reduce 47
-	NEGATION  reduce 47
-	OR  reduce 47
-	AND  reduce 47
 	')'  reduce 47
+	']'  reduce 47
+	'.'  reduce 47
 	'*'  reduce 47
 	'/'  reduce 47
 	'%'  reduce 47
@@ -1106,31 +1207,451 @@ state 89
 	';'  reduce 47
 
 
-state 90
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion AND expresion .  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
+state 94
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion EQUALS expresion .  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
 
-	OR  shift 73
-	'='  shift 82
+	OR  shift 77
+	AND  shift 78
+	'='  shift 87
+	GREATER  reduce 49
+	SMALLER  reduce 49
+	EQUALS  reduce 49
+	NEGATION  reduce 49
+	')'  reduce 49
+	']'  reduce 49
+	'.'  reduce 49
+	'*'  reduce 49
+	'/'  reduce 49
+	'%'  reduce 49
+	'+'  reduce 49
+	'-'  reduce 49
+	'>'  reduce 49
+	'<'  reduce 49
+	';'  reduce 49
+
+
+state 95
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion NEGATION expresion .  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	EQUALS  shift 75
+	OR  shift 77
+	AND  shift 78
+	'='  shift 87
+	GREATER  reduce 48
+	SMALLER  reduce 48
+	NEGATION  reduce 48
+	')'  reduce 48
+	']'  reduce 48
+	'.'  reduce 48
+	'*'  reduce 48
+	'/'  reduce 48
+	'%'  reduce 48
+	'+'  reduce 48
+	'-'  reduce 48
+	'>'  reduce 48
+	'<'  reduce 48
+	';'  reduce 48
+
+
+state 96
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion OR expresion .  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	'='  shift 87
+	GREATER  reduce 51
+	SMALLER  reduce 51
+	EQUALS  reduce 51
+	NEGATION  reduce 51
+	OR  reduce 51
+	AND  reduce 51
+	')'  reduce 51
+	']'  reduce 51
+	'.'  reduce 51
+	'*'  reduce 51
+	'/'  reduce 51
+	'%'  reduce 51
+	'+'  reduce 51
+	'-'  reduce 51
+	'>'  reduce 51
+	'<'  reduce 51
+	';'  reduce 51
+
+
+state 97
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion AND expresion .  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	OR  shift 77
+	'='  shift 87
+	GREATER  reduce 50
+	SMALLER  reduce 50
+	EQUALS  reduce 50
+	NEGATION  reduce 50
+	AND  reduce 50
+	')'  reduce 50
+	']'  reduce 50
+	'.'  reduce 50
+	'*'  reduce 50
+	'/'  reduce 50
+	'%'  reduce 50
+	'+'  reduce 50
+	'-'  reduce 50
+	'>'  reduce 50
+	'<'  reduce 50
+	';'  reduce 50
+
+
+state 98
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion '.' expresion .  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 35
+	']'  reduce 35
+	';'  reduce 35
+
+
+state 99
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion '*' expresion .  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 39
+	']'  reduce 39
+	'.'  reduce 39
+	'*'  reduce 39
+	';'  reduce 39
+
+
+state 100
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion '/' expresion .  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 40
+	']'  reduce 40
+	'.'  reduce 40
+	'*'  reduce 40
+	'/'  reduce 40
+	';'  reduce 40
+
+
+state 101
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion '%' expresion .  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 41
+	']'  reduce 41
+	'.'  reduce 41
+	'*'  reduce 41
+	'/'  reduce 41
+	'%'  reduce 41
+	';'  reduce 41
+
+
+state 102
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion '+' expresion .  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 42
+	']'  reduce 42
+	'.'  reduce 42
+	'*'  reduce 42
+	'/'  reduce 42
+	'%'  reduce 42
+	'+'  reduce 42
+	';'  reduce 42
+
+
+state 103
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion '-' expresion .  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 43
+	']'  reduce 43
+	'.'  reduce 43
+	'*'  reduce 43
+	'/'  reduce 43
+	'%'  reduce 43
+	'+'  reduce 43
+	'-'  reduce 43
+	';'  reduce 43
+
+
+state 104
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion '>' expresion .  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 44
+	']'  reduce 44
+	'.'  reduce 44
+	'*'  reduce 44
+	'/'  reduce 44
+	'%'  reduce 44
+	'+'  reduce 44
+	'-'  reduce 44
+	'>'  reduce 44
+	';'  reduce 44
+
+
+state 105
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion '<' expresion .  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'='  shift 87
 	GREATER  reduce 46
-	SMALLER  reduce 46
-	EQUALS  reduce 46
-	NEGATION  reduce 46
-	AND  reduce 46
 	')'  reduce 46
+	']'  reduce 46
+	'.'  reduce 46
 	'*'  reduce 46
 	'/'  reduce 46
 	'%'  reduce 46
@@ -1141,276 +1662,76 @@ state 90
 	';'  reduce 46
 
 
-state 91
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion '*' expresion .  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
+state 106
+	expresion : expresion . '.' expresion  (35)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+	expresion : expresion '=' expresion .  (52)
 
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'/'  shift 76
-	'%'  shift 77
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 35
-	'*'  reduce 35
-	';'  reduce 35
+	.  reduce 52
 
 
-state 92
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion '/' expresion .  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'%'  shift 77
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 36
-	'*'  reduce 36
-	'/'  reduce 36
-	';'  reduce 36
-
-
-state 93
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion '%' expresion .  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'+'  shift 78
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 37
-	'*'  reduce 37
-	'/'  reduce 37
-	'%'  reduce 37
-	';'  reduce 37
-
-
-state 94
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion '+' expresion .  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'-'  shift 79
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 38
-	'*'  reduce 38
-	'/'  reduce 38
-	'%'  reduce 38
-	'+'  reduce 38
-	';'  reduce 38
-
-
-state 95
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion '-' expresion .  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'>'  shift 80
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 39
-	'*'  reduce 39
-	'/'  reduce 39
-	'%'  reduce 39
-	'+'  reduce 39
-	'-'  reduce 39
-	';'  reduce 39
-
-
-state 96
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion '>' expresion .  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	GREATER  shift 69
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'<'  shift 81
-	'='  shift 82
-	')'  reduce 40
-	'*'  reduce 40
-	'/'  reduce 40
-	'%'  reduce 40
-	'+'  reduce 40
-	'-'  reduce 40
-	'>'  reduce 40
-	';'  reduce 40
-
-
-state 97
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion '<' expresion .  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-
-	SMALLER  shift 70
-	EQUALS  shift 71
-	NEGATION  shift 72
-	OR  shift 73
-	AND  shift 74
-	'='  shift 82
-	GREATER  reduce 42
-	')'  reduce 42
-	'*'  reduce 42
-	'/'  reduce 42
-	'%'  reduce 42
-	'+'  reduce 42
-	'-'  reduce 42
-	'>'  reduce 42
-	'<'  reduce 42
-	';'  reduce 42
-
-
-state 98
-	expresion : expresion . '*' expresion  (35)
-	expresion : expresion . '/' expresion  (36)
-	expresion : expresion . '%' expresion  (37)
-	expresion : expresion . '+' expresion  (38)
-	expresion : expresion . '-' expresion  (39)
-	expresion : expresion . '>' expresion  (40)
-	expresion : expresion . GREATER expresion  (41)
-	expresion : expresion . '<' expresion  (42)
-	expresion : expresion . SMALLER expresion  (43)
-	expresion : expresion . NEGATION expresion  (44)
-	expresion : expresion . EQUALS expresion  (45)
-	expresion : expresion . AND expresion  (46)
-	expresion : expresion . OR expresion  (47)
-	expresion : expresion . '=' expresion  (48)
-	expresion : expresion '=' expresion .  (48)
-
-	.  reduce 48
-
-
-state 99
+state 107
 	sentencias : expresion ';' sentencias .  (28)
 
 	.  reduce 28
 
 
-43 terminals, 17 nonterminals
-49 grammar rules, 100 states
+state 108
+	expresion : ID '[' expresion ']' .  (34)
+
+	.  reduce 34
+
+
+state 109
+	expresion : expresion . '.' expresion  (35)
+	expresion : '(' tipo ')' expresion .  (36)
+	expresion : expresion . '*' expresion  (39)
+	expresion : expresion . '/' expresion  (40)
+	expresion : expresion . '%' expresion  (41)
+	expresion : expresion . '+' expresion  (42)
+	expresion : expresion . '-' expresion  (43)
+	expresion : expresion . '>' expresion  (44)
+	expresion : expresion . GREATER expresion  (45)
+	expresion : expresion . '<' expresion  (46)
+	expresion : expresion . SMALLER expresion  (47)
+	expresion : expresion . NEGATION expresion  (48)
+	expresion : expresion . EQUALS expresion  (49)
+	expresion : expresion . AND expresion  (50)
+	expresion : expresion . OR expresion  (51)
+	expresion : expresion . '=' expresion  (52)
+
+	GREATER  shift 73
+	SMALLER  shift 74
+	EQUALS  shift 75
+	NEGATION  shift 76
+	OR  shift 77
+	AND  shift 78
+	'.'  shift 79
+	'*'  shift 80
+	'/'  shift 81
+	'%'  shift 82
+	'+'  shift 83
+	'-'  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'='  shift 87
+	')'  reduce 36
+	']'  reduce 36
+	';'  reduce 36
+
+
+44 terminals, 17 nonterminals
+53 grammar rules, 110 states

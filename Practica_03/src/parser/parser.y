@@ -32,6 +32,8 @@ import java.io.Reader;
 %token AND
 
 %nonassoc '(' ')'
+%nonassoc '[' ']'
+%nonassoc '.'
 %nonassoc '!'
 
 %left '*'
@@ -128,6 +130,10 @@ sentencias:/* empty */
 		| CHAR_CONSTANT
 		| REAL_CONSTANT
 		| '(' expresion ')'
+		| ID '[' expresion ']'
+		|  expresion '.' expresion
+		| '(' tipo ')' expresion
+		| '-' expresion
 		| '!' expresion
 		|  expresion '*' expresion
 		|  expresion '/' expresion
