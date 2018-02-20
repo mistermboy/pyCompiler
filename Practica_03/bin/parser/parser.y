@@ -121,10 +121,10 @@ campo:ids ':' tipo ';';
 
 
 sentencias: /* empty */
-		| sentencias assignment;
+		| sentencias sentencia;
 
 
-assignment: PRINT list ';'
+sentencia: PRINT list ';'
 		| INPUT list ';'
 		| expresion ';'
 		;
@@ -133,12 +133,12 @@ list: expresion
 	| list ',' expresion
 	;
 
- expresion: ID 
+expresion: ID 
 		| INT_CONSTANT
 		| CHAR_CONSTANT
 		| REAL_CONSTANT
 		| '(' expresion ')'
-		| ID '[' expresion ']'
+		| expresion '[' expresion ']'
 		|  expresion '.' expresion
 		| '(' tipo ')' expresion
 		| '-' expresion
