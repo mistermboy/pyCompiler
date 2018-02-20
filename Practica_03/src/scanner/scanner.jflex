@@ -121,8 +121,11 @@ main				{this.yylval = yytext();
 							return Parser.NEGATION;}			
 "!" 					{this.yylval = yytext();
 							return '!';}
-"|" 					{this.yylval = yytext();
-							return '|';}																				
+"||" 					{this.yylval = yytext();
+							return Parser.OR;}
+"&&" 					{this.yylval = yytext();
+							return Parser.AND;}							
+																				
 																																																														
  
 // * CONSTANTS

@@ -28,9 +28,30 @@ import java.io.Reader;
 %token EQUALS
 %token NEGATION
 %token MAIN
+%token OR
+%token AND
 
-%left '+'
+%nonassoc '(' ')'
+%nonassoc '!'
+
 %left '*'
+%left '/'
+%left '%'
+%left '+'
+%left '-'
+
+%left '>'
+%left GREATER
+%left '<'
+%left SMALLER
+%left NEGATION
+%left EQUALS
+
+%left AND
+%left OR
+%left '='
+
+
 
 %%
 // * Gramática y acciones Yacc
@@ -106,10 +127,23 @@ sentencias:/* empty */
 		| INT_CONSTANT
 		| CHAR_CONSTANT
 		| REAL_CONSTANT
+		| '(' expresion ')'
+		| '!' expresion
+		|  expresion '*' expresion
+		|  expresion '/' expresion
+		|  expresion '%' expresion
 		|  expresion '+' expresion
-		| expresion '*' expresion 
+		|  expresion '-' expresion
+		| expresion '>' expresion
+		| expresion GREATER expresion
+		| expresion '<' expresion
+		| expresion SMALLER expresion
+		| expresion NEGATION expresion
+		| expresion EQUALS expresion
+		| expresion AND expresion
+		| expresion OR expresion
+		| expresion '=' expresion
 		;
-	
 	         
 %%
 // * Código Java
