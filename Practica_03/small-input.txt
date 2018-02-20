@@ -24,6 +24,31 @@ def _p(a:int): void { }
 
 def as(a:int,b:double,c:char):void{
 	fd,_g:char;
+	pair: struct {
+    	integer: int;
+    	character: char;
+    	vS:[2][5]double;
+    	pair2: struct {
+	    	integer2: int;
+	    	character2: char;
+	    	vS2:[2][5]double;
+ 		};
+ 	};
+ 	vector:[2][6]struct{
+	    	integer3: int;
+	    	character3: char;
+	    	vS3:[2][5]double;
+ 		}; 
+ 	
+	c1 + c2 + x;
+	5+4+5;
+	4+a+3;
+	4;
+	'a';
+	'm'+5;
+	4.5;
+	1.1+a+'m';
+	
 }
 c:double;
 def main():void{

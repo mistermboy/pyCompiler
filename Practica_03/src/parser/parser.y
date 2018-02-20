@@ -49,7 +49,7 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' defs '}';
+funcion: DEF ID '(' params ')' ':' retorno '{' defs sentencias'}';
 
 retorno:  tipo 
 		|  VOID
@@ -88,20 +88,27 @@ tipo: INT
 
 
 campos: campo
-		|campos campo ;
+		|campos campo 
+		;
 		
 campo:ids ':' tipo ';';	
 
 // *********  DEFINICIONES  *********
 
 
-//sentencias: expresion | expresion sentencias;
+
+sentencias:/* empty */
+		|  expresion ';' sentencias
+		;
 
 
-/* expresion: INT_CONSTANT 
-		| ID
+ expresion: ID 
+		| INT_CONSTANT
+		| CHAR_CONSTANT
+		| REAL_CONSTANT
 		|  expresion '+' expresion
-		| expresion '*' expresion */
+		| expresion '*' expresion 
+		;
 	
 	         
 %%

@@ -8,7 +8,7 @@
    4  definicion : def ';'
    5             | funcion
 
-   6  funcion : DEF ID '(' params ')' ':' retorno '{' defs '}'
+   6  funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias '}'
 
    7  retorno : tipo
    8          | VOID
@@ -39,6 +39,16 @@
   25         | campos campo
 
   26  campo : ids ':' tipo ';'
+
+  27  sentencias :
+  28             | expresion ';' sentencias
+
+  29  expresion : ID
+  30            | INT_CONSTANT
+  31            | CHAR_CONSTANT
+  32            | REAL_CONSTANT
+  33            | expresion '+' expresion
+  34            | expresion '*' expresion
 
 state 0
 	$accept : . programa $end  (0)
@@ -72,7 +82,7 @@ state 2
 
 state 3
 	programa : definiciones DEF . MAIN '(' ')' ':' VOID '{' '}'  (1)
-	funcion : DEF . ID '(' params ')' ':' retorno '{' defs '}'  (6)
+	funcion : DEF . ID '(' params ')' ':' retorno '{' defs sentencias '}'  (6)
 
 	ID  shift 9
 	MAIN  shift 10
@@ -114,7 +124,7 @@ state 8
 
 
 state 9
-	funcion : DEF ID . '(' params ')' ':' retorno '{' defs '}'  (6)
+	funcion : DEF ID . '(' params ')' ':' retorno '{' defs sentencias '}'  (6)
 
 	'('  shift 14
 	.  error
@@ -154,7 +164,7 @@ state 13
 
 
 state 14
-	funcion : DEF ID '(' . params ')' ':' retorno '{' defs '}'  (6)
+	funcion : DEF ID '(' . params ')' ':' retorno '{' defs sentencias '}'  (6)
 	params : .  (9)
 
 	ID  shift 23
@@ -224,7 +234,7 @@ state 23
 
 
 state 24
-	funcion : DEF ID '(' params . ')' ':' retorno '{' defs '}'  (6)
+	funcion : DEF ID '(' params . ')' ':' retorno '{' defs sentencias '}'  (6)
 
 	')'  shift 31
 	.  error
@@ -283,7 +293,7 @@ state 30
 
 
 state 31
-	funcion : DEF ID '(' params ')' . ':' retorno '{' defs '}'  (6)
+	funcion : DEF ID '(' params ')' . ':' retorno '{' defs sentencias '}'  (6)
 
 	':'  shift 39
 	.  error
@@ -352,7 +362,7 @@ state 38
 
 
 state 39
-	funcion : DEF ID '(' params ')' ':' . retorno '{' defs '}'  (6)
+	funcion : DEF ID '(' params ')' ':' . retorno '{' defs sentencias '}'  (6)
 
 	INT  shift 16
 	DOUBLE  shift 17
@@ -417,7 +427,7 @@ state 46
 
 
 state 47
-	funcion : DEF ID '(' params ')' ':' retorno . '{' defs '}'  (6)
+	funcion : DEF ID '(' params ')' ':' retorno . '{' defs sentencias '}'  (6)
 
 	'{'  shift 51
 	.  error
@@ -444,7 +454,7 @@ state 50
 
 
 state 51
-	funcion : DEF ID '(' params ')' ':' retorno '{' . defs '}'  (6)
+	funcion : DEF ID '(' params ')' ':' retorno '{' . defs sentencias '}'  (6)
 	defs : .  (14)
 
 	.  reduce 14
@@ -465,35 +475,155 @@ state 53
 
 
 state 54
-	funcion : DEF ID '(' params ')' ':' retorno '{' defs . '}'  (6)
+	funcion : DEF ID '(' params ')' ':' retorno '{' defs . sentencias '}'  (6)
 	defs : defs . def ';'  (15)
+	sentencias : .  (27)
 
-	ID  shift 4
-	'}'  shift 55
-	.  error
+	INT_CONSTANT  shift 55
+	ID  shift 56
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'}'  reduce 27
 
-	def  goto 56
+	def  goto 59
+	sentencias  goto 60
 	ids  goto 8
+	expresion  goto 61
 
 
 state 55
-	funcion : DEF ID '(' params ')' ':' retorno '{' defs '}' .  (6)
+	expresion : INT_CONSTANT .  (30)
 
-	.  reduce 6
+	.  reduce 30
 
 
 state 56
-	defs : defs def . ';'  (15)
+	ids : ID .  (17)
+	expresion : ID .  (29)
 
-	';'  shift 57
-	.  error
+	'+'  reduce 29
+	'*'  reduce 29
+	':'  reduce 17
+	';'  reduce 29
+	','  reduce 17
 
 
 state 57
+	expresion : REAL_CONSTANT .  (32)
+
+	.  reduce 32
+
+
+state 58
+	expresion : CHAR_CONSTANT .  (31)
+
+	.  reduce 31
+
+
+state 59
+	defs : defs def . ';'  (15)
+
+	';'  shift 62
+	.  error
+
+
+state 60
+	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias . '}'  (6)
+
+	'}'  shift 63
+	.  error
+
+
+state 61
+	sentencias : expresion . ';' sentencias  (28)
+	expresion : expresion . '+' expresion  (33)
+	expresion : expresion . '*' expresion  (34)
+
+	'+'  shift 64
+	'*'  shift 65
+	';'  shift 66
+	.  error
+
+
+state 62
 	defs : defs def ';' .  (15)
 
 	.  reduce 15
 
 
-34 terminals, 15 nonterminals
-27 grammar rules, 58 states
+state 63
+	funcion : DEF ID '(' params ')' ':' retorno '{' defs sentencias '}' .  (6)
+
+	.  reduce 6
+
+
+state 64
+	expresion : expresion '+' . expresion  (33)
+
+	INT_CONSTANT  shift 55
+	ID  shift 67
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	.  error
+
+	expresion  goto 68
+
+
+state 65
+	expresion : expresion '*' . expresion  (34)
+
+	INT_CONSTANT  shift 55
+	ID  shift 67
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	.  error
+
+	expresion  goto 69
+
+
+state 66
+	sentencias : expresion ';' . sentencias  (28)
+	sentencias : .  (27)
+
+	INT_CONSTANT  shift 55
+	ID  shift 67
+	REAL_CONSTANT  shift 57
+	CHAR_CONSTANT  shift 58
+	'}'  reduce 27
+
+	sentencias  goto 70
+	expresion  goto 61
+
+
+state 67
+	expresion : ID .  (29)
+
+	.  reduce 29
+
+
+state 68
+	expresion : expresion . '+' expresion  (33)
+	expresion : expresion '+' expresion .  (33)
+	expresion : expresion . '*' expresion  (34)
+
+	'*'  shift 65
+	'+'  reduce 33
+	';'  reduce 33
+
+
+state 69
+	expresion : expresion . '+' expresion  (33)
+	expresion : expresion . '*' expresion  (34)
+	expresion : expresion '*' expresion .  (34)
+
+	.  reduce 34
+
+
+state 70
+	sentencias : expresion ';' sentencias .  (28)
+
+	.  reduce 28
+
+
+34 terminals, 17 nonterminals
+35 grammar rules, 71 states
