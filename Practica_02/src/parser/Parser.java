@@ -33,6 +33,9 @@ public class Parser {
 	public final static int NEGATION = 279;
 	public final static int MAIN = 280;
 	
+	public final static int OR = 281;
+	public final static int AND = 282;
+	
 	private Scanner scanner;
 
 	public Parser(Scanner scanner) {
