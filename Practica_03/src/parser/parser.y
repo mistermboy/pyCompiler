@@ -31,27 +31,28 @@ import java.io.Reader;
 %token OR
 %token AND
 
-%nonassoc '(' ')'
-%nonassoc '[' ']'
-%nonassoc '.'
-%nonassoc '!'
 
-%left '*'
-%left '/'
-%left '%'
-%left '+'
-%left '-'
-
-%left '>'
-%left GREATER
-%left '<'
-%left SMALLER
-%left NEGATION
-%left EQUALS
-
-%left AND
+%right '='
 %left OR
-%left '='
+%left AND
+
+%left EQUALS
+%left NEGATION
+%left SMALLER
+%left '<'
+%left GREATER
+%left '>'
+
+%left '-'
+%left '+'
+%left '%'
+%left '/'
+%left '*'
+
+%nonassoc '!'
+%left '.'
+%nonassoc '[' ']'
+%nonassoc '(' ')'
 
 
 
@@ -116,14 +117,21 @@ campos: campo
 		
 campo:ids ':' tipo ';';	
 
-// *********  DEFINICIONES  *********
+// *********  SENTENCIAS  *********
 
 
+sentencias: /* empty */
+		| sentencias assignment;
 
-sentencias:/* empty */
-		|  expresion ';' sentencias
+
+assignment: PRINT list ';'
+		| INPUT list ';'
+		| expresion ';'
 		;
-
+	
+list: expresion
+	| list ',' expresion
+	;
 
  expresion: ID 
 		| INT_CONSTANT

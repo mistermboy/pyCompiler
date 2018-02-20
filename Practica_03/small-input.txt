@@ -70,7 +70,10 @@ def as(a:int,b:double,c:char):void{
 	vector[69*17]=4;
 	pair.vector[4]=7;
 	(int) 5.7;
-	(double) ((66*7)%5);  
+	(double) ((66*7)%5); 
+	print a;
+	input b;
+	print (a+b); 
 }
 c:double;
 def main():void{
