@@ -33,21 +33,12 @@ import java.io.Reader;
 
 
 %right '='
-%left OR
-%left AND
+%left OR AND
 
-%left EQUALS
-%left NEGATION
-%left SMALLER
-%left '<'
-%left GREATER
-%left '>'
+%left EQUALS NEGATION SMALLER '<' GREATER '>'
 
-%left '-'
-%left '+'
-%left '%'
-%left '/'
-%left '*'
+%left '-' '+'
+%left '*' '/' '%'
 
 %nonassoc CAST
 %right UNARIO
@@ -133,11 +124,10 @@ sentencias: sentencia
 
 sentencia: PRINT list ';'	
 		| INPUT list ';'	
-		| RETURN expresion ';'	
-		| asignacion ';'	
+		| RETURN expresion ';'		
 		| condicionales
 		| while
-		| invocacion ';'
+		| expresion ';'
 		;
 	
 
@@ -164,6 +154,8 @@ expresion: ID
 		| expresion EQUALS expresion
 		| expresion AND expresion
 		| expresion OR expresion
+		| expresion '=' expresion
+		| ID '(' args ')'
 		;
 		
 		
@@ -171,9 +163,6 @@ list: expresion
 	| list ',' expresion
 	;
 
-// *********  ASINACIÓN  *********
-
-asignacion: expresion '=' expresion	
 
 // *********  WHILE  *********
 
@@ -184,8 +173,7 @@ while: WHILE expresion ':' '{' sents '}' ;
 
 condicionales: IF expresion ':' cuerpo else;
 
-else: /*empty*/
-	|ELSE cuerpo;
+else:ELSE cuerpo;
 
 cuerpo: cuerpoSimple
 		| cuerpoComplejo  
@@ -200,14 +188,13 @@ sents: /*empty*/
 
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
-invocacion: ID '(' args ')'
-
 args:  /* empty */
 		| arg
 		;
 
-arg: ID
-	| arg ',' ID
+arg: expresion
+	| arg ',' expresion
+
 
 		         
 %%
