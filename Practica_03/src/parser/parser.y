@@ -61,7 +61,7 @@ import java.io.Reader;
 %%
 // * Gramática y acciones Yacc
 
-programa : definiciones DEF MAIN '(' ')'':'VOID '{' '}';
+programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';
 
 definiciones: definiciones definicion 
 	 | /* empty */
@@ -74,7 +74,7 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' body'}';
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}';
 
 
 body: defs
@@ -177,20 +177,27 @@ asignacion: expresion '=' expresion
 
 // *********  WHILE  *********
 
-while: WHILE expresion ':' '{' sentencias '}' ;
+while: WHILE expresion ':' '{' sents '}' ;
 
 // *********  IF-ELSE  *********
+
 
 condicionales: IF expresion ':' cuerpo else;
 
 else: /*empty*/
-	| ELSE cuerpo;
+	|ELSE cuerpo;
 
-
-cuerpo: '{' sentencias '}' 
-		// | sentencia  IMPLEMENTAR PARA CUANDO NO TENGA LLAVES
+cuerpo: cuerpoSimple
+		| cuerpoComplejo  
 		;
+
+cuerpoSimple: sentencia;
+cuerpoComplejo: '{' sents '}' 
 		
+		
+sents: /*empty*/
+	| sentencias
+
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
 invocacion: ID '(' args ')'

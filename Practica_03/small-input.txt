@@ -18,9 +18,9 @@ vector:[2][6]struct{
 	    	vS3:[2][5]double;
  		}; 
   	
-def p(): void { }
+def p(): double { }
 
-def _p(a:int): void { }
+def _p(a:int): int { }
 
 def as(a:int,b:double,c:char):void{
 	fd,_g:char;
@@ -40,46 +40,49 @@ def as(a:int,b:double,c:char):void{
 	    	vS3:[2][5]double;
  		}; 
  	
-	if (a+b)*5==c:{
-	input x,y;
-	print a;
-	pair.b=33;
-	vector[69*17]=4;
-	pair.vector[4]=7;
+ 	#comeeent
+ 	
+ 	""" moreeeee 
+ 	
+ 	coments """
+ 	
+	if a>b:
+		return a;
+	else
+		return b;
 	
-	if a==b:{
-		return MiaKhalifa;
-		}
 	
-	
-	while i>3:{
-		a=(int) 5.7;
-		b=(double) ((66*7)%5);
-		return 3;
-		while j<5 : {
-      		vector[i][j] = i + j;
-      		j=j+1;
-      		if a==b:{
-				return MiaKhalifa;
-			}
-		}
-		i=i+1;
-		f();
-		f(a,b);
-	}
-	
-	a=(int) 5.7;
-	b=(double) ((66*7)%5);
-	return 3;
-	return a+b; 
+	if b>a:{
+		return a;
+		return b;
 	}else{
-		print a;
-		pair.b=33;
-		vector[69*17]=4;
-		pair.vector[4]=7;
-		a=(int) 5.7;
+		return b;
 	}
+	
 }
 c:double;
 def main():void{
+
+	fd,_g:char;
+	pair: struct {
+    	integer: int;
+    	character: char;
+    	vS:[2][5]double;
+    	pair2: struct {
+	    	integer2: int;
+	    	character2: char;
+	    	vS2:[2][5]double;
+ 		};
+ 	};
+
+	i=0;
+  	j=0;
+  	while i<10 : {
+    	while j<5 : {
+      		vector[i][j] = i + j;
+      		j=j+1;
+		}
+		i=i+1;
+  	} 	
+  	
 }
