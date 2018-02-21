@@ -74,7 +74,14 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' defs sentencias'}';
+funcion: DEF ID '(' params ')' ':' retorno '{' body'}';
+
+
+body: defs
+	| sentencias
+	| defs sentencias
+	|
+	;
 
 retorno:  tipo 
 		|  VOID
@@ -92,7 +99,7 @@ par:  ID ':' tipo;
 
 // *********  DEFINICIONES  *********
 
-defs: /* empty */
+defs: def ';'
 	| defs def ';'
 	;
 				
@@ -120,14 +127,14 @@ campo:ids ':' tipo ';';
 
 // *********  SENTENCIAS  *********
 
-sentencias: /* empty */
+sentencias: sentencia
 		| sentencias sentencia;
 
 
-sentencia: PRINT list ';'
-		| INPUT list ';'
-		| RETURN expresion ';'
-		| asignacion ';'
+sentencia: PRINT list ';'	
+		| INPUT list ';'	
+		| RETURN expresion ';'	
+		| asignacion ';'	
 		| condicionales
 		| while
 		| invocacion ';'
@@ -166,7 +173,7 @@ list: expresion
 
 // *********  ASINACIÓN  *********
 
-asignacion: expresion '=' expresion		
+asignacion: expresion '=' expresion	
 
 // *********  WHILE  *********
 
