@@ -49,6 +49,8 @@ import java.io.Reader;
 %left '/'
 %left '*'
 
+%nonassoc CAST
+%right UNARIO
 %nonassoc '!'
 %left '.'
 %nonassoc '[' ']'
@@ -58,7 +60,6 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
-
 
 programa : definiciones DEF MAIN '(' ')'':'VOID '{' '}';
 
@@ -119,19 +120,19 @@ campo:ids ':' tipo ';';
 
 // *********  SENTENCIAS  *********
 
-
 sentencias: /* empty */
 		| sentencias sentencia;
 
 
 sentencia: PRINT list ';'
 		| INPUT list ';'
-		| expresion ';'
+		| RETURN expresion ';'
+		| asignacion ';'
+		| condicionales
+		| while
+		| invocacion ';'
 		;
 	
-list: expresion
-	| list ',' expresion
-	;
 
 expresion: ID 
 		| INT_CONSTANT
@@ -140,8 +141,8 @@ expresion: ID
 		| '(' expresion ')'
 		| expresion '[' expresion ']'
 		|  expresion '.' expresion
-		| '(' tipo ')' expresion
-		| '-' expresion
+		| '(' tipo ')' expresion %prec CAST
+		| '-' expresion %prec UNARIO
 		| '!' expresion
 		|  expresion '*' expresion
 		|  expresion '/' expresion
@@ -156,9 +157,45 @@ expresion: ID
 		| expresion EQUALS expresion
 		| expresion AND expresion
 		| expresion OR expresion
-		| expresion '=' expresion
 		;
-	         
+		
+		
+list: expresion
+	| list ',' expresion
+	;
+
+// *********  ASINACIÓN  *********
+
+asignacion: expresion '=' expresion		
+
+// *********  WHILE  *********
+
+while: WHILE expresion ':' '{' sentencias '}' ;
+
+// *********  IF-ELSE  *********
+
+condicionales: IF expresion ':' cuerpo else;
+
+else: /*empty*/
+	| ELSE cuerpo;
+
+
+cuerpo: '{' sentencias '}' 
+		// | sentencia  IMPLEMENTAR PARA CUANDO NO TENGA LLAVES
+		;
+		
+// *********  INVOCACIÓN DE FUNCIONES  *********
+
+invocacion: ID '(' args ')'
+
+args:  /* empty */
+		| arg
+		;
+
+arg: ID
+	| arg ',' ID
+
+		         
 %%
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:
