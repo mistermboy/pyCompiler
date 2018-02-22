@@ -47,6 +47,9 @@ import java.io.Reader;
 %nonassoc '[' ']'
 %nonassoc '(' ')'
 
+%nonassoc CUERPO
+%nonassoc ELSE
+
 
 
 %%
@@ -125,7 +128,8 @@ sentencias: sentencia
 sentencia: PRINT list ';'	
 		| INPUT list ';'	
 		| RETURN expresion ';'		
-		| condicionales
+		| condicionalSimple 
+		| condicionalComplejo
 		| while
 		| expresion ';'
 		;
@@ -171,9 +175,10 @@ while: WHILE expresion ':' '{' sents '}' ;
 // *********  IF-ELSE  *********
 
 
-condicionales: IF expresion ':' cuerpo else;
+condicionalSimple: IF expresion ':' cuerpo %prec CUERPO;
+condicionalComplejo: IF expresion ':' cuerpo else;
 
-else:ELSE cuerpo;
+else: ELSE cuerpo ;
 
 cuerpo: cuerpoSimple
 		| cuerpoComplejo  
