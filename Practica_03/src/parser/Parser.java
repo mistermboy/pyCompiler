@@ -590,7 +590,7 @@ final static String yyrule[] = {
 "arg : arg ',' expresion",
 };
 
-//#line 203 "../../src/parser/parser.y"
+//#line 204 "../../src/parser/parser.y"
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:
 //	- Atributos, si son variables

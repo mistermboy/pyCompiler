@@ -122,7 +122,8 @@ campo:ids ':' tipo ';';
 // *********  SENTENCIAS  *********
 
 sentencias: sentencia
-		| sentencias sentencia;
+		| sentencias sentencia
+		;
 
 
 sentencia: PRINT list ';'	
