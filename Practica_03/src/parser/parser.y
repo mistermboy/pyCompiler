@@ -170,7 +170,7 @@ list: expresion
 
 // *********  WHILE  *********
 
-while: WHILE expresion ':' '{' sents '}' ;
+while: WHILE expresion ':' '{' sentencias '}' ;
 
 // *********  IF-ELSE  *********
 
@@ -185,12 +185,9 @@ cuerpo: cuerpoSimple
 		;
 
 cuerpoSimple: sentencia;
-cuerpoComplejo: '{' sents '}' 
+cuerpoComplejo: '{' sentencias '}' 
 		
 		
-sents: /*empty*/
-	| sentencias
-
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
 args:  /* empty */
