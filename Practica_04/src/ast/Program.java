@@ -5,15 +5,15 @@ import java.util.List;
 public class Program implements ASTNode {
 
 	@SuppressWarnings("unused")
-	private List<Statement> statements;
+	private List<Definition> definitions;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Program(int i, int j, List<Statement> statements) {
+	public Program(int i, int j, List<Definition> definitions) {
 		this.row = i;
 		this.column = j;
-		this.statements = statements;
+		this.definitions = definitions;
 	}
 
 	public int getLine() {
