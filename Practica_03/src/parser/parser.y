@@ -68,7 +68,7 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' body '}';
+funcion: DEF ID '(' params ')' ':' tipo '{' body '}';
 
 
 body: defs
@@ -77,9 +77,6 @@ body: defs
 	|
 	;
 
-retorno:  tipo 
-		|  VOID
-		;
 
 params:  /* empty */
 		| param
@@ -108,6 +105,7 @@ ids: ID
 tipo: INT 
 	| DOUBLE 
 	| CHAR
+	| VOID
 	|'['INT_CONSTANT']' tipo
 	| STRUCT '{' campos '}'
 	;
