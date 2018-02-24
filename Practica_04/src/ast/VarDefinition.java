@@ -2,31 +2,42 @@ package ast;
 
 public class VarDefinition implements Definition, Statement {
 
+	private int row = ASTNode.DEFAULT_ROW_COLUMN;
+	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+
 	private int scope = 0;
 	private int offset;
+	private String name;
+	private Type type;
+
+	public VarDefinition(int row, int column, int scope, int offset, String name, Type type) {
+		super();
+		this.row = row;
+		this.column = column;
+		this.scope = scope;
+		this.offset = offset;
+		this.name = name;
+		this.type = type;
+	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	@Override
 	public int getLine() {
-		// TODO Auto-generated method stub
-		return 0;
+		return row;
 	}
 
 	@Override
 	public int getColumn() {
-		// TODO Auto-generated method stub
-		return 0;
+		return column;
 	}
 
 	public int getOffset() {
@@ -43,6 +54,24 @@ public class VarDefinition implements Definition, Statement {
 
 	public void setScope(int scope) {
 		this.scope = scope;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "VarDefinition [row=" + row + ", column=" + column + ", scope=" + scope + ", offset=" + offset
+				+ ", name=" + name + ", type=" + type + "]";
 	}
 
 }
