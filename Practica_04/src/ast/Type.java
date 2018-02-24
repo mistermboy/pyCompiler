@@ -1,5 +1,5 @@
 package ast;
 
-public interface Type {
+public interface Type extends ASTNode {
 
 }
