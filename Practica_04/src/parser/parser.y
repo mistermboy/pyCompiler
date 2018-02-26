@@ -72,7 +72,7 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' tipo '{' body '}'; //		{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
+funcion: DEF ID '(' params ')' ':' tipo '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
 
 
 body: defs
@@ -128,10 +128,10 @@ sentencias: sentencia
 		;
 
 
-sentencia: PRINT list ';'	
+sentencia: PRINT list ';'										// ********************** COMO LE PASO VARIAS EXPRESIONES?????
 		| INPUT list ';'	
 		| RETURN expresion ';'									{ $$ = new Return(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
-		| condicionalSimple 
+		| condicionalSimple
 		| condicionalComplejo
 		| while
 		| expresion ';'
@@ -148,19 +148,19 @@ expresion: ID
 		| '(' tipo ')' expresion  %prec CAST
 		| '-' expresion %prec UNARIO
 		| '!' expresion
-		|  expresion '*' expresion
-		|  expresion '/' expresion
-		|  expresion '%' expresion
-		|  expresion '+' expresion
-		|  expresion '-' expresion
-		| expresion '>' expresion
-		| expresion GREATER expresion
-		| expresion '<' expresion
-		| expresion SMALLER expresion
-		| expresion NEGATION expresion
-		| expresion EQUALS expresion
-		| expresion AND expresion
-		| expresion OR expresion
+		|  expresion '*' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		|  expresion '/' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		|  expresion '+' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		|  expresion '-' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion '>' expresion	 							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion GREATER expresion 							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion '<' expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion SMALLER expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion NEGATION expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion EQUALS expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		| expresion '=' expresion
 		| ID '(' args ')'
 		;
@@ -178,8 +178,8 @@ while: WHILE expresion ':' '{' sentencias '}' ;
 // *********  IF-ELSE  *********
 
 
-condicionalSimple: IF expresion ':' cuerpo %prec CUERPO;
-condicionalComplejo: IF expresion ':' cuerpo else;
+condicionalSimple: IF expresion ':' cuerpo %prec CUERPO; 		{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,null,(Expression) $2);}
+condicionalComplejo: IF expresion ':' cuerpo else;			//	{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),$4,,(Expression) $2);}  // *******************  COMO COÑO LE PASO EL CUERPO DEL ELSE??????
 
 else: ELSE cuerpo ;
 
