@@ -67,12 +67,12 @@ definiciones: definiciones definicion
 
 
 definicion: def ';'													
-			| funcion										//		{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1);}
+			| funcion										
 			;
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' tipo '{' body '}';
+funcion: DEF ID '(' params ')' ':' tipo '{' body '}'; //		{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
 
 
 body: defs
@@ -99,7 +99,7 @@ defs: def ';'
 	;
 				
 	
-def: ids ':' tipo												{ $$ = new VarDefinition(scanner.getLine(),scanner.getColumn(), (String) $1);}
+def: ids ':' tipo												{ $$ = new VarDefinition(scanner.getLine(),scanner.getColumn(), (String) $1, (Type) $3);}
 
 
 ids: ID
@@ -109,9 +109,9 @@ ids: ID
 tipo: INT 														{ $$ = IntType.getInstance();}
 	| DOUBLE 													{ $$ = RealType.getInstance();}
 	| CHAR														{ $$ = CharType.getInstance();}
-	|'['INT_CONSTANT']' tipo
-	| STRUCT '{' campos '}'
-	| VOID
+	|'['INT_CONSTANT']' tipo									{ $$ = new ArrayType(scanner.getLine(),scanner.getColumn(),(int) $2, (Type) $4);} 
+	| STRUCT '{' campos '}'										{ $$ = new RecordType(scanner.getLine(),scanner.getColumn(),(List<RecordField>)$3);}
+	| VOID														{ $$ = VoidType.getInstance();}
 	;
 
 
@@ -130,7 +130,7 @@ sentencias: sentencia
 
 sentencia: PRINT list ';'	
 		| INPUT list ';'	
-		| RETURN expresion ';'		
+		| RETURN expresion ';'									{ $$ = new Return(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
 		| condicionalSimple 
 		| condicionalComplejo
 		| while
@@ -144,8 +144,8 @@ expresion: ID
 		| REAL_CONSTANT
 		| '(' expresion ')'
 		| expresion '[' expresion ']'
-		|  expresion '.' expresion
-		| '(' tipo ')' expresion %prec CAST
+		|  expresion '.' ID
+		| '(' tipo ')' expresion  %prec CAST
 		| '-' expresion %prec UNARIO
 		| '!' expresion
 		|  expresion '*' expresion

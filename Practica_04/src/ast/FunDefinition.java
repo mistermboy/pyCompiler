@@ -7,12 +7,12 @@ public class FunDefinition implements Definition {
 	private List<Statement> statements;
 	private String name;
 	private Type type;
-	
-	
-	public FunDefinition(List<Statement> statements, String name) {
+
+	public FunDefinition(List<Statement> statements, String name, Type type) {
 		super();
 		this.statements = statements;
 		this.name = name;
+		this.type = type;
 	}
 
 	@Override
@@ -37,7 +37,5 @@ public class FunDefinition implements Definition {
 	public String toString() {
 		return "FunDefinition [statements=" + statements + ", name=" + name + ", type=" + type + "]";
 	}
-	
-	
 
 }

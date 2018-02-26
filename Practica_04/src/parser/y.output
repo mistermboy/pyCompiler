@@ -60,7 +60,7 @@
   42            | REAL_CONSTANT
   43            | '(' expresion ')'
   44            | expresion '[' expresion ']'
-  45            | expresion '.' expresion
+  45            | expresion '.' ID
   46            | '(' tipo ')' expresion
   47            | '-' expresion
   48            | '!' expresion
@@ -810,7 +810,7 @@ state 67
 state 68
 	sentencia : expresion . ';'  (38)
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -916,7 +916,7 @@ state 75
 
 state 76
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -964,7 +964,7 @@ state 77
 
 state 78
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1003,7 +1003,7 @@ state 78
 
 state 79
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1044,7 +1044,7 @@ state 79
 state 80
 	sentencia : RETURN expresion . ';'  (34)
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1100,7 +1100,7 @@ state 81
 
 state 82
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : '-' expresion .  (47)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
@@ -1142,7 +1142,7 @@ state 82
 
 state 83
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : '!' expresion .  (48)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
@@ -1192,7 +1192,7 @@ state 84
 state 85
 	expresion : '(' expresion . ')'  (43)
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1489,18 +1489,10 @@ state 104
 
 
 state 105
-	expresion : expresion '.' . expresion  (45)
+	expresion : expresion '.' . ID  (45)
 
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
+	ID  shift 135
 	.  error
-
-	expresion  goto 135
 
 
 state 106
@@ -1601,7 +1593,7 @@ state 114
 
 state 115
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1682,7 +1674,7 @@ state 120
 
 state 121
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1724,7 +1716,7 @@ state 121
 
 state 122
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1766,7 +1758,7 @@ state 122
 
 state 123
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1808,7 +1800,7 @@ state 123
 
 state 124
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1850,7 +1842,7 @@ state 124
 
 state 125
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1892,7 +1884,7 @@ state 125
 
 state 126
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1934,7 +1926,7 @@ state 126
 
 state 127
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -1976,7 +1968,7 @@ state 127
 
 state 128
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2018,7 +2010,7 @@ state 128
 
 state 129
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2060,7 +2052,7 @@ state 129
 
 state 130
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2102,7 +2094,7 @@ state 130
 
 state 131
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2144,7 +2136,7 @@ state 131
 
 state 132
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion '*' expresion .  (49)
 	expresion : expresion . '/' expresion  (50)
@@ -2186,7 +2178,7 @@ state 132
 
 state 133
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion '/' expresion .  (50)
@@ -2228,7 +2220,7 @@ state 133
 
 state 134
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2269,51 +2261,15 @@ state 134
 
 
 state 135
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
-	expresion : expresion '.' expresion .  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+	expresion : expresion '.' ID .  (45)
 
-	'['  shift 106
-	GREATER  reduce 45
-	SMALLER  reduce 45
-	EQUALS  reduce 45
-	NEGATION  reduce 45
-	OR  reduce 45
-	AND  reduce 45
-	'='  reduce 45
-	'<'  reduce 45
-	'>'  reduce 45
-	'-'  reduce 45
-	'+'  reduce 45
-	'*'  reduce 45
-	'/'  reduce 45
-	'%'  reduce 45
-	'.'  reduce 45
-	']'  reduce 45
-	')'  reduce 45
-	':'  reduce 45
-	';'  reduce 45
-	','  reduce 45
+	.  reduce 45
 
 
 state 136
 	expresion : expresion . '[' expresion ']'  (44)
 	expresion : expresion '[' expresion . ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2351,7 +2307,7 @@ state 136
 
 state 137
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
@@ -2501,7 +2457,7 @@ state 145
 
 state 146
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : '(' tipo ')' expresion .  (46)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
@@ -2635,7 +2591,7 @@ state 151
 
 state 152
 	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' expresion  (45)
+	expresion : expresion . '.' ID  (45)
 	expresion : expresion . '*' expresion  (49)
 	expresion : expresion . '/' expresion  (50)
 	expresion : expresion . '%' expresion  (51)
