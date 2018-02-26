@@ -25,8 +25,9 @@ import scanner.Scanner;
 import java.io.Reader;
 
 import ast.*;
+import java.util.*;
 
-//#line 26 "Parser.java"
+//#line 27 "Parser.java"
 
 
 
@@ -592,7 +593,7 @@ final static String yyrule[] = {
 "arg : arg ',' expresion",
 };
 
-//#line 205 "../../src/parser/parser.y"
+//#line 206 "../../src/parser/parser.y"
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:
 //	- Atributos, si son variables
@@ -635,7 +636,7 @@ public void yyerror (String error) {
 public Parser(Scanner scanner) {
 	this.scanner = scanner;
 }
-//#line 575 "Parser.java"
+//#line 576 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -789,6 +790,27 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 1:
+//#line 62 "../../src/parser/parser.y"
+{ ast = new Program(0,0,(List<Definition>) val_peek(9));}
+break;
+case 18:
+//#line 102 "../../src/parser/parser.y"
+{ yyval = new VarDefinition(scanner.getLine(),scanner.getColumn(), (String) val_peek(2));}
+break;
+case 21:
+//#line 109 "../../src/parser/parser.y"
+{ yyval = IntType.getInstance();}
+break;
+case 22:
+//#line 110 "../../src/parser/parser.y"
+{ yyval = RealType.getInstance();}
+break;
+case 23:
+//#line 111 "../../src/parser/parser.y"
+{ yyval = CharType.getInstance();}
+break;
+//#line 745 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

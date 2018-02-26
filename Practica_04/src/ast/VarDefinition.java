@@ -10,14 +10,11 @@ public class VarDefinition implements Definition, Statement {
 	private String name;
 	private Type type;
 
-	public VarDefinition(int row, int column, int scope, int offset, String name, Type type) {
+	public VarDefinition(int row, int column,String name) {
 		super();
 		this.row = row;
 		this.column = column;
-		this.scope = scope;
-		this.offset = offset;
 		this.name = name;
-		this.type = type;
 	}
 
 	@Override

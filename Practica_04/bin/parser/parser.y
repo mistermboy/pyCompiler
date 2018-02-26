@@ -6,6 +6,7 @@ import scanner.Scanner;
 import java.io.Reader;
 
 import ast.*;
+import java.util.*;
 
 %}
 
@@ -58,15 +59,15 @@ import ast.*;
 %%
 // * Gramática y acciones Yacc
 
-programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';
+programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';		{ ast = new Program(0,0,(List<Definition>) $1);}
 
-definiciones: definiciones definicion 
+definiciones: definiciones definicion 								
 	 | /* empty */
 	 ;
 
 
-definicion: def ';'
-			| funcion
+definicion: def ';'													
+			| funcion										//		{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1);}
 			;
 
 // *********  FUNCIONES  *********
@@ -98,16 +99,16 @@ defs: def ';'
 	;
 				
 	
-def: ids ':' tipo
+def: ids ':' tipo												{ $$ = new VarDefinition(scanner.getLine(),scanner.getColumn(), (String) $1);}
 
 
 ids: ID
 	| ids ',' ID
 	;
 								   
-tipo: INT 
-	| DOUBLE 
-	| CHAR
+tipo: INT 														{ $$ = IntType.getInstance();}
+	| DOUBLE 													{ $$ = RealType.getInstance();}
+	| CHAR														{ $$ = CharType.getInstance();}
 	|'['INT_CONSTANT']' tipo
 	| STRUCT '{' campos '}'
 	| VOID

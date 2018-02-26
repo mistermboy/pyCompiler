@@ -5,17 +5,24 @@ import java.util.List;
 public class FunDefinition implements Definition {
 
 	private List<Statement> statements;
+	private String name;
+	private Type type;
+	
+	
+	public FunDefinition(List<Statement> statements, String name) {
+		super();
+		this.statements = statements;
+		this.name = name;
+	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	public List<Statement> getStatements() {
@@ -25,5 +32,12 @@ public class FunDefinition implements Definition {
 	public void setStatements(List<Statement> statements) {
 		this.statements = statements;
 	}
+
+	@Override
+	public String toString() {
+		return "FunDefinition [statements=" + statements + ", name=" + name + ", type=" + type + "]";
+	}
+	
+	
 
 }
