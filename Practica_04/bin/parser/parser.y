@@ -74,7 +74,7 @@ definicion: def ';'
 
 funcion: DEF ID '(' params ')' ':' retorno '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
 
-retorno: tipo | VOID ; 												{ $$ = VoidType.getInstance();}
+retorno: tipo | VOID ; 											{ $$ = VoidType.getInstance();}
 
 
 
@@ -85,7 +85,7 @@ body: defs
 	;
 
 
-params:  /* empty */											{$$ = $1;}  //HAY QUE DEVOLVER ALGO?
+params:  /* empty */											 //HAY QUE DEVOLVER ALGO?
 		| param													{$$ = $1;}
 		;
 
@@ -130,7 +130,7 @@ sentencias: sentencia
 		;
 
 
-sentencia: PRINT list ';'										// ********************** COMO LE PASO VARIAS EXPRESIONES?????
+sentencia: PRINT list ';'										
 		| INPUT list ';'	
 		| RETURN expresion ';'									{ $$ = new Return(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
 		| condicionalSimple
@@ -156,15 +156,14 @@ expresion: ID
 		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		|  expresion '+' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		|  expresion '-' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion '>' expresion	 							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion GREATER expresion 							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion '<' expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion SMALLER expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion NEGATION expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion EQUALS expresion							{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		| expresion '>' expresion	 							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
+		| expresion GREATER expresion 							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
+		| expresion '<' expresion								{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
+		| expresion SMALLER expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
+		| expresion NEGATION expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
+		| expresion EQUALS expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion '=' expresion
 		| ID '(' args ')'
 		;
 		
@@ -180,7 +179,7 @@ invocacion: ID '(' args ')'
 
 // *********  WHILE  *********
 
-while: WHILE expresion ':' '{' sentencias '}' ;
+while: WHILE expresion ':' '{' sentencias '}' ;					{ $$ = new WhileStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $5,(Expression) $2);}
 
 // *********  IF-ELSE  *********
 
@@ -198,11 +197,11 @@ cuerpo: sentencia												{ $$=$1;}
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
 args:  /* empty */
-		| arg
+		| arg													{$$=$1;}
 		;
 
-arg: expresion
-	| arg ',' expresion
+arg: expresion													{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)$1);$$=exp;}
+	| arg ',' expresion											{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$1);$$=exps;}
 
 
 		         

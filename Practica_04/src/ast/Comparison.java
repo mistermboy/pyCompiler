@@ -8,10 +8,13 @@ public class Comparison implements Expression {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Comparison(int i, int j, Expression left, Expression right) {
+	private String comparator;
+
+	public Comparison(int i, int j, Expression left, String comparator, Expression right) {
 		this.row = i;
 		this.column = j;
 		this.left = left;
+		this.comparator = comparator;
 		this.right = right;
 	}
 
@@ -62,6 +65,14 @@ public class Comparison implements Expression {
 		cad += "==";
 		cad += this.right.toString() + "";
 		return cad;
+	}
+
+	public String getComparator() {
+		return comparator;
+	}
+
+	public void setComparator(String comparator) {
+		this.comparator = comparator;
 	}
 
 }
