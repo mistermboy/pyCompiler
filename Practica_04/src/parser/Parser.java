@@ -938,6 +938,14 @@ case 66:
 //#line 172 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
+case 67:
+//#line 175 "../../src/parser/parser.y"
+{ yyval = new Assignment(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(2)),(Arithmetic)val_peek(0));}
+break;
+case 68:
+//#line 177 "../../src/parser/parser.y"
+{ yyval = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(3)),(List<Expression>) val_peek(1));}
+break;
 case 69:
 //#line 182 "../../src/parser/parser.y"
 { yyval = new WhileStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) val_peek(1),(Expression) val_peek(4));}
@@ -974,7 +982,7 @@ case 78:
 //#line 204 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
-//#line 909 "Parser.java"
+//#line 917 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

@@ -172,9 +172,9 @@ list: expresion													{ List<Expression> exp = new ArrayList<Expression>()
 	| list ',' expresion										{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$1);$$=exps;}
 	;
 	
-asignacion: expresion '=' expresion ;
+asignacion: expresion '=' expresion ;							{ $$ = new Assignment(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(Arithmetic)$3);}
 
-invocacion: ID '(' args ')'
+invocacion: ID '(' args ')'										{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
 
 
 // *********  WHILE  *********
