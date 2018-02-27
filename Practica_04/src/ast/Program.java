@@ -1,5 +1,6 @@
 package ast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Program implements ASTNode {
@@ -10,10 +11,13 @@ public class Program implements ASTNode {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Program(int i, int j, List<Definition> definitions) {
+	public Program(int i, int j, List<Definition> definitions, List<Statement> statements) {
 		this.row = i;
 		this.column = j;
 		this.definitions = definitions;
+		FunDefinition main = new FunDefinition(i, j, "main",
+				new FunctionType(i, j, VoidType.getInstance(), new ArrayList<VarDefinition>()), statements);
+		this.definitions.add(main);
 	}
 
 	public int getLine() {

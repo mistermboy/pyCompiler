@@ -59,34 +59,36 @@ import java.util.*;
 %%
 // * Gramática y acciones Yacc
 
-programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';		{ ast = new Program(0,0,(List<Definition>) $1);}
+programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';	{ ast = new Program(0,0,(List<Definition>) $1,(List<Statement>) $9);}
 
-definiciones: definiciones definicion 								
-	 | /* empty */
+definiciones: definiciones definicion 							{List<Definition> def = (List<Definition>)$1;def.add((Definition)$2);$$=def;} 	
+	 | /* empty */												{$$ = new ArrayList<Definition>();}
 	 ;
 
 
-definicion: def ';'													
-			| funcion										
+definicion: def ';'												{$$ = $1;}		
+			| funcion											{$$ = $1;} 				
 			;
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}';     	{ FunctionType ft = new FunctionType(scanner.getLine(),scanner.getColumn(),(Type) $7,(List<VarDefinition>)$4);$$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,ft,(List<Statement>) $9);}
 
-retorno: tipo | VOID ; 											{ $$ = VoidType.getInstance();}
+retorno: tipo 													{ $$ = $1;}
+		| VOID 													{ $$ = VoidType.getInstance();}
+		; 											
 
 
 
-body: defs
-	| sentencias
-	| defs sentencias
-	|
+body: defs														{ $$ = $1;}
+	| sentencias												{ $$ = $1;}
+	| defs sentencias											{ List<Statement> st = (List<Statement>) $1;List<Statement> sent = (List<Statement>) $2;for(Statement s: sent){st.add(s);}$$=st;}	
+	|															{ $$ = new ArrayList<Statement>();}
 	;
 
 
-params:  /* empty */											{$$ = new ArrayList<VarDefinition>();}
-		| param													{$$ = $1;}
+params:  /* empty */											{ $$ = new ArrayList<VarDefinition>();}
+		| param													{ $$ = $1;}
 		;
 
 param: par														{ List<VarDefinition> par = new ArrayList<VarDefinition>();par.add((VarDefinition)$1);$$=par;}
@@ -125,8 +127,8 @@ campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<V
 
 // *********  SENTENCIAS  *********
 
-sentencias: sentencia
-		| sentencias sentencia
+sentencias: sentencia											{ List<Statement> states = new ArrayList<Statement>(); states.add((Statement)$1);$$=states;}
+		| sentencias sentencia									{ List<Statement> states = (List<Statement>)$1;states.add((Statement)$1);$$=states;}
 		;
 
 
@@ -141,16 +143,16 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		;
 	
 
-expresion: ID 
-		| INT_CONSTANT
-		| CHAR_CONSTANT
-		| REAL_CONSTANT
-		| '(' expresion ')'
-		| expresion '[' expresion ']'
-		|  expresion '.' ID
-		| '(' tipo ')' expresion  %prec CAST
-		| '-' expresion %prec UNARIO
-		| '!' expresion
+expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColumn(),(String) $1);}
+		| INT_CONSTANT											{ $$ = new IntLiteral(scanner.getLine(),scanner.getColumn(),(int) $1);}
+		| CHAR_CONSTANT											{ $$ = new CharLiteral(scanner.getLine(),scanner.getColumn(),(char) $1);}
+		| REAL_CONSTANT											{ $$ = new RealLiteral(scanner.getLine(),scanner.getColumn(),(double) $1);}
+		| '(' expresion ')'										{ $$ = $1;}
+		| expresion '[' expresion ']'							// **********************  M I S S I N G  ***************************
+		|  expresion '.' ID										{ $$ = new FieldAccess(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $3);}
+		| '(' tipo ')' expresion  %prec CAST					{ $$ = new Cast(scanner.getLine(),scanner.getColumn(),(Expression) $4,(Type) $2);}
+		| '-' expresion %prec UNARIO							{ $$ = new UnaryMinus(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
+		| '!' expresion											{ $$ = new Negation(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
 		|  expresion '*' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		|  expresion '/' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
 		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
@@ -196,8 +198,8 @@ cuerpo: sentencia												{ $$=$1;}
 				
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
-args:  /* empty */
-		| arg													{$$=$1;}
+args:  /* empty */												{ $$ = new ArrayList<Expression>();} 
+		| arg													{ $$ = $1;}
 		;
 
 arg: expresion													{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)$1);$$=exp;}

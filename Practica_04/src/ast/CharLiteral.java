@@ -1,31 +1,31 @@
 package ast;
 
-public class UnaryMinus implements Expression {
+public class CharLiteral implements Expression {
 
-	private Expression exp;
+	private char value;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public UnaryMinus(int i, int j, Expression exp) {
+	public CharLiteral(int i, int j, char value) {
 		this.row = i;
 		this.column = j;
-		this.exp = exp;
+		this.value = value;
 	}
 
 	/**
-	 * @return the operand
+	 * @return the value
 	 */
-	public Expression getOperand() {
-		return exp;
+	public char getValue() {
+		return value;
 	}
 
 	/**
-	 * @param operand
-	 *            the operand to set
+	 * @param value
+	 *            the value to set
 	 */
-	public void setOperand(Expression operand) {
-		this.exp = operand;
+	public void setValue(char value) {
+		this.value = value;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class UnaryMinus implements Expression {
 
 	@Override
 	public String toString() {
-		return exp.toString();
+		return "" + value;
 	}
 
 }

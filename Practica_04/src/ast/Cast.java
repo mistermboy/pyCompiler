@@ -6,9 +6,9 @@ public class Cast implements Expression {
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
 	private Expression exp;
-	private Cast castType;
+	private Type castType;
 
-	public Cast(int row, int column, Expression exp, Cast castType) {
+	public Cast(int row, int column, Expression exp, Type castType) {
 		super();
 		this.row = row;
 		this.column = column;
@@ -42,11 +42,11 @@ public class Cast implements Expression {
 		this.exp = exp;
 	}
 
-	public Cast getCastType() {
+	public Type getCastType() {
 		return castType;
 	}
 
-	public void setCastType(Cast castType) {
+	public void setCastType(Type castType) {
 		this.castType = castType;
 	}
 

@@ -1,6 +1,6 @@
 package ast;
 
-public class FielAccess implements Expression {
+public class FieldAccess implements Expression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
@@ -9,7 +9,7 @@ public class FielAccess implements Expression {
 
 	private String name;
 
-	public FielAccess(int row, int column, Expression exp, String name) {
+	public FieldAccess(int row, int column, Expression exp, String name) {
 		super();
 		this.row = row;
 		this.column = column;

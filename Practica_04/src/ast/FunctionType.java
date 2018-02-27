@@ -52,10 +52,5 @@ public class FunctionType implements Type {
 		this.parameters = parameters;
 	}
 
-	@Override
-	public String toString() {
-		return "FunctionType [row=" + row + ", column=" + column + ", returnType=" + returnType + ", parameters="
-				+ parameters + "]";
-	}
 
 }

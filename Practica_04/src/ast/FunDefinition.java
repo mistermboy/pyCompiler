@@ -8,8 +8,13 @@ public class FunDefinition implements Definition {
 	private String name;
 	private Type type;
 
-	public FunDefinition(List<Statement> statements, String name, Type type) {
+	private int row = ASTNode.DEFAULT_ROW_COLUMN;
+	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+
+	public FunDefinition(int i, int j, String name, Type type,List<Statement> statements) {
 		super();
+		this.row = i;
+		this.column = j;
 		this.statements = statements;
 		this.name = name;
 		this.type = type;
@@ -36,6 +41,16 @@ public class FunDefinition implements Definition {
 	@Override
 	public String toString() {
 		return "FunDefinition [statements=" + statements + ", name=" + name + ", type=" + type + "]";
+	}
+
+	@Override
+	public int getLine() {
+		return row;
+	}
+
+	@Override
+	public int getColumn() {
+		return column;
 	}
 
 }
