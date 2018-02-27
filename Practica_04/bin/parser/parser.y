@@ -85,7 +85,7 @@ body: defs
 	;
 
 
-params:  /* empty */											 //HAY QUE DEVOLVER ALGO?
+params:  /* empty */											{$$ = new ArrayList<VarDefinition>();}
 		| param													{$$ = $1;}
 		;
 
@@ -132,10 +132,10 @@ sentencias: sentencia
 
 sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) $2; for(Expression e:exps){states.add(new Write(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
 		| INPUT list ';'										{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) $2; for(Expression e:exps){states.add(new Read(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
-		| RETURN expresion ';'									{List<Statement> states = new ArrayList<Statement>(); List<Expression> exps = new ArrayList<Expression>();exps.add((Expression) $2);for(Expression e:exps){states.add(new Return(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
-		| condicionalSimple
-		| condicionalComplejo
-		| while
+		| RETURN expresion ';'									{ List<Statement> states = new ArrayList<Statement>(); Expression e = (Expression) $2;states.add(new Return(scanner.getLine(),scanner.getColumn(),e));$$=states;}
+		| condicionalSimple										{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) $1; states.add(ifs);$$=states;}
+		| condicionalComplejo									{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) $1; states.add(ifs);$$=states;}
+		| while													
 		| asignacion ';'
 		| invocacion ';'
 		;

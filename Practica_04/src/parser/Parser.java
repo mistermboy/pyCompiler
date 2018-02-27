@@ -818,6 +818,10 @@ case 8:
 //#line 77 "../../src/parser/parser.y"
 { yyval = VoidType.getInstance();}
 break;
+case 13:
+//#line 88 "../../src/parser/parser.y"
+{yyval = new ArrayList<VarDefinition>();}
+break;
 case 14:
 //#line 89 "../../src/parser/parser.y"
 {yyval = val_peek(0);}
@@ -896,7 +900,15 @@ case 34:
 break;
 case 35:
 //#line 135 "../../src/parser/parser.y"
-{List<Statement> states = new ArrayList<Statement>(); List<Expression> exps = new ArrayList<Expression>();exps.add((Expression) val_peek(1));for(Expression e:exps){states.add(new Return(scanner.getLine(),scanner.getColumn(),e));}yyval=states;}
+{ List<Statement> states = new ArrayList<Statement>(); Expression e = (Expression) val_peek(1);states.add(new Return(scanner.getLine(),scanner.getColumn(),e));yyval=states;}
+break;
+case 36:
+//#line 136 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) val_peek(0); states.add(ifs);yyval=states;}
+break;
+case 37:
+//#line 137 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) val_peek(0); states.add(ifs);yyval=states;}
 break;
 case 51:
 //#line 154 "../../src/parser/parser.y"
@@ -1002,7 +1014,7 @@ case 78:
 //#line 204 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
-//#line 937 "Parser.java"
+//#line 949 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
