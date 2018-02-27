@@ -2,7 +2,7 @@ package ast;
 
 import java.util.List;
 
-public class Indexing implements Expression {
+public class Indexing implements Statement {
 
 	private List<Expression> arguments;
 	private Variable variable;

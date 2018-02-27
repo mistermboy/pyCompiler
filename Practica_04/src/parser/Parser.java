@@ -910,6 +910,18 @@ case 37:
 //#line 137 "../../src/parser/parser.y"
 { List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) val_peek(0); states.add(ifs);yyval=states;}
 break;
+case 38:
+//#line 138 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) val_peek(0); states.add(wS);yyval=states;}
+break;
+case 39:
+//#line 139 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) val_peek(1); states.add(aS);yyval=states;}
+break;
+case 40:
+//#line 140 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>(); Indexing iS = (Indexing) val_peek(1); states.add(iS);yyval=states;}
+break;
 case 51:
 //#line 154 "../../src/parser/parser.y"
 { yyval = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) val_peek(2),(String)val_peek(1),(Arithmetic)val_peek(0));}
@@ -1014,7 +1026,7 @@ case 78:
 //#line 204 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
-//#line 949 "Parser.java"
+//#line 961 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

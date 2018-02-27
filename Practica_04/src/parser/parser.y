@@ -135,9 +135,9 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		| RETURN expresion ';'									{ List<Statement> states = new ArrayList<Statement>(); Expression e = (Expression) $2;states.add(new Return(scanner.getLine(),scanner.getColumn(),e));$$=states;}
 		| condicionalSimple										{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) $1; states.add(ifs);$$=states;}
 		| condicionalComplejo									{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) $1; states.add(ifs);$$=states;}
-		| while													
-		| asignacion ';'
-		| invocacion ';'
+		| while													{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) $1; states.add(wS);$$=states;}
+		| asignacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) $1; states.add(aS);$$=states;}
+		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Indexing iS = (Indexing) $1; states.add(iS);$$=states;}
 		;
 	
 
