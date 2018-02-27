@@ -930,6 +930,14 @@ case 63:
 //#line 166 "../../src/parser/parser.y"
 { yyval = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) val_peek(2),(String)val_peek(1),(Arithmetic)val_peek(0));}
 break;
+case 65:
+//#line 171 "../../src/parser/parser.y"
+{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)val_peek(0));yyval=exp;}
+break;
+case 66:
+//#line 172 "../../src/parser/parser.y"
+{ List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
+break;
 case 69:
 //#line 182 "../../src/parser/parser.y"
 { yyval = new WhileStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) val_peek(1),(Expression) val_peek(4));}
@@ -966,7 +974,7 @@ case 78:
 //#line 204 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
-//#line 901 "Parser.java"
+//#line 909 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

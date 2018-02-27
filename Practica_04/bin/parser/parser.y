@@ -168,8 +168,8 @@ expresion: ID
 		;
 		
 		
-list: expresion
-	| list ',' expresion
+list: expresion													{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)$1);$$=exp;}
+	| list ',' expresion										{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$1);$$=exps;}
 	;
 	
 asignacion: expresion '=' expresion ;
