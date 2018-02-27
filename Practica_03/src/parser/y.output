@@ -8,101 +8,107 @@
    4  definicion : def ';'
    5             | funcion
 
-   6  funcion : DEF ID '(' params ')' ':' tipo '{' body '}'
+   6  funcion : DEF ID '(' params ')' ':' retorno '{' body '}'
 
-   7  body : defs
-   8       | sentencias
-   9       | defs sentencias
-  10       |
+   7  retorno : tipo
+   8          | VOID
 
-  11  params :
-  12         | param
+   9  body : defs
+  10       | sentencias
+  11       | defs sentencias
+  12       |
 
-  13  param : par
-  14        | param ',' par
+  13  params :
+  14         | param
 
-  15  par : ID ':' tipo
+  15  param : par
+  16        | param ',' par
 
-  16  defs : def ';'
-  17       | defs def ';'
+  17  par : ID ':' tipo
 
-  18  def : ids ':' tipo
+  18  defs : def ';'
+  19       | defs def ';'
 
-  19  ids : ID
-  20      | ids ',' ID
+  20  def : ids ':' tipo
 
-  21  tipo : INT
-  22       | DOUBLE
-  23       | CHAR
-  24       | VOID
-  25       | '[' INT_CONSTANT ']' tipo
-  26       | STRUCT '{' campos '}'
+  21  ids : ID
+  22      | ids ',' ID
 
-  27  campos : campo
-  28         | campos campo
+  23  tipo : INT
+  24       | DOUBLE
+  25       | CHAR
+  26       | '[' INT_CONSTANT ']' tipo
+  27       | STRUCT '{' campos '}'
 
-  29  campo : ids ':' tipo ';'
+  28  campos : campo
+  29         | campos campo
 
-  30  sentencias : sentencia
-  31             | sentencias sentencia
+  30  campo : ids ':' tipo ';'
 
-  32  sentencia : PRINT list ';'
-  33            | INPUT list ';'
-  34            | RETURN expresion ';'
-  35            | condicionalSimple
-  36            | condicionalComplejo
-  37            | while
-  38            | expresion ';'
+  31  sentencias : sentencia
+  32             | sentencias sentencia
 
-  39  expresion : ID
-  40            | INT_CONSTANT
-  41            | CHAR_CONSTANT
-  42            | REAL_CONSTANT
-  43            | '(' expresion ')'
-  44            | expresion '[' expresion ']'
-  45            | expresion '.' ID
-  46            | '(' tipo ')' expresion
-  47            | '-' expresion
-  48            | '!' expresion
-  49            | expresion '*' expresion
-  50            | expresion '/' expresion
-  51            | expresion '%' expresion
-  52            | expresion '+' expresion
-  53            | expresion '-' expresion
-  54            | expresion '>' expresion
-  55            | expresion GREATER expresion
-  56            | expresion '<' expresion
-  57            | expresion SMALLER expresion
-  58            | expresion NEGATION expresion
-  59            | expresion EQUALS expresion
-  60            | expresion AND expresion
-  61            | expresion OR expresion
-  62            | expresion '=' expresion
-  63            | ID '(' args ')'
+  33  sentencia : PRINT list ';'
+  34            | INPUT list ';'
+  35            | RETURN expresion ';'
+  36            | condicionalSimple
+  37            | condicionalComplejo
+  38            | while
+  39            | asignacion ';'
+  40            | invocacion ';'
 
-  64  list : expresion
-  65       | list ',' expresion
+  41  expresion : ID
+  42            | INT_CONSTANT
+  43            | CHAR_CONSTANT
+  44            | REAL_CONSTANT
+  45            | '(' expresion ')'
+  46            | expresion '[' expresion ']'
+  47            | expresion '.' ID
+  48            | '(' tipo ')' expresion
+  49            | '-' expresion
+  50            | '!' expresion
+  51            | expresion '*' expresion
+  52            | expresion '/' expresion
+  53            | expresion '%' expresion
+  54            | expresion '+' expresion
+  55            | expresion '-' expresion
+  56            | expresion '>' expresion
+  57            | expresion GREATER expresion
+  58            | expresion '<' expresion
+  59            | expresion SMALLER expresion
+  60            | expresion NEGATION expresion
+  61            | expresion EQUALS expresion
+  62            | expresion AND expresion
+  63            | expresion OR expresion
+  64            | ID '(' args ')'
 
-  66  while : WHILE expresion ':' '{' sentencias '}'
+  65  list : expresion
+  66       | list ',' expresion
 
-  67  condicionalSimple : IF expresion ':' cuerpo
+  67  asignacion : expresion '=' expresion
 
-  68  condicionalComplejo : IF expresion ':' cuerpo else
+  68  invocacion : ID '(' args ')'
 
-  69  else : ELSE cuerpo
+  69  while : WHILE expresion ':' '{' sentencias '}'
 
-  70  cuerpo : cuerpoSimple
-  71         | cuerpoComplejo
+  70  condicionalSimple : IF expresion ':' cuerpo
 
-  72  cuerpoSimple : sentencia
+  71  condicionalComplejo : IF expresion ':' cuerpo else
 
-  73  cuerpoComplejo : '{' sentencias '}'
+  72  else : ELSE cuerpo
 
-  74  args :
-  75       | arg
+  73  cuerpo : cuerpoSimple
+  74         | cuerpoComplejo
 
-  76  arg : expresion
-  77      | arg ',' expresion
+  75  cuerpoSimple : sentencia
+
+  76  cuerpoComplejo : '{' sentencias '}'
+
+  77  args :
+  78       | arg
+
+  79  arg : expresion
+  80      | arg ',' expresion
 
 state 0
 	$accept : . programa $end  (0)
@@ -136,7 +142,7 @@ state 2
 
 state 3
 	programa : definiciones DEF . MAIN '(' ')' ':' VOID '{' body '}'  (1)
-	funcion : DEF . ID '(' params ')' ':' tipo '{' body '}'  (6)
+	funcion : DEF . ID '(' params ')' ':' retorno '{' body '}'  (6)
 
 	ID  shift 9
 	MAIN  shift 10
@@ -144,9 +150,9 @@ state 3
 
 
 state 4
-	ids : ID .  (19)
+	ids : ID .  (21)
 
-	.  reduce 19
+	.  reduce 21
 
 
 state 5
@@ -169,8 +175,8 @@ state 7
 
 
 state 8
-	def : ids . ':' tipo  (18)
-	ids : ids . ',' ID  (20)
+	def : ids . ':' tipo  (20)
+	ids : ids . ',' ID  (22)
 
 	':'  shift 12
 	','  shift 13
@@ -178,7 +184,7 @@ state 8
 
 
 state 9
-	funcion : DEF ID . '(' params ')' ':' tipo '{' body '}'  (6)
+	funcion : DEF ID . '(' params ')' ':' retorno '{' body '}'  (6)
 
 	'('  shift 14
 	.  error
@@ -198,1963 +204,941 @@ state 11
 
 
 state 12
-	def : ids ':' . tipo  (18)
+	def : ids ':' . tipo  (20)
 
 	INT  shift 16
 	DOUBLE  shift 17
 	CHAR  shift 18
 	STRUCT  shift 19
-	VOID  shift 20
-	'['  shift 21
+	'['  shift 20
 	.  error
 
-	tipo  goto 22
+	tipo  goto 21
 
 
 state 13
-	ids : ids ',' . ID  (20)
+	ids : ids ',' . ID  (22)
 
-	ID  shift 23
+	ID  shift 22
 	.  error
 
 
 state 14
-	funcion : DEF ID '(' . params ')' ':' tipo '{' body '}'  (6)
-	params : .  (11)
+	funcion : DEF ID '(' . params ')' ':' retorno '{' body '}'  (6)
+	params : .  (13)
 
-	ID  shift 24
-	')'  reduce 11
+	ID  shift 23
+	')'  reduce 13
 
-	params  goto 25
-	param  goto 26
-	par  goto 27
+	params  goto 24
+	param  goto 25
+	par  goto 26
 
 
 state 15
 	programa : definiciones DEF MAIN '(' . ')' ':' VOID '{' body '}'  (1)
 
-	')'  shift 28
+	')'  shift 27
 	.  error
 
 
 state 16
-	tipo : INT .  (21)
-
-	.  reduce 21
-
-
-state 17
-	tipo : DOUBLE .  (22)
-
-	.  reduce 22
-
-
-state 18
-	tipo : CHAR .  (23)
+	tipo : INT .  (23)
 
 	.  reduce 23
 
 
-state 19
-	tipo : STRUCT . '{' campos '}'  (26)
-
-	'{'  shift 29
-	.  error
-
-
-state 20
-	tipo : VOID .  (24)
+state 17
+	tipo : DOUBLE .  (24)
 
 	.  reduce 24
 
 
-state 21
-	tipo : '[' . INT_CONSTANT ']' tipo  (25)
-
-	INT_CONSTANT  shift 30
-	.  error
-
-
-state 22
-	def : ids ':' tipo .  (18)
-
-	.  reduce 18
-
-
-state 23
-	ids : ids ',' ID .  (20)
-
-	.  reduce 20
-
-
-state 24
-	par : ID . ':' tipo  (15)
-
-	':'  shift 31
-	.  error
-
-
-state 25
-	funcion : DEF ID '(' params . ')' ':' tipo '{' body '}'  (6)
-
-	')'  shift 32
-	.  error
-
-
-state 26
-	params : param .  (12)
-	param : param . ',' par  (14)
-
-	','  shift 33
-	')'  reduce 12
-
-
-state 27
-	param : par .  (13)
-
-	.  reduce 13
-
-
-state 28
-	programa : definiciones DEF MAIN '(' ')' . ':' VOID '{' body '}'  (1)
-
-	':'  shift 34
-	.  error
-
-
-state 29
-	tipo : STRUCT '{' . campos '}'  (26)
-
-	ID  shift 4
-	.  error
-
-	ids  goto 35
-	campos  goto 36
-	campo  goto 37
-
-
-state 30
-	tipo : '[' INT_CONSTANT . ']' tipo  (25)
-
-	']'  shift 38
-	.  error
-
-
-state 31
-	par : ID ':' . tipo  (15)
-
-	INT  shift 16
-	DOUBLE  shift 17
-	CHAR  shift 18
-	STRUCT  shift 19
-	VOID  shift 20
-	'['  shift 21
-	.  error
-
-	tipo  goto 39
-
-
-state 32
-	funcion : DEF ID '(' params ')' . ':' tipo '{' body '}'  (6)
-
-	':'  shift 40
-	.  error
-
-
-state 33
-	param : param ',' . par  (14)
-
-	ID  shift 24
-	.  error
-
-	par  goto 41
-
-
-state 34
-	programa : definiciones DEF MAIN '(' ')' ':' . VOID '{' body '}'  (1)
-
-	VOID  shift 42
-	.  error
-
-
-state 35
-	ids : ids . ',' ID  (20)
-	campo : ids . ':' tipo ';'  (29)
-
-	':'  shift 43
-	','  shift 13
-	.  error
-
-
-state 36
-	tipo : STRUCT '{' campos . '}'  (26)
-	campos : campos . campo  (28)
-
-	ID  shift 4
-	'}'  shift 44
-	.  error
-
-	ids  goto 35
-	campo  goto 45
-
-
-state 37
-	campos : campo .  (27)
-
-	.  reduce 27
-
-
-state 38
-	tipo : '[' INT_CONSTANT ']' . tipo  (25)
-
-	INT  shift 16
-	DOUBLE  shift 17
-	CHAR  shift 18
-	STRUCT  shift 19
-	VOID  shift 20
-	'['  shift 21
-	.  error
-
-	tipo  goto 46
-
-
-state 39
-	par : ID ':' tipo .  (15)
-
-	.  reduce 15
-
-
-state 40
-	funcion : DEF ID '(' params ')' ':' . tipo '{' body '}'  (6)
-
-	INT  shift 16
-	DOUBLE  shift 17
-	CHAR  shift 18
-	STRUCT  shift 19
-	VOID  shift 20
-	'['  shift 21
-	.  error
-
-	tipo  goto 47
-
-
-state 41
-	param : param ',' par .  (14)
-
-	.  reduce 14
-
-
-state 42
-	programa : definiciones DEF MAIN '(' ')' ':' VOID . '{' body '}'  (1)
-
-	'{'  shift 48
-	.  error
-
-
-state 43
-	campo : ids ':' . tipo ';'  (29)
-
-	INT  shift 16
-	DOUBLE  shift 17
-	CHAR  shift 18
-	STRUCT  shift 19
-	VOID  shift 20
-	'['  shift 21
-	.  error
-
-	tipo  goto 49
-
-
-state 44
-	tipo : STRUCT '{' campos '}' .  (26)
-
-	.  reduce 26
-
-
-state 45
-	campos : campos campo .  (28)
-
-	.  reduce 28
-
-
-state 46
-	tipo : '[' INT_CONSTANT ']' tipo .  (25)
+state 18
+	tipo : CHAR .  (25)
 
 	.  reduce 25
 
 
-state 47
-	funcion : DEF ID '(' params ')' ':' tipo . '{' body '}'  (6)
+state 19
+	tipo : STRUCT . '{' campos '}'  (27)
 
-	'{'  shift 50
+	'{'  shift 28
+	.  error
+
+
+state 20
+	tipo : '[' . INT_CONSTANT ']' tipo  (26)
+
+	INT_CONSTANT  shift 29
+	.  error
+
+
+state 21
+	def : ids ':' tipo .  (20)
+
+	.  reduce 20
+
+
+state 22
+	ids : ids ',' ID .  (22)
+
+	.  reduce 22
+
+
+state 23
+	par : ID . ':' tipo  (17)
+
+	':'  shift 30
+	.  error
+
+
+state 24
+	funcion : DEF ID '(' params . ')' ':' retorno '{' body '}'  (6)
+
+	')'  shift 31
+	.  error
+
+
+state 25
+	params : param .  (14)
+	param : param . ',' par  (16)
+
+	','  shift 32
+	')'  reduce 14
+
+
+state 26
+	param : par .  (15)
+
+	.  reduce 15
+
+
+state 27
+	programa : definiciones DEF MAIN '(' ')' . ':' VOID '{' body '}'  (1)
+
+	':'  shift 33
+	.  error
+
+
+state 28
+	tipo : STRUCT '{' . campos '}'  (27)
+
+	ID  shift 4
+	.  error
+
+	ids  goto 34
+	campos  goto 35
+	campo  goto 36
+
+
+state 29
+	tipo : '[' INT_CONSTANT . ']' tipo  (26)
+
+	']'  shift 37
+	.  error
+
+
+state 30
+	par : ID ':' . tipo  (17)
+
+	INT  shift 16
+	DOUBLE  shift 17
+	CHAR  shift 18
+	STRUCT  shift 19
+	'['  shift 20
+	.  error
+
+	tipo  goto 38
+
+
+state 31
+	funcion : DEF ID '(' params ')' . ':' retorno '{' body '}'  (6)
+
+	':'  shift 39
+	.  error
+
+
+state 32
+	param : param ',' . par  (16)
+
+	ID  shift 23
+	.  error
+
+	par  goto 40
+
+
+state 33
+	programa : definiciones DEF MAIN '(' ')' ':' . VOID '{' body '}'  (1)
+
+	VOID  shift 41
+	.  error
+
+
+state 34
+	ids : ids . ',' ID  (22)
+	campo : ids . ':' tipo ';'  (30)
+
+	':'  shift 42
+	','  shift 13
+	.  error
+
+
+state 35
+	tipo : STRUCT '{' campos . '}'  (27)
+	campos : campos . campo  (29)
+
+	ID  shift 4
+	'}'  shift 43
+	.  error
+
+	ids  goto 34
+	campo  goto 44
+
+
+state 36
+	campos : campo .  (28)
+
+	.  reduce 28
+
+
+state 37
+	tipo : '[' INT_CONSTANT ']' . tipo  (26)
+
+	INT  shift 16
+	DOUBLE  shift 17
+	CHAR  shift 18
+	STRUCT  shift 19
+	'['  shift 20
+	.  error
+
+	tipo  goto 45
+
+
+state 38
+	par : ID ':' tipo .  (17)
+
+	.  reduce 17
+
+
+state 39
+	funcion : DEF ID '(' params ')' ':' . retorno '{' body '}'  (6)
+
+	INT  shift 16
+	DOUBLE  shift 17
+	CHAR  shift 18
+	STRUCT  shift 19
+	VOID  shift 46
+	'['  shift 20
+	.  error
+
+	retorno  goto 47
+	tipo  goto 48
+
+
+state 40
+	param : param ',' par .  (16)
+
+	.  reduce 16
+
+
+state 41
+	programa : definiciones DEF MAIN '(' ')' ':' VOID . '{' body '}'  (1)
+
+	'{'  shift 49
+	.  error
+
+
+state 42
+	campo : ids ':' . tipo ';'  (30)
+
+	INT  shift 16
+	DOUBLE  shift 17
+	CHAR  shift 18
+	STRUCT  shift 19
+	'['  shift 20
+	.  error
+
+	tipo  goto 50
+
+
+state 43
+	tipo : STRUCT '{' campos '}' .  (27)
+
+	.  reduce 27
+
+
+state 44
+	campos : campos campo .  (29)
+
+	.  reduce 29
+
+
+state 45
+	tipo : '[' INT_CONSTANT ']' tipo .  (26)
+
+	.  reduce 26
+
+
+state 46
+	retorno : VOID .  (8)
+
+	.  reduce 8
+
+
+state 47
+	funcion : DEF ID '(' params ')' ':' retorno . '{' body '}'  (6)
+
+	'{'  shift 51
 	.  error
 
 
 state 48
-	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' . body '}'  (1)
-	body : .  (10)
+	retorno : tipo .  (7)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 57
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  reduce 10
-
-	body  goto 63
-	def  goto 64
-	defs  goto 65
-	sentencias  goto 66
-	ids  goto 8
-	sentencia  goto 67
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
+	.  reduce 7
 
 
 state 49
-	campo : ids ':' tipo . ';'  (29)
+	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' . body '}'  (1)
+	body : .  (12)
 
-	';'  shift 72
-	.  error
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 58
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  reduce 12
+
+	body  goto 64
+	def  goto 65
+	defs  goto 66
+	sentencias  goto 67
+	ids  goto 8
+	sentencia  goto 68
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
 
 
 state 50
-	funcion : DEF ID '(' params ')' ':' tipo '{' . body '}'  (6)
-	body : .  (10)
+	campo : ids ':' tipo . ';'  (30)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 57
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  reduce 10
-
-	body  goto 73
-	def  goto 64
-	defs  goto 65
-	sentencias  goto 66
-	ids  goto 8
-	sentencia  goto 67
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
+	';'  shift 75
+	.  error
 
 
 state 51
-	expresion : INT_CONSTANT .  (40)
+	funcion : DEF ID '(' params ')' ':' retorno '{' . body '}'  (6)
+	body : .  (12)
 
-	.  reduce 40
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 58
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  reduce 12
+
+	body  goto 76
+	def  goto 65
+	defs  goto 66
+	sentencias  goto 67
+	ids  goto 8
+	sentencia  goto 68
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
 
 
 state 52
-	sentencia : INPUT . list ';'  (33)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	list  goto 75
-	expresion  goto 76
-
-
-state 53
-	sentencia : PRINT . list ';'  (32)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	list  goto 77
-	expresion  goto 76
-
-
-state 54
-	while : WHILE . expresion ':' '{' sentencias '}'  (66)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 78
-
-
-state 55
-	condicionalSimple : IF . expresion ':' cuerpo  (67)
-	condicionalComplejo : IF . expresion ':' cuerpo else  (68)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 79
-
-
-state 56
-	sentencia : RETURN . expresion ';'  (34)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 80
-
-
-state 57
-	ids : ID .  (19)
-	expresion : ID .  (39)
-	expresion : ID . '(' args ')'  (63)
-
-	'('  shift 81
-	GREATER  reduce 39
-	SMALLER  reduce 39
-	EQUALS  reduce 39
-	NEGATION  reduce 39
-	OR  reduce 39
-	AND  reduce 39
-	'='  reduce 39
-	'<'  reduce 39
-	'>'  reduce 39
-	'-'  reduce 39
-	'+'  reduce 39
-	'*'  reduce 39
-	'/'  reduce 39
-	'%'  reduce 39
-	'.'  reduce 39
-	'['  reduce 39
-	':'  reduce 19
-	';'  reduce 39
-	','  reduce 19
-
-
-state 58
-	expresion : REAL_CONSTANT .  (42)
+	expresion : INT_CONSTANT .  (42)
 
 	.  reduce 42
 
 
-state 59
-	expresion : CHAR_CONSTANT .  (41)
+state 53
+	sentencia : INPUT . list ';'  (34)
 
-	.  reduce 41
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	list  goto 78
+	expresion  goto 79
 
 
-state 60
-	expresion : '-' . expresion  (47)
+state 54
+	sentencia : PRINT . list ';'  (33)
 
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	list  goto 80
+	expresion  goto 79
+
+
+state 55
+	while : WHILE . expresion ':' '{' sentencias '}'  (69)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 81
+
+
+state 56
+	condicionalSimple : IF . expresion ':' cuerpo  (70)
+	condicionalComplejo : IF . expresion ':' cuerpo else  (71)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
 	.  error
 
 	expresion  goto 82
 
 
-state 61
-	expresion : '!' . expresion  (48)
+state 57
+	sentencia : RETURN . expresion ';'  (35)
 
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
 	.  error
 
 	expresion  goto 83
 
 
-state 62
-	expresion : '(' . expresion ')'  (43)
-	expresion : '(' . tipo ')' expresion  (46)
+state 58
+	ids : ID .  (21)
+	expresion : ID .  (41)
+	expresion : ID . '(' args ')'  (64)
+	invocacion : ID . '(' args ')'  (68)
 
-	INT_CONSTANT  shift 51
+	'('  shift 84
+	GREATER  reduce 41
+	SMALLER  reduce 41
+	EQUALS  reduce 41
+	NEGATION  reduce 41
+	OR  reduce 41
+	AND  reduce 41
+	'='  reduce 41
+	'<'  reduce 41
+	'>'  reduce 41
+	'-'  reduce 41
+	'+'  reduce 41
+	'*'  reduce 41
+	'/'  reduce 41
+	'%'  reduce 41
+	'.'  reduce 41
+	'['  reduce 41
+	':'  reduce 21
+	','  reduce 21
+
+
+state 59
+	expresion : REAL_CONSTANT .  (44)
+
+	.  reduce 44
+
+
+state 60
+	expresion : CHAR_CONSTANT .  (43)
+
+	.  reduce 43
+
+
+state 61
+	expresion : '-' . expresion  (49)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 85
+
+
+state 62
+	expresion : '!' . expresion  (50)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 86
+
+
+state 63
+	expresion : '(' . expresion ')'  (45)
+	expresion : '(' . tipo ')' expresion  (48)
+
+	INT_CONSTANT  shift 52
 	INT  shift 16
 	DOUBLE  shift 17
 	CHAR  shift 18
 	STRUCT  shift 19
-	VOID  shift 20
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'['  shift 21
-	'('  shift 62
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'['  shift 20
+	'('  shift 63
 	.  error
 
-	tipo  goto 84
-	expresion  goto 85
-
-
-state 63
-	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' body . '}'  (1)
-
-	'}'  shift 86
-	.  error
+	tipo  goto 87
+	expresion  goto 88
 
 
 state 64
-	defs : def . ';'  (16)
+	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' body . '}'  (1)
 
-	';'  shift 87
+	'}'  shift 89
 	.  error
 
 
 state 65
-	body : defs .  (7)
-	body : defs . sentencias  (9)
-	defs : defs . def ';'  (17)
+	defs : def . ';'  (18)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 57
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  reduce 7
-
-	def  goto 88
-	sentencias  goto 89
-	ids  goto 8
-	sentencia  goto 67
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-
-
-state 66
-	body : sentencias .  (8)
-	sentencias : sentencias . sentencia  (31)
-
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  reduce 8
-
-	sentencia  goto 90
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-
-
-state 67
-	sentencias : sentencia .  (30)
-
-	.  reduce 30
-
-
-state 68
-	sentencia : expresion . ';'  (38)
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	';'  shift 107
+	';'  shift 90
 	.  error
 
 
-state 69
-	sentencia : condicionalSimple .  (35)
+state 66
+	body : defs .  (9)
+	body : defs . sentencias  (11)
+	defs : defs . def ';'  (19)
 
-	.  reduce 35
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 58
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  reduce 9
+
+	def  goto 91
+	sentencias  goto 92
+	ids  goto 8
+	sentencia  goto 68
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+
+
+state 67
+	body : sentencias .  (10)
+	sentencias : sentencias . sentencia  (32)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  reduce 10
+
+	sentencia  goto 94
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+
+
+state 68
+	sentencias : sentencia .  (31)
+
+	.  reduce 31
+
+
+state 69
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	asignacion : expresion . '=' expresion  (67)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'='  shift 101
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	.  error
 
 
 state 70
-	sentencia : condicionalComplejo .  (36)
+	sentencia : condicionalSimple .  (36)
 
 	.  reduce 36
 
 
 state 71
-	sentencia : while .  (37)
+	sentencia : condicionalComplejo .  (37)
 
 	.  reduce 37
 
 
 state 72
-	campo : ids ':' tipo ';' .  (29)
-
-	.  reduce 29
-
-
-state 73
-	funcion : DEF ID '(' params ')' ':' tipo '{' body . '}'  (6)
-
-	'}'  shift 108
-	.  error
-
-
-state 74
-	expresion : ID .  (39)
-	expresion : ID . '(' args ')'  (63)
-
-	'('  shift 81
-	GREATER  reduce 39
-	SMALLER  reduce 39
-	EQUALS  reduce 39
-	NEGATION  reduce 39
-	OR  reduce 39
-	AND  reduce 39
-	'='  reduce 39
-	'<'  reduce 39
-	'>'  reduce 39
-	'-'  reduce 39
-	'+'  reduce 39
-	'*'  reduce 39
-	'/'  reduce 39
-	'%'  reduce 39
-	'.'  reduce 39
-	'['  reduce 39
-	']'  reduce 39
-	')'  reduce 39
-	':'  reduce 39
-	';'  reduce 39
-	','  reduce 39
-
-
-state 75
-	sentencia : INPUT list . ';'  (33)
-	list : list . ',' expresion  (65)
-
-	';'  shift 109
-	','  shift 110
-	.  error
-
-
-state 76
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	list : expresion .  (64)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	';'  reduce 64
-	','  reduce 64
-
-
-state 77
-	sentencia : PRINT list . ';'  (32)
-	list : list . ',' expresion  (65)
-
-	';'  shift 111
-	','  shift 110
-	.  error
-
-
-state 78
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	while : WHILE expresion . ':' '{' sentencias '}'  (66)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	':'  shift 112
-	.  error
-
-
-state 79
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	condicionalSimple : IF expresion . ':' cuerpo  (67)
-	condicionalComplejo : IF expresion . ':' cuerpo else  (68)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	':'  shift 113
-	.  error
-
-
-state 80
-	sentencia : RETURN expresion . ';'  (34)
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	';'  shift 114
-	.  error
-
-
-state 81
-	expresion : ID '(' . args ')'  (63)
-	args : .  (74)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	')'  reduce 74
-
-	expresion  goto 115
-	args  goto 116
-	arg  goto 117
-
-
-state 82
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : '-' expresion .  (47)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 47
-	SMALLER  reduce 47
-	EQUALS  reduce 47
-	NEGATION  reduce 47
-	OR  reduce 47
-	AND  reduce 47
-	'='  reduce 47
-	'<'  reduce 47
-	'>'  reduce 47
-	'-'  reduce 47
-	'+'  reduce 47
-	'*'  reduce 47
-	'/'  reduce 47
-	'%'  reduce 47
-	']'  reduce 47
-	')'  reduce 47
-	':'  reduce 47
-	';'  reduce 47
-	','  reduce 47
-
-
-state 83
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : '!' expresion .  (48)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 48
-	SMALLER  reduce 48
-	EQUALS  reduce 48
-	NEGATION  reduce 48
-	OR  reduce 48
-	AND  reduce 48
-	'='  reduce 48
-	'<'  reduce 48
-	'>'  reduce 48
-	'-'  reduce 48
-	'+'  reduce 48
-	'*'  reduce 48
-	'/'  reduce 48
-	'%'  reduce 48
-	']'  reduce 48
-	')'  reduce 48
-	':'  reduce 48
-	';'  reduce 48
-	','  reduce 48
-
-
-state 84
-	expresion : '(' tipo . ')' expresion  (46)
-
-	')'  shift 118
-	.  error
-
-
-state 85
-	expresion : '(' expresion . ')'  (43)
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	')'  shift 119
-	.  error
-
-
-state 86
-	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' body '}' .  (1)
-
-	.  reduce 1
-
-
-state 87
-	defs : def ';' .  (16)
-
-	.  reduce 16
-
-
-state 88
-	defs : defs def . ';'  (17)
-
-	';'  shift 120
-	.  error
-
-
-state 89
-	body : defs sentencias .  (9)
-	sentencias : sentencias . sentencia  (31)
-
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  reduce 9
-
-	sentencia  goto 90
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-
-
-state 90
-	sentencias : sentencias sentencia .  (31)
-
-	.  reduce 31
-
-
-state 91
-	expresion : expresion GREATER . expresion  (55)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 121
-
-
-state 92
-	expresion : expresion SMALLER . expresion  (57)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 122
-
-
-state 93
-	expresion : expresion EQUALS . expresion  (59)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 123
-
-
-state 94
-	expresion : expresion NEGATION . expresion  (58)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 124
-
-
-state 95
-	expresion : expresion OR . expresion  (61)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 125
-
-
-state 96
-	expresion : expresion AND . expresion  (60)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 126
-
-
-state 97
-	expresion : expresion '=' . expresion  (62)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 127
-
-
-state 98
-	expresion : expresion '<' . expresion  (56)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 128
-
-
-state 99
-	expresion : expresion '>' . expresion  (54)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 129
-
-
-state 100
-	expresion : expresion '-' . expresion  (53)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 130
-
-
-state 101
-	expresion : expresion '+' . expresion  (52)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 131
-
-
-state 102
-	expresion : expresion '*' . expresion  (49)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 132
-
-
-state 103
-	expresion : expresion '/' . expresion  (50)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 133
-
-
-state 104
-	expresion : expresion '%' . expresion  (51)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 134
-
-
-state 105
-	expresion : expresion '.' . ID  (45)
-
-	ID  shift 135
-	.  error
-
-
-state 106
-	expresion : expresion '[' . expresion ']'  (44)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 136
-
-
-state 107
-	sentencia : expresion ';' .  (38)
+	sentencia : while .  (38)
 
 	.  reduce 38
 
 
-state 108
-	funcion : DEF ID '(' params ')' ':' tipo '{' body '}' .  (6)
+state 73
+	sentencia : asignacion . ';'  (39)
 
-	.  reduce 6
-
-
-state 109
-	sentencia : INPUT list ';' .  (33)
-
-	.  reduce 33
-
-
-state 110
-	list : list ',' . expresion  (65)
-
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	expresion  goto 137
-
-
-state 111
-	sentencia : PRINT list ';' .  (32)
-
-	.  reduce 32
-
-
-state 112
-	while : WHILE expresion ':' . '{' sentencias '}'  (66)
-
-	'{'  shift 138
+	';'  shift 111
 	.  error
 
 
-state 113
-	condicionalSimple : IF expresion ':' . cuerpo  (67)
-	condicionalComplejo : IF expresion ':' . cuerpo else  (68)
+state 74
+	sentencia : invocacion . ';'  (40)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'{'  shift 139
-	.  error
-
-	sentencia  goto 140
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-	cuerpo  goto 141
-	cuerpoSimple  goto 142
-	cuerpoComplejo  goto 143
-
-
-state 114
-	sentencia : RETURN expresion ';' .  (34)
-
-	.  reduce 34
-
-
-state 115
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	arg : expresion .  (76)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	')'  reduce 76
-	','  reduce 76
-
-
-state 116
-	expresion : ID '(' args . ')'  (63)
-
-	')'  shift 144
+	';'  shift 112
 	.  error
 
 
-state 117
-	args : arg .  (75)
-	arg : arg . ',' expresion  (77)
+state 75
+	campo : ids ':' tipo ';' .  (30)
 
-	','  shift 145
-	')'  reduce 75
+	.  reduce 30
 
 
-state 118
-	expresion : '(' tipo ')' . expresion  (46)
+state 76
+	funcion : DEF ID '(' params ')' ':' retorno '{' body . '}'  (6)
 
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
+	'}'  shift 113
 	.  error
 
-	expresion  goto 146
+
+state 77
+	expresion : ID .  (41)
+	expresion : ID . '(' args ')'  (64)
+
+	'('  shift 114
+	GREATER  reduce 41
+	SMALLER  reduce 41
+	EQUALS  reduce 41
+	NEGATION  reduce 41
+	OR  reduce 41
+	AND  reduce 41
+	'='  reduce 41
+	'<'  reduce 41
+	'>'  reduce 41
+	'-'  reduce 41
+	'+'  reduce 41
+	'*'  reduce 41
+	'/'  reduce 41
+	'%'  reduce 41
+	'.'  reduce 41
+	'['  reduce 41
+	']'  reduce 41
+	')'  reduce 41
+	':'  reduce 41
+	';'  reduce 41
+	','  reduce 41
 
 
-state 119
-	expresion : '(' expresion ')' .  (43)
+state 78
+	sentencia : INPUT list . ';'  (34)
+	list : list . ',' expresion  (66)
 
-	.  reduce 43
-
-
-state 120
-	defs : defs def ';' .  (17)
-
-	.  reduce 17
+	';'  shift 115
+	','  shift 116
+	.  error
 
 
-state 121
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion GREATER expresion .  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 79
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	list : expresion .  (65)
 
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 55
-	SMALLER  reduce 55
-	EQUALS  reduce 55
-	NEGATION  reduce 55
-	OR  reduce 55
-	AND  reduce 55
-	'='  reduce 55
-	'<'  reduce 55
-	'>'  reduce 55
-	']'  reduce 55
-	')'  reduce 55
-	':'  reduce 55
-	';'  reduce 55
-	','  reduce 55
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	';'  reduce 65
+	','  reduce 65
 
 
-state 122
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion SMALLER expresion .  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 80
+	sentencia : PRINT list . ';'  (33)
+	list : list . ',' expresion  (66)
 
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 57
-	SMALLER  reduce 57
-	EQUALS  reduce 57
-	NEGATION  reduce 57
-	OR  reduce 57
-	AND  reduce 57
-	'='  reduce 57
-	'<'  reduce 57
-	'>'  reduce 57
-	']'  reduce 57
-	')'  reduce 57
-	':'  reduce 57
-	';'  reduce 57
-	','  reduce 57
+	';'  shift 117
+	','  shift 116
+	.  error
 
 
-state 123
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion EQUALS expresion .  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 81
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	while : WHILE expresion . ':' '{' sentencias '}'  (69)
 
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 59
-	SMALLER  reduce 59
-	EQUALS  reduce 59
-	NEGATION  reduce 59
-	OR  reduce 59
-	AND  reduce 59
-	'='  reduce 59
-	'<'  reduce 59
-	'>'  reduce 59
-	']'  reduce 59
-	')'  reduce 59
-	':'  reduce 59
-	';'  reduce 59
-	','  reduce 59
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	':'  shift 118
+	.  error
 
 
-state 124
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion NEGATION expresion .  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 82
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	condicionalSimple : IF expresion . ':' cuerpo  (70)
+	condicionalComplejo : IF expresion . ':' cuerpo else  (71)
 
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 58
-	SMALLER  reduce 58
-	EQUALS  reduce 58
-	NEGATION  reduce 58
-	OR  reduce 58
-	AND  reduce 58
-	'='  reduce 58
-	'<'  reduce 58
-	'>'  reduce 58
-	']'  reduce 58
-	')'  reduce 58
-	':'  reduce 58
-	';'  reduce 58
-	','  reduce 58
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	':'  shift 119
+	.  error
 
 
-state 125
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion OR expresion .  (61)
-	expresion : expresion . '=' expresion  (62)
+state 83
+	sentencia : RETURN expresion . ';'  (35)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	OR  reduce 61
-	AND  reduce 61
-	'='  reduce 61
-	']'  reduce 61
-	')'  reduce 61
-	':'  reduce 61
-	';'  reduce 61
-	','  reduce 61
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	';'  shift 120
+	.  error
 
 
-state 126
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion AND expresion .  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 84
+	expresion : ID '(' . args ')'  (64)
+	invocacion : ID '(' . args ')'  (68)
+	args : .  (77)
 
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	OR  reduce 60
-	AND  reduce 60
-	'='  reduce 60
-	']'  reduce 60
-	')'  reduce 60
-	':'  reduce 60
-	';'  reduce 60
-	','  reduce 60
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	')'  reduce 77
+
+	expresion  goto 121
+	args  goto 122
+	arg  goto 123
 
 
-state 127
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	expresion : expresion '=' expresion .  (62)
+state 85
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : '-' expresion .  (49)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	']'  reduce 62
-	')'  reduce 62
-	':'  reduce 62
-	';'  reduce 62
-	','  reduce 62
-
-
-state 128
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion '<' expresion .  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 56
-	SMALLER  reduce 56
-	EQUALS  reduce 56
-	NEGATION  reduce 56
-	OR  reduce 56
-	AND  reduce 56
-	'='  reduce 56
-	'<'  reduce 56
-	'>'  reduce 56
-	']'  reduce 56
-	')'  reduce 56
-	':'  reduce 56
-	';'  reduce 56
-	','  reduce 56
-
-
-state 129
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion '>' expresion .  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 54
-	SMALLER  reduce 54
-	EQUALS  reduce 54
-	NEGATION  reduce 54
-	OR  reduce 54
-	AND  reduce 54
-	'='  reduce 54
-	'<'  reduce 54
-	'>'  reduce 54
-	']'  reduce 54
-	')'  reduce 54
-	':'  reduce 54
-	';'  reduce 54
-	','  reduce 54
-
-
-state 130
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion '-' expresion .  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 53
-	SMALLER  reduce 53
-	EQUALS  reduce 53
-	NEGATION  reduce 53
-	OR  reduce 53
-	AND  reduce 53
-	'='  reduce 53
-	'<'  reduce 53
-	'>'  reduce 53
-	'-'  reduce 53
-	'+'  reduce 53
-	']'  reduce 53
-	')'  reduce 53
-	':'  reduce 53
-	';'  reduce 53
-	','  reduce 53
-
-
-state 131
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion '+' expresion .  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 52
-	SMALLER  reduce 52
-	EQUALS  reduce 52
-	NEGATION  reduce 52
-	OR  reduce 52
-	AND  reduce 52
-	'='  reduce 52
-	'<'  reduce 52
-	'>'  reduce 52
-	'-'  reduce 52
-	'+'  reduce 52
-	']'  reduce 52
-	')'  reduce 52
-	':'  reduce 52
-	';'  reduce 52
-	','  reduce 52
-
-
-state 132
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion '*' expresion .  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	'.'  shift 105
-	'['  shift 106
+	'.'  shift 109
+	'['  shift 110
 	GREATER  reduce 49
 	SMALLER  reduce 49
 	EQUALS  reduce 49
@@ -2176,27 +1160,26 @@ state 132
 	','  reduce 49
 
 
-state 133
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion '/' expresion .  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 86
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : '!' expresion .  (50)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	'.'  shift 105
-	'['  shift 106
+	'.'  shift 109
+	'['  shift 110
 	GREATER  reduce 50
 	SMALLER  reduce 50
 	EQUALS  reduce 50
@@ -2218,27 +1201,1011 @@ state 133
 	','  reduce 50
 
 
-state 134
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion '%' expresion .  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+state 87
+	expresion : '(' tipo . ')' expresion  (48)
 
-	'.'  shift 105
-	'['  shift 106
+	')'  shift 124
+	.  error
+
+
+state 88
+	expresion : '(' expresion . ')'  (45)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	')'  shift 125
+	.  error
+
+
+state 89
+	programa : definiciones DEF MAIN '(' ')' ':' VOID '{' body '}' .  (1)
+
+	.  reduce 1
+
+
+state 90
+	defs : def ';' .  (18)
+
+	.  reduce 18
+
+
+state 91
+	defs : defs def . ';'  (19)
+
+	';'  shift 126
+	.  error
+
+
+state 92
+	body : defs sentencias .  (11)
+	sentencias : sentencias . sentencia  (32)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  reduce 11
+
+	sentencia  goto 94
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+
+
+state 93
+	expresion : ID .  (41)
+	expresion : ID . '(' args ')'  (64)
+	invocacion : ID . '(' args ')'  (68)
+
+	'('  shift 84
+	GREATER  reduce 41
+	SMALLER  reduce 41
+	EQUALS  reduce 41
+	NEGATION  reduce 41
+	OR  reduce 41
+	AND  reduce 41
+	'='  reduce 41
+	'<'  reduce 41
+	'>'  reduce 41
+	'-'  reduce 41
+	'+'  reduce 41
+	'*'  reduce 41
+	'/'  reduce 41
+	'%'  reduce 41
+	'.'  reduce 41
+	'['  reduce 41
+
+
+state 94
+	sentencias : sentencias sentencia .  (32)
+
+	.  reduce 32
+
+
+state 95
+	expresion : expresion GREATER . expresion  (57)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 127
+
+
+state 96
+	expresion : expresion SMALLER . expresion  (59)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 128
+
+
+state 97
+	expresion : expresion EQUALS . expresion  (61)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 129
+
+
+state 98
+	expresion : expresion NEGATION . expresion  (60)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 130
+
+
+state 99
+	expresion : expresion OR . expresion  (63)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 131
+
+
+state 100
+	expresion : expresion AND . expresion  (62)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 132
+
+
+state 101
+	asignacion : expresion '=' . expresion  (67)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 133
+
+
+state 102
+	expresion : expresion '<' . expresion  (58)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 134
+
+
+state 103
+	expresion : expresion '>' . expresion  (56)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 135
+
+
+state 104
+	expresion : expresion '-' . expresion  (55)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 136
+
+
+state 105
+	expresion : expresion '+' . expresion  (54)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 137
+
+
+state 106
+	expresion : expresion '*' . expresion  (51)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 138
+
+
+state 107
+	expresion : expresion '/' . expresion  (52)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 139
+
+
+state 108
+	expresion : expresion '%' . expresion  (53)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 140
+
+
+state 109
+	expresion : expresion '.' . ID  (47)
+
+	ID  shift 141
+	.  error
+
+
+state 110
+	expresion : expresion '[' . expresion ']'  (46)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 142
+
+
+state 111
+	sentencia : asignacion ';' .  (39)
+
+	.  reduce 39
+
+
+state 112
+	sentencia : invocacion ';' .  (40)
+
+	.  reduce 40
+
+
+state 113
+	funcion : DEF ID '(' params ')' ':' retorno '{' body '}' .  (6)
+
+	.  reduce 6
+
+
+state 114
+	expresion : ID '(' . args ')'  (64)
+	args : .  (77)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	')'  reduce 77
+
+	expresion  goto 121
+	args  goto 143
+	arg  goto 123
+
+
+state 115
+	sentencia : INPUT list ';' .  (34)
+
+	.  reduce 34
+
+
+state 116
+	list : list ',' . expresion  (66)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 144
+
+
+state 117
+	sentencia : PRINT list ';' .  (33)
+
+	.  reduce 33
+
+
+state 118
+	while : WHILE expresion ':' . '{' sentencias '}'  (69)
+
+	'{'  shift 145
+	.  error
+
+
+state 119
+	condicionalSimple : IF expresion ':' . cuerpo  (70)
+	condicionalComplejo : IF expresion ':' . cuerpo else  (71)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'{'  shift 146
+	.  error
+
+	sentencia  goto 147
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+	cuerpo  goto 148
+	cuerpoSimple  goto 149
+	cuerpoComplejo  goto 150
+
+
+state 120
+	sentencia : RETURN expresion ';' .  (35)
+
+	.  reduce 35
+
+
+state 121
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	arg : expresion .  (79)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	')'  reduce 79
+	','  reduce 79
+
+
+state 122
+	expresion : ID '(' args . ')'  (64)
+	invocacion : ID '(' args . ')'  (68)
+
+	')'  shift 151
+	.  error
+
+
+state 123
+	args : arg .  (78)
+	arg : arg . ',' expresion  (80)
+
+	','  shift 152
+	')'  reduce 78
+
+
+state 124
+	expresion : '(' tipo ')' . expresion  (48)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 153
+
+
+state 125
+	expresion : '(' expresion ')' .  (45)
+
+	.  reduce 45
+
+
+state 126
+	defs : defs def ';' .  (19)
+
+	.  reduce 19
+
+
+state 127
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion GREATER expresion .  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 57
+	SMALLER  reduce 57
+	EQUALS  reduce 57
+	NEGATION  reduce 57
+	OR  reduce 57
+	AND  reduce 57
+	'='  reduce 57
+	'<'  reduce 57
+	'>'  reduce 57
+	']'  reduce 57
+	')'  reduce 57
+	':'  reduce 57
+	';'  reduce 57
+	','  reduce 57
+
+
+state 128
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion SMALLER expresion .  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 59
+	SMALLER  reduce 59
+	EQUALS  reduce 59
+	NEGATION  reduce 59
+	OR  reduce 59
+	AND  reduce 59
+	'='  reduce 59
+	'<'  reduce 59
+	'>'  reduce 59
+	']'  reduce 59
+	')'  reduce 59
+	':'  reduce 59
+	';'  reduce 59
+	','  reduce 59
+
+
+state 129
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion EQUALS expresion .  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 61
+	SMALLER  reduce 61
+	EQUALS  reduce 61
+	NEGATION  reduce 61
+	OR  reduce 61
+	AND  reduce 61
+	'='  reduce 61
+	'<'  reduce 61
+	'>'  reduce 61
+	']'  reduce 61
+	')'  reduce 61
+	':'  reduce 61
+	';'  reduce 61
+	','  reduce 61
+
+
+state 130
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion NEGATION expresion .  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 60
+	SMALLER  reduce 60
+	EQUALS  reduce 60
+	NEGATION  reduce 60
+	OR  reduce 60
+	AND  reduce 60
+	'='  reduce 60
+	'<'  reduce 60
+	'>'  reduce 60
+	']'  reduce 60
+	')'  reduce 60
+	':'  reduce 60
+	';'  reduce 60
+	','  reduce 60
+
+
+state 131
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	expresion : expresion OR expresion .  (63)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	OR  reduce 63
+	AND  reduce 63
+	'='  reduce 63
+	']'  reduce 63
+	')'  reduce 63
+	':'  reduce 63
+	';'  reduce 63
+	','  reduce 63
+
+
+state 132
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion AND expresion .  (62)
+	expresion : expresion . OR expresion  (63)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	OR  reduce 62
+	AND  reduce 62
+	'='  reduce 62
+	']'  reduce 62
+	')'  reduce 62
+	':'  reduce 62
+	';'  reduce 62
+	','  reduce 62
+
+
+state 133
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	asignacion : expresion '=' expresion .  (67)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	';'  reduce 67
+
+
+state 134
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion '<' expresion .  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 58
+	SMALLER  reduce 58
+	EQUALS  reduce 58
+	NEGATION  reduce 58
+	OR  reduce 58
+	AND  reduce 58
+	'='  reduce 58
+	'<'  reduce 58
+	'>'  reduce 58
+	']'  reduce 58
+	')'  reduce 58
+	':'  reduce 58
+	';'  reduce 58
+	','  reduce 58
+
+
+state 135
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion '>' expresion .  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 56
+	SMALLER  reduce 56
+	EQUALS  reduce 56
+	NEGATION  reduce 56
+	OR  reduce 56
+	AND  reduce 56
+	'='  reduce 56
+	'<'  reduce 56
+	'>'  reduce 56
+	']'  reduce 56
+	')'  reduce 56
+	':'  reduce 56
+	';'  reduce 56
+	','  reduce 56
+
+
+state 136
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion '-' expresion .  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 55
+	SMALLER  reduce 55
+	EQUALS  reduce 55
+	NEGATION  reduce 55
+	OR  reduce 55
+	AND  reduce 55
+	'='  reduce 55
+	'<'  reduce 55
+	'>'  reduce 55
+	'-'  reduce 55
+	'+'  reduce 55
+	']'  reduce 55
+	')'  reduce 55
+	':'  reduce 55
+	';'  reduce 55
+	','  reduce 55
+
+
+state 137
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion '+' expresion .  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 54
+	SMALLER  reduce 54
+	EQUALS  reduce 54
+	NEGATION  reduce 54
+	OR  reduce 54
+	AND  reduce 54
+	'='  reduce 54
+	'<'  reduce 54
+	'>'  reduce 54
+	'-'  reduce 54
+	'+'  reduce 54
+	']'  reduce 54
+	')'  reduce 54
+	':'  reduce 54
+	';'  reduce 54
+	','  reduce 54
+
+
+state 138
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion '*' expresion .  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'.'  shift 109
+	'['  shift 110
 	GREATER  reduce 51
 	SMALLER  reduce 51
 	EQUALS  reduce 51
@@ -2260,391 +2227,506 @@ state 134
 	','  reduce 51
 
 
-state 135
-	expresion : expresion '.' ID .  (45)
-
-	.  reduce 45
-
-
-state 136
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion '[' expresion . ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	']'  shift 147
-	.  error
-
-
-state 137
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	list : list ',' expresion .  (65)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	';'  reduce 65
-	','  reduce 65
-
-
-state 138
-	while : WHILE expresion ':' '{' . sentencias '}'  (66)
-
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	sentencias  goto 148
-	sentencia  goto 67
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-
-
 state 139
-	cuerpoComplejo : '{' . sentencias '}'  (73)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion '/' expresion .  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	.  error
-
-	sentencias  goto 149
-	sentencia  goto 67
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 52
+	SMALLER  reduce 52
+	EQUALS  reduce 52
+	NEGATION  reduce 52
+	OR  reduce 52
+	AND  reduce 52
+	'='  reduce 52
+	'<'  reduce 52
+	'>'  reduce 52
+	'-'  reduce 52
+	'+'  reduce 52
+	'*'  reduce 52
+	'/'  reduce 52
+	'%'  reduce 52
+	']'  reduce 52
+	')'  reduce 52
+	':'  reduce 52
+	';'  reduce 52
+	','  reduce 52
 
 
 state 140
-	cuerpoSimple : sentencia .  (72)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion '%' expresion .  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	.  reduce 72
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 53
+	SMALLER  reduce 53
+	EQUALS  reduce 53
+	NEGATION  reduce 53
+	OR  reduce 53
+	AND  reduce 53
+	'='  reduce 53
+	'<'  reduce 53
+	'>'  reduce 53
+	'-'  reduce 53
+	'+'  reduce 53
+	'*'  reduce 53
+	'/'  reduce 53
+	'%'  reduce 53
+	']'  reduce 53
+	')'  reduce 53
+	':'  reduce 53
+	';'  reduce 53
+	','  reduce 53
 
 
 state 141
-	condicionalSimple : IF expresion ':' cuerpo .  (67)
-	condicionalComplejo : IF expresion ':' cuerpo . else  (68)
+	expresion : expresion '.' ID .  (47)
 
-	ELSE  shift 150
-	INT_CONSTANT  reduce 67
-	INPUT  reduce 67
-	PRINT  reduce 67
-	WHILE  reduce 67
-	IF  reduce 67
-	RETURN  reduce 67
-	ID  reduce 67
-	REAL_CONSTANT  reduce 67
-	CHAR_CONSTANT  reduce 67
-	'-'  reduce 67
-	'!'  reduce 67
-	'('  reduce 67
-	'}'  reduce 67
-
-	else  goto 151
+	.  reduce 47
 
 
 state 142
-	cuerpo : cuerpoSimple .  (70)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion '[' expresion . ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
 
-	.  reduce 70
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	']'  shift 154
+	.  error
 
 
 state 143
-	cuerpo : cuerpoComplejo .  (71)
+	expresion : ID '(' args . ')'  (64)
 
-	.  reduce 71
+	')'  shift 155
+	.  error
 
 
 state 144
-	expresion : ID '(' args ')' .  (63)
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	list : list ',' expresion .  (66)
 
-	.  reduce 63
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	';'  reduce 66
+	','  reduce 66
 
 
 state 145
-	arg : arg ',' . expresion  (77)
+	while : WHILE expresion ':' '{' . sentencias '}'  (69)
 
-	INT_CONSTANT  shift 51
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
 	.  error
 
-	expresion  goto 152
+	sentencias  goto 156
+	sentencia  goto 68
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
 
 
 state 146
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : '(' tipo ')' expresion .  (46)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
+	cuerpoComplejo : '{' . sentencias '}'  (76)
 
-	'.'  shift 105
-	'['  shift 106
-	GREATER  reduce 46
-	SMALLER  reduce 46
-	EQUALS  reduce 46
-	NEGATION  reduce 46
-	OR  reduce 46
-	AND  reduce 46
-	'='  reduce 46
-	'<'  reduce 46
-	'>'  reduce 46
-	'-'  reduce 46
-	'+'  reduce 46
-	'*'  reduce 46
-	'/'  reduce 46
-	'%'  reduce 46
-	']'  reduce 46
-	')'  reduce 46
-	':'  reduce 46
-	';'  reduce 46
-	','  reduce 46
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	sentencias  goto 157
+	sentencia  goto 68
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
 
 
 state 147
-	expresion : expresion '[' expresion ']' .  (44)
+	cuerpoSimple : sentencia .  (75)
 
-	.  reduce 44
+	.  reduce 75
 
 
 state 148
-	sentencias : sentencias . sentencia  (31)
-	while : WHILE expresion ':' '{' sentencias . '}'  (66)
+	condicionalSimple : IF expresion ':' cuerpo .  (70)
+	condicionalComplejo : IF expresion ':' cuerpo . else  (71)
 
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  shift 153
-	.  error
+	ELSE  shift 158
+	INT_CONSTANT  reduce 70
+	INPUT  reduce 70
+	PRINT  reduce 70
+	WHILE  reduce 70
+	IF  reduce 70
+	RETURN  reduce 70
+	ID  reduce 70
+	REAL_CONSTANT  reduce 70
+	CHAR_CONSTANT  reduce 70
+	'-'  reduce 70
+	'!'  reduce 70
+	'('  reduce 70
+	'}'  reduce 70
 
-	sentencia  goto 90
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
+	else  goto 159
 
 
 state 149
-	sentencias : sentencias . sentencia  (31)
-	cuerpoComplejo : '{' sentencias . '}'  (73)
-
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'}'  shift 154
-	.  error
-
-	sentencia  goto 90
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-
-
-state 150
-	else : ELSE . cuerpo  (69)
-
-	INT_CONSTANT  shift 51
-	INPUT  shift 52
-	PRINT  shift 53
-	WHILE  shift 54
-	IF  shift 55
-	RETURN  shift 56
-	ID  shift 74
-	REAL_CONSTANT  shift 58
-	CHAR_CONSTANT  shift 59
-	'-'  shift 60
-	'!'  shift 61
-	'('  shift 62
-	'{'  shift 139
-	.  error
-
-	sentencia  goto 140
-	expresion  goto 68
-	condicionalSimple  goto 69
-	condicionalComplejo  goto 70
-	while  goto 71
-	cuerpo  goto 155
-	cuerpoSimple  goto 142
-	cuerpoComplejo  goto 143
-
-
-state 151
-	condicionalComplejo : IF expresion ':' cuerpo else .  (68)
-
-	.  reduce 68
-
-
-state 152
-	expresion : expresion . '[' expresion ']'  (44)
-	expresion : expresion . '.' ID  (45)
-	expresion : expresion . '*' expresion  (49)
-	expresion : expresion . '/' expresion  (50)
-	expresion : expresion . '%' expresion  (51)
-	expresion : expresion . '+' expresion  (52)
-	expresion : expresion . '-' expresion  (53)
-	expresion : expresion . '>' expresion  (54)
-	expresion : expresion . GREATER expresion  (55)
-	expresion : expresion . '<' expresion  (56)
-	expresion : expresion . SMALLER expresion  (57)
-	expresion : expresion . NEGATION expresion  (58)
-	expresion : expresion . EQUALS expresion  (59)
-	expresion : expresion . AND expresion  (60)
-	expresion : expresion . OR expresion  (61)
-	expresion : expresion . '=' expresion  (62)
-	arg : arg ',' expresion .  (77)
-
-	GREATER  shift 91
-	SMALLER  shift 92
-	EQUALS  shift 93
-	NEGATION  shift 94
-	OR  shift 95
-	AND  shift 96
-	'='  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	'-'  shift 100
-	'+'  shift 101
-	'*'  shift 102
-	'/'  shift 103
-	'%'  shift 104
-	'.'  shift 105
-	'['  shift 106
-	')'  reduce 77
-	','  reduce 77
-
-
-state 153
-	while : WHILE expresion ':' '{' sentencias '}' .  (66)
-
-	.  reduce 66
-
-
-state 154
-	cuerpoComplejo : '{' sentencias '}' .  (73)
+	cuerpo : cuerpoSimple .  (73)
 
 	.  reduce 73
 
 
+state 150
+	cuerpo : cuerpoComplejo .  (74)
+
+	.  reduce 74
+
+
+state 151
+	expresion : ID '(' args ')' .  (64)
+	invocacion : ID '(' args ')' .  (68)
+
+	GREATER  reduce 64
+	SMALLER  reduce 64
+	EQUALS  reduce 64
+	NEGATION  reduce 64
+	OR  reduce 64
+	AND  reduce 64
+	'='  reduce 64
+	'<'  reduce 64
+	'>'  reduce 64
+	'-'  reduce 64
+	'+'  reduce 64
+	'*'  reduce 64
+	'/'  reduce 64
+	'%'  reduce 64
+	'.'  reduce 64
+	'['  reduce 64
+	';'  reduce 68
+
+
+state 152
+	arg : arg ',' . expresion  (80)
+
+	INT_CONSTANT  shift 52
+	ID  shift 77
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	.  error
+
+	expresion  goto 160
+
+
+state 153
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : '(' tipo ')' expresion .  (48)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+
+	'.'  shift 109
+	'['  shift 110
+	GREATER  reduce 48
+	SMALLER  reduce 48
+	EQUALS  reduce 48
+	NEGATION  reduce 48
+	OR  reduce 48
+	AND  reduce 48
+	'='  reduce 48
+	'<'  reduce 48
+	'>'  reduce 48
+	'-'  reduce 48
+	'+'  reduce 48
+	'*'  reduce 48
+	'/'  reduce 48
+	'%'  reduce 48
+	']'  reduce 48
+	')'  reduce 48
+	':'  reduce 48
+	';'  reduce 48
+	','  reduce 48
+
+
+state 154
+	expresion : expresion '[' expresion ']' .  (46)
+
+	.  reduce 46
+
+
 state 155
-	else : ELSE cuerpo .  (69)
+	expresion : ID '(' args ')' .  (64)
+
+	.  reduce 64
+
+
+state 156
+	sentencias : sentencias . sentencia  (32)
+	while : WHILE expresion ':' '{' sentencias . '}'  (69)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  shift 161
+	.  error
+
+	sentencia  goto 94
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+
+
+state 157
+	sentencias : sentencias . sentencia  (32)
+	cuerpoComplejo : '{' sentencias . '}'  (76)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'}'  shift 162
+	.  error
+
+	sentencia  goto 94
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+
+
+state 158
+	else : ELSE . cuerpo  (72)
+
+	INT_CONSTANT  shift 52
+	INPUT  shift 53
+	PRINT  shift 54
+	WHILE  shift 55
+	IF  shift 56
+	RETURN  shift 57
+	ID  shift 93
+	REAL_CONSTANT  shift 59
+	CHAR_CONSTANT  shift 60
+	'-'  shift 61
+	'!'  shift 62
+	'('  shift 63
+	'{'  shift 146
+	.  error
+
+	sentencia  goto 147
+	expresion  goto 69
+	condicionalSimple  goto 70
+	condicionalComplejo  goto 71
+	while  goto 72
+	asignacion  goto 73
+	invocacion  goto 74
+	cuerpo  goto 163
+	cuerpoSimple  goto 149
+	cuerpoComplejo  goto 150
+
+
+state 159
+	condicionalComplejo : IF expresion ':' cuerpo else .  (71)
+
+	.  reduce 71
+
+
+state 160
+	expresion : expresion . '[' expresion ']'  (46)
+	expresion : expresion . '.' ID  (47)
+	expresion : expresion . '*' expresion  (51)
+	expresion : expresion . '/' expresion  (52)
+	expresion : expresion . '%' expresion  (53)
+	expresion : expresion . '+' expresion  (54)
+	expresion : expresion . '-' expresion  (55)
+	expresion : expresion . '>' expresion  (56)
+	expresion : expresion . GREATER expresion  (57)
+	expresion : expresion . '<' expresion  (58)
+	expresion : expresion . SMALLER expresion  (59)
+	expresion : expresion . NEGATION expresion  (60)
+	expresion : expresion . EQUALS expresion  (61)
+	expresion : expresion . AND expresion  (62)
+	expresion : expresion . OR expresion  (63)
+	arg : arg ',' expresion .  (80)
+
+	GREATER  shift 95
+	SMALLER  shift 96
+	EQUALS  shift 97
+	NEGATION  shift 98
+	OR  shift 99
+	AND  shift 100
+	'<'  shift 102
+	'>'  shift 103
+	'-'  shift 104
+	'+'  shift 105
+	'*'  shift 106
+	'/'  shift 107
+	'%'  shift 108
+	'.'  shift 109
+	'['  shift 110
+	')'  reduce 80
+	','  reduce 80
+
+
+state 161
+	while : WHILE expresion ':' '{' sentencias '}' .  (69)
 
 	.  reduce 69
 
 
-47 terminals, 28 nonterminals
-78 grammar rules, 156 states
+state 162
+	cuerpoComplejo : '{' sentencias '}' .  (76)
+
+	.  reduce 76
+
+
+state 163
+	else : ELSE cuerpo .  (72)
+
+	.  reduce 72
+
+
+47 terminals, 31 nonterminals
+81 grammar rules, 164 states

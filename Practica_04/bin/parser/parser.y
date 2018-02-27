@@ -72,7 +72,10 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' tipo '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
+
+retorno: tipo | VOID ;
+
 
 
 body: defs
@@ -134,7 +137,8 @@ sentencia: PRINT list ';'										// ********************** COMO LE PASO VARIAS
 		| condicionalSimple
 		| condicionalComplejo
 		| while
-		| expresion ';'
+		| asignacion ';'
+		| invocacion ';'
 		;
 	
 
@@ -169,6 +173,10 @@ expresion: ID
 list: expresion
 	| list ',' expresion
 	;
+	
+asignacion: expresion '=' expresion ;
+
+invocacion: ID '(' args ')'
 
 
 // *********  WHILE  *********
@@ -181,9 +189,9 @@ while: WHILE expresion ':' '{' sentencias '}' ;
 condicionalSimple: IF expresion ':' cuerpo %prec CUERPO; 		{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,null,(Expression) $2);}
 condicionalComplejo: IF expresion ':' cuerpo else;			//	{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),$4,,(Expression) $2);}  // *******************  COMO COÑO LE PASO EL CUERPO DEL ELSE??????
 
-else: ELSE cuerpo ;
+else: ELSE cuerpo ;		{ $$=$2;}
 
-cuerpo: cuerpoSimple
+cuerpo: cuerpoSimple   { $$=$1;}
 		| cuerpoComplejo  
 		;
 

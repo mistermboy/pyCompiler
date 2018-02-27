@@ -68,7 +68,9 @@ definicion: def ';'
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' tipo '{' body '}';
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}';
+
+retorno: tipo | VOID ;
 
 
 body: defs
@@ -105,7 +107,6 @@ ids: ID
 tipo: INT 
 	| DOUBLE 
 	| CHAR
-	| VOID
 	|'['INT_CONSTANT']' tipo
 	| STRUCT '{' campos '}'
 	;
@@ -130,7 +131,8 @@ sentencia: PRINT list ';'
 		| condicionalSimple 
 		| condicionalComplejo
 		| while
-		| expresion ';'
+		| asignacion ';'
+		| invocacion ';'
 		;
 	
 
@@ -157,7 +159,6 @@ expresion: ID
 		| expresion EQUALS expresion
 		| expresion AND expresion
 		| expresion OR expresion
-		| expresion '=' expresion
 		| ID '(' args ')'
 		;
 		
@@ -165,6 +166,11 @@ expresion: ID
 list: expresion
 	| list ',' expresion
 	;
+	
+	
+asignacion: expresion '=' expresion ;
+
+invocacion: ID '(' args ')'
 
 
 // *********  WHILE  *********
