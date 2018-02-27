@@ -7,7 +7,7 @@ public class Read implements Statement {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Read(int i, int j, Variable variable) {
+	public Read(int i, int j, Expression variable) {
 		this.row = i;
 		this.column = j;
 		this.read = variable;

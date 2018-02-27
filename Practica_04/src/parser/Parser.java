@@ -874,9 +874,29 @@ case 27:
 //#line 116 "../../src/parser/parser.y"
 { yyval = new RecordType(scanner.getLine(),scanner.getColumn(),(List<RecordField>)val_peek(1));}
 break;
+case 28:
+//#line 120 "../../src/parser/parser.y"
+{yyval=val_peek(0);}
+break;
+case 29:
+//#line 121 "../../src/parser/parser.y"
+{ List<Definition> camps = (List<Definition>)val_peek(1); List<VarDefinition> def = (List<VarDefinition>) val_peek(0); for(VarDefinition var:def){camps.add(var);}yyval=camps;}
+break;
+case 30:
+//#line 124 "../../src/parser/parser.y"
+{ List<String> ids = (List<String>) val_peek(3); List<VarDefinition> def = new ArrayList<VarDefinition>();for(String id:ids){def.add(new VarDefinition(scanner.getLine(),scanner.getColumn(),id, (Type) val_peek(1)));}yyval=def;}
+break;
+case 33:
+//#line 133 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) val_peek(1); for(Expression e:exps){states.add(new Write(scanner.getLine(),scanner.getColumn(),e));}yyval=states;}
+break;
+case 34:
+//#line 134 "../../src/parser/parser.y"
+{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) val_peek(1); for(Expression e:exps){states.add(new Read(scanner.getLine(),scanner.getColumn(),e));}yyval=states;}
+break;
 case 35:
 //#line 135 "../../src/parser/parser.y"
-{ yyval = new Return(scanner.getLine(),scanner.getColumn(),(Expression) val_peek(1));}
+{List<Statement> states = new ArrayList<Statement>(); List<Expression> exps = new ArrayList<Expression>();exps.add((Expression) val_peek(1));for(Expression e:exps){states.add(new Return(scanner.getLine(),scanner.getColumn(),e));}yyval=states;}
 break;
 case 51:
 //#line 154 "../../src/parser/parser.y"
@@ -982,7 +1002,7 @@ case 78:
 //#line 204 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(2));yyval=exps;}
 break;
-//#line 917 "Parser.java"
+//#line 937 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

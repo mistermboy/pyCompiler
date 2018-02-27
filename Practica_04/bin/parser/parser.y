@@ -117,11 +117,11 @@ tipo: INT 														{ $$ = IntType.getInstance();}
 	;
 
 
-campos: campo
-		|campos campo 
+campos: campo													{$$=$1;}
+		|campos campo 											{ List<Definition> camps = (List<Definition>)$1; List<VarDefinition> def = (List<VarDefinition>) $2; for(VarDefinition var:def){camps.add(var);}$$=camps;}
 		;
 		
-campo:ids ':' tipo ';';	
+campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<VarDefinition> def = new ArrayList<VarDefinition>();for(String id:ids){def.add(new VarDefinition(scanner.getLine(),scanner.getColumn(),id, (Type) $3));}$$=def;}
 
 // *********  SENTENCIAS  *********
 
@@ -130,9 +130,9 @@ sentencias: sentencia
 		;
 
 
-sentencia: PRINT list ';'										
-		| INPUT list ';'	
-		| RETURN expresion ';'									{ $$ = new Return(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
+sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) $2; for(Expression e:exps){states.add(new Write(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
+		| INPUT list ';'										{ List<Statement> states = new ArrayList<Statement>();List<Expression> exps = (List<Expression>) $2; for(Expression e:exps){states.add(new Read(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
+		| RETURN expresion ';'									{List<Statement> states = new ArrayList<Statement>(); List<Expression> exps = new ArrayList<Expression>();exps.add((Expression) $2);for(Expression e:exps){states.add(new Return(scanner.getLine(),scanner.getColumn(),e));}$$=states;}
 		| condicionalSimple
 		| condicionalComplejo
 		| while
