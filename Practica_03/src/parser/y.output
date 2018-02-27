@@ -97,18 +97,14 @@
 
   72  else : ELSE cuerpo
 
-  73  cuerpo : cuerpoSimple
-  74         | cuerpoComplejo
+  73  cuerpo : sentencia
+  74         | '{' sentencias '}'
 
-  75  cuerpoSimple : sentencia
+  75  args :
+  76       | arg
 
-  76  cuerpoComplejo : '{' sentencias '}'
-
-  77  args :
-  78       | arg
-
-  79  arg : expresion
-  80      | arg ',' expresion
+  77  arg : expresion
+  78      | arg ',' expresion
 
 state 0
 	$accept : . programa $end  (0)
@@ -1103,7 +1099,7 @@ state 83
 state 84
 	expresion : ID '(' . args ')'  (64)
 	invocacion : ID '(' . args ')'  (68)
-	args : .  (77)
+	args : .  (75)
 
 	INT_CONSTANT  shift 52
 	ID  shift 77
@@ -1112,7 +1108,7 @@ state 84
 	'-'  shift 61
 	'!'  shift 62
 	'('  shift 63
-	')'  reduce 77
+	')'  reduce 75
 
 	expresion  goto 121
 	args  goto 122
@@ -1573,7 +1569,7 @@ state 113
 
 state 114
 	expresion : ID '(' . args ')'  (64)
-	args : .  (77)
+	args : .  (75)
 
 	INT_CONSTANT  shift 52
 	ID  shift 77
@@ -1582,7 +1578,7 @@ state 114
 	'-'  shift 61
 	'!'  shift 62
 	'('  shift 63
-	')'  reduce 77
+	')'  reduce 75
 
 	expresion  goto 121
 	args  goto 143
@@ -1650,8 +1646,6 @@ state 119
 	asignacion  goto 73
 	invocacion  goto 74
 	cuerpo  goto 148
-	cuerpoSimple  goto 149
-	cuerpoComplejo  goto 150
 
 
 state 120
@@ -1676,7 +1670,7 @@ state 121
 	expresion : expresion . EQUALS expresion  (61)
 	expresion : expresion . AND expresion  (62)
 	expresion : expresion . OR expresion  (63)
-	arg : expresion .  (79)
+	arg : expresion .  (77)
 
 	GREATER  shift 95
 	SMALLER  shift 96
@@ -1693,24 +1687,24 @@ state 121
 	'%'  shift 108
 	'.'  shift 109
 	'['  shift 110
-	')'  reduce 79
-	','  reduce 79
+	')'  reduce 77
+	','  reduce 77
 
 
 state 122
 	expresion : ID '(' args . ')'  (64)
 	invocacion : ID '(' args . ')'  (68)
 
-	')'  shift 151
+	')'  shift 149
 	.  error
 
 
 state 123
-	args : arg .  (78)
-	arg : arg . ',' expresion  (80)
+	args : arg .  (76)
+	arg : arg . ',' expresion  (78)
 
-	','  shift 152
-	')'  reduce 78
+	','  shift 150
+	')'  reduce 76
 
 
 state 124
@@ -1725,7 +1719,7 @@ state 124
 	'('  shift 63
 	.  error
 
-	expresion  goto 153
+	expresion  goto 151
 
 
 state 125
@@ -2348,14 +2342,14 @@ state 142
 	'%'  shift 108
 	'.'  shift 109
 	'['  shift 110
-	']'  shift 154
+	']'  shift 152
 	.  error
 
 
 state 143
 	expresion : ID '(' args . ')'  (64)
 
-	')'  shift 155
+	')'  shift 153
 	.  error
 
 
@@ -2413,7 +2407,7 @@ state 145
 	'('  shift 63
 	.  error
 
-	sentencias  goto 156
+	sentencias  goto 154
 	sentencia  goto 68
 	expresion  goto 69
 	condicionalSimple  goto 70
@@ -2424,7 +2418,7 @@ state 145
 
 
 state 146
-	cuerpoComplejo : '{' . sentencias '}'  (76)
+	cuerpo : '{' . sentencias '}'  (74)
 
 	INT_CONSTANT  shift 52
 	INPUT  shift 53
@@ -2440,7 +2434,7 @@ state 146
 	'('  shift 63
 	.  error
 
-	sentencias  goto 157
+	sentencias  goto 155
 	sentencia  goto 68
 	expresion  goto 69
 	condicionalSimple  goto 70
@@ -2451,16 +2445,16 @@ state 146
 
 
 state 147
-	cuerpoSimple : sentencia .  (75)
+	cuerpo : sentencia .  (73)
 
-	.  reduce 75
+	.  reduce 73
 
 
 state 148
 	condicionalSimple : IF expresion ':' cuerpo .  (70)
 	condicionalComplejo : IF expresion ':' cuerpo . else  (71)
 
-	ELSE  shift 158
+	ELSE  shift 156
 	INT_CONSTANT  reduce 70
 	INPUT  reduce 70
 	PRINT  reduce 70
@@ -2475,22 +2469,10 @@ state 148
 	'('  reduce 70
 	'}'  reduce 70
 
-	else  goto 159
+	else  goto 157
 
 
 state 149
-	cuerpo : cuerpoSimple .  (73)
-
-	.  reduce 73
-
-
-state 150
-	cuerpo : cuerpoComplejo .  (74)
-
-	.  reduce 74
-
-
-state 151
 	expresion : ID '(' args ')' .  (64)
 	invocacion : ID '(' args ')' .  (68)
 
@@ -2513,8 +2495,8 @@ state 151
 	';'  reduce 68
 
 
-state 152
-	arg : arg ',' . expresion  (80)
+state 150
+	arg : arg ',' . expresion  (78)
 
 	INT_CONSTANT  shift 52
 	ID  shift 77
@@ -2525,10 +2507,10 @@ state 152
 	'('  shift 63
 	.  error
 
-	expresion  goto 160
+	expresion  goto 158
 
 
-state 153
+state 151
 	expresion : expresion . '[' expresion ']'  (46)
 	expresion : expresion . '.' ID  (47)
 	expresion : '(' tipo ')' expresion .  (48)
@@ -2569,19 +2551,19 @@ state 153
 	','  reduce 48
 
 
-state 154
+state 152
 	expresion : expresion '[' expresion ']' .  (46)
 
 	.  reduce 46
 
 
-state 155
+state 153
 	expresion : ID '(' args ')' .  (64)
 
 	.  reduce 64
 
 
-state 156
+state 154
 	sentencias : sentencias . sentencia  (32)
 	while : WHILE expresion ':' '{' sentencias . '}'  (69)
 
@@ -2597,7 +2579,7 @@ state 156
 	'-'  shift 61
 	'!'  shift 62
 	'('  shift 63
-	'}'  shift 161
+	'}'  shift 159
 	.  error
 
 	sentencia  goto 94
@@ -2609,9 +2591,9 @@ state 156
 	invocacion  goto 74
 
 
-state 157
+state 155
 	sentencias : sentencias . sentencia  (32)
-	cuerpoComplejo : '{' sentencias . '}'  (76)
+	cuerpo : '{' sentencias . '}'  (74)
 
 	INT_CONSTANT  shift 52
 	INPUT  shift 53
@@ -2625,7 +2607,7 @@ state 157
 	'-'  shift 61
 	'!'  shift 62
 	'('  shift 63
-	'}'  shift 162
+	'}'  shift 160
 	.  error
 
 	sentencia  goto 94
@@ -2637,7 +2619,7 @@ state 157
 	invocacion  goto 74
 
 
-state 158
+state 156
 	else : ELSE . cuerpo  (72)
 
 	INT_CONSTANT  shift 52
@@ -2662,18 +2644,16 @@ state 158
 	while  goto 72
 	asignacion  goto 73
 	invocacion  goto 74
-	cuerpo  goto 163
-	cuerpoSimple  goto 149
-	cuerpoComplejo  goto 150
+	cuerpo  goto 161
 
 
-state 159
+state 157
 	condicionalComplejo : IF expresion ':' cuerpo else .  (71)
 
 	.  reduce 71
 
 
-state 160
+state 158
 	expresion : expresion . '[' expresion ']'  (46)
 	expresion : expresion . '.' ID  (47)
 	expresion : expresion . '*' expresion  (51)
@@ -2689,7 +2669,7 @@ state 160
 	expresion : expresion . EQUALS expresion  (61)
 	expresion : expresion . AND expresion  (62)
 	expresion : expresion . OR expresion  (63)
-	arg : arg ',' expresion .  (80)
+	arg : arg ',' expresion .  (78)
 
 	GREATER  shift 95
 	SMALLER  shift 96
@@ -2706,27 +2686,27 @@ state 160
 	'%'  shift 108
 	'.'  shift 109
 	'['  shift 110
-	')'  reduce 80
-	','  reduce 80
+	')'  reduce 78
+	','  reduce 78
 
 
-state 161
+state 159
 	while : WHILE expresion ':' '{' sentencias '}' .  (69)
 
 	.  reduce 69
 
 
-state 162
-	cuerpoComplejo : '{' sentencias '}' .  (76)
+state 160
+	cuerpo : '{' sentencias '}' .  (74)
 
-	.  reduce 76
+	.  reduce 74
 
 
-state 163
+state 161
 	else : ELSE cuerpo .  (72)
 
 	.  reduce 72
 
 
-47 terminals, 31 nonterminals
-81 grammar rules, 164 states
+47 terminals, 29 nonterminals
+79 grammar rules, 162 states

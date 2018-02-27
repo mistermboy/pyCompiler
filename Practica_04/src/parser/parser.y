@@ -74,7 +74,7 @@ definicion: def ';'
 
 funcion: DEF ID '(' params ')' ':' retorno '{' body '}'; //	************** NIPU	{ $$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,(Type) $7);}
 
-retorno: tipo | VOID ;
+retorno: tipo | VOID ; 												{ $$ = VoidType.getInstance();}
 
 
 
@@ -85,28 +85,28 @@ body: defs
 	;
 
 
-params:  /* empty */
-		| param
+params:  /* empty */											{$$ = $1;}  //HAY QUE DEVOLVER ALGO?
+		| param													{$$ = $1;}
 		;
 
-param: par
-	| param ',' par
+param: par														{ List<VarDefinition> par = new ArrayList<VarDefinition>();par.add((VarDefinition)$1);$$=par;}
+	| param ',' par												{ List<VarDefinition> pars = (List<VarDefinition>) $1;pars.add((VarDefinition)$3);$$=pars;}
 
-par:  ID ':' tipo;
+par:  ID ':' tipo;												{ $$ = new VarDefinition(scanner.getLine(),scanner.getColumn(),(String) $1, (Type) $3);}
 
 
 // *********  DEFINICIONES  *********
 
-defs: def ';'
-	| defs def ';'
+defs: def ';'													{ $$ = $1;}
+	| defs def ';'												{ List<Definition> defs = (List<Definition>)$1; List<VarDefinition> def = (List<VarDefinition>) $2; for(VarDefinition var:def){defs.add(var);}$$=defs;}
 	;
 				
 	
-def: ids ':' tipo												{ $$ = new VarDefinition(scanner.getLine(),scanner.getColumn(), (String) $1, (Type) $3);}
+def: ids ':' tipo												{ List<String> ids = (List<String>) $1; List<VarDefinition> def = new ArrayList<VarDefinition>();for(String id:ids){def.add(new VarDefinition(scanner.getLine(),scanner.getColumn(),id, (Type) $3));}$$=def;}
 
 
-ids: ID
-	| ids ',' ID
+ids: ID															{ List<String> ids = new ArrayList<String>(); ids.add((String) $1); $$=ids;}
+	| ids ',' ID												{ List<String> ids = (List<String>) $1; ids.add((String) $3); $$=ids;}
 	;
 								   
 tipo: INT 														{ $$ = IntType.getInstance();}
@@ -114,7 +114,6 @@ tipo: INT 														{ $$ = IntType.getInstance();}
 	| CHAR														{ $$ = CharType.getInstance();}
 	|'['INT_CONSTANT']' tipo									{ $$ = new ArrayType(scanner.getLine(),scanner.getColumn(),(int) $2, (Type) $4);} 
 	| STRUCT '{' campos '}'										{ $$ = new RecordType(scanner.getLine(),scanner.getColumn(),(List<RecordField>)$3);}
-	| VOID														{ $$ = VoidType.getInstance();}
 	;
 
 
@@ -187,18 +186,15 @@ while: WHILE expresion ':' '{' sentencias '}' ;
 
 
 condicionalSimple: IF expresion ':' cuerpo %prec CUERPO; 		{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,null,(Expression) $2);}
-condicionalComplejo: IF expresion ':' cuerpo else;			//	{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),$4,,(Expression) $2);}  // *******************  COMO COÑO LE PASO EL CUERPO DEL ELSE??????
+condicionalComplejo: IF expresion ':' cuerpo else;				{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,(List<Statement>) $5,(Expression) $2);}
 
-else: ELSE cuerpo ;		{ $$=$2;}
+else: ELSE cuerpo ;												{ $$=$2;}
 
-cuerpo: cuerpoSimple   { $$=$1;}
-		| cuerpoComplejo  
+cuerpo: sentencia												{ $$=$1;}
+		| '{' sentencias '}'   									{ $$=$2;}
 		;
-
-cuerpoSimple: sentencia;
-cuerpoComplejo: '{' sentencias '}' 
 		
-		
+				
 // *********  INVOCACIÓN DE FUNCIONES  *********
 
 args:  /* empty */

@@ -1,0 +1,19 @@
+//### This file created by BYACC 1.8(/Java extension  1.15)
+//### Java capabilities added 7 Jan 97, Bob Jamison
+//### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
+//###           01 Jan 98  -- Bob Jamison -- fixed generic semantic constructor
+//###           01 Jun 99  -- Bob Jamison -- added Runnable support
+//###           06 Aug 00  -- Bob Jamison -- made state variables class-global
+//###           03 Jan 01  -- Bob Jamison -- improved flags, tracing
+//###           16 May 01  -- Bob Jamison -- added custom stack sizing
+//###           04 Mar 02  -- Yuval Oren  -- improved java performance, added options
+//###           14 Mar 02  -- Tomas Hurka -- -d support, static initializer workaround
+//### Please send bug reports to tom@hukatronic.cz
+//### static char yysccsid[] = "@(#)yaccpar	1.8 (Berkeley) 01/20/90";
+
+
+
+package parser;
+
+
+

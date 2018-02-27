@@ -185,12 +185,10 @@ condicionalComplejo: IF expresion ':' cuerpo else;
 
 else: ELSE cuerpo ;
 
-cuerpo: cuerpoSimple
-		| cuerpoComplejo  
+cuerpo: sentencia
+		| '{' sentencias '}'   
 		;
 
-cuerpoSimple: sentencia;
-cuerpoComplejo: '{' sentencias '}' 
 		
 		
 // *********  INVOCACIÓN DE FUNCIONES  *********
