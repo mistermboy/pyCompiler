@@ -127,8 +127,8 @@ campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<V
 
 // *********  SENTENCIAS  *********
 
-sentencias: sentencia											{ List<Statement> states = new ArrayList<Statement>(); List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}$$=states;}
-		| sentencias sentencia									{ List<Statement> states = (List<Statement>)$1;List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}$$=states;}
+sentencias: sentencia											{ $$=$1;}
+		| sentencias sentencia									{ List<Statement> states = (List<Statement>)$1;List<Statement> st = (List<Statement>)$2;for(Statement s:st){states.add(s);}$$=states;}
 		;
 
 
@@ -139,7 +139,7 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		| condicionalComplejo									{ List<Statement> states = new ArrayList<Statement>(); IfStatement ifs = (IfStatement) $1; states.add(ifs);$$=states;}
 		| while													{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) $1; states.add(wS);$$=states;}
 		| asignacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) $1; states.add(aS);$$=states;}
-		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Indexing iS = (Indexing) $1; states.add(iS);$$=states;}
+		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Invocation iS = (Invocation) $1; states.add(iS);$$=states;}
 		;
 	
 
@@ -148,7 +148,7 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		| CHAR_CONSTANT											{ $$ = new CharLiteral(scanner.getLine(),scanner.getColumn(),(char) $1);}
 		| REAL_CONSTANT											{ $$ = new RealLiteral(scanner.getLine(),scanner.getColumn(),(double) $1);}
 		| '(' expresion ')'										{ $$ = $2;}
-		| expresion '[' expresion ']'							{ $$ = new ArrayAccess(scanner.getLine(),scanner.getColumn(),(Expression)$1,(Expression)$3);}
+		| expresion '[' expresion ']'							{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),(Expression)$1,(Expression)$3);}
 		|  expresion '.' ID										{ $$ = new FieldAccess(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $3);}
 		| '(' tipo ')' expresion  %prec CAST					{ $$ = new Cast(scanner.getLine(),scanner.getColumn(),(Expression) $4,(Type) $2);}
 		| '-' expresion %prec UNARIO							{ $$ = new UnaryMinus(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
@@ -166,7 +166,7 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		| expresion EQUALS expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
 		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
-		| ID '(' args ')'										{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
+		| ID '(' args ')'										{ $$ = new Invocation(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
 		;
 		
 		
@@ -176,7 +176,7 @@ list: expresion													{ List<Expression> exp = new ArrayList<Expression>()
 	
 asignacion: expresion '=' expresion ;							{ $$ = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression)$1,(Expression)$3);}
 
-invocacion: ID '(' args ')'										{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
+invocacion: ID '(' args ')'										{ $$ = new Invocation(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
 
 
 // *********  WHILE  *********

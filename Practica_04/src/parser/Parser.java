@@ -932,11 +932,11 @@ case 30:
 break;
 case 31:
 //#line 130 "../../src/parser/parser.y"
-{ List<Statement> states = new ArrayList<Statement>(); List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}yyval=states;}
+{ yyval=val_peek(0);}
 break;
 case 32:
 //#line 131 "../../src/parser/parser.y"
-{ List<Statement> states = (List<Statement>)val_peek(1);List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}yyval=states;}
+{ List<Statement> states = (List<Statement>)val_peek(1);List<Statement> st = (List<Statement>)val_peek(0);for(Statement s:st){states.add(s);}yyval=states;}
 break;
 case 33:
 //#line 135 "../../src/parser/parser.y"
@@ -968,7 +968,7 @@ case 39:
 break;
 case 40:
 //#line 142 "../../src/parser/parser.y"
-{ List<Statement> states = new ArrayList<Statement>(); Indexing iS = (Indexing) val_peek(1); states.add(iS);yyval=states;}
+{ List<Statement> states = new ArrayList<Statement>(); Invocation iS = (Invocation) val_peek(1); states.add(iS);yyval=states;}
 break;
 case 41:
 //#line 146 "../../src/parser/parser.y"
@@ -992,7 +992,7 @@ case 45:
 break;
 case 46:
 //#line 151 "../../src/parser/parser.y"
-{ yyval = new ArrayAccess(scanner.getLine(),scanner.getColumn(),(Expression)val_peek(3),(Expression)val_peek(1));}
+{ yyval = new Indexing(scanner.getLine(),scanner.getColumn(),(Expression)val_peek(3),(Expression)val_peek(1));}
 break;
 case 47:
 //#line 152 "../../src/parser/parser.y"
@@ -1064,7 +1064,7 @@ case 63:
 break;
 case 64:
 //#line 169 "../../src/parser/parser.y"
-{ yyval = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(3)),(List<Expression>) val_peek(1));}
+{ yyval = new Invocation(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(3)),(List<Expression>) val_peek(1));}
 break;
 case 65:
 //#line 173 "../../src/parser/parser.y"
@@ -1080,7 +1080,7 @@ case 67:
 break;
 case 68:
 //#line 179 "../../src/parser/parser.y"
-{ yyval = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(3)),(List<Expression>) val_peek(1));}
+{ yyval = new Invocation(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)val_peek(3)),(List<Expression>) val_peek(1));}
 break;
 case 69:
 //#line 184 "../../src/parser/parser.y"

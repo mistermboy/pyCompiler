@@ -2,7 +2,7 @@ package ast;
 
 import java.util.List;
 
-public class Invocation implements Statement {
+public class Invocation implements Statement,Expression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
@@ -11,7 +11,7 @@ public class Invocation implements Statement {
 
 	private Variable funcion;
 
-	public Invocation(int row, int column, List<Expression> arguments, Variable funcion) {
+	public Invocation(int row, int column, Variable funcion, List<Expression> arguments) {
 		super();
 		this.row = row;
 		this.column = column;

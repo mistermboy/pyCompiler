@@ -1,16 +1,14 @@
 package ast;
 
-import java.util.List;
+public class Indexing implements Statement, Expression {
 
-public class Indexing implements Statement,Expression {
-
-	private List<Expression> arguments;
-	private Variable variable;
+	private Expression arguments;
+	private Expression variable;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Indexing(int i, int j, Variable variable, List<Expression> arguments) {
+	public Indexing(int i, int j, Expression variable, Expression arguments) {
 		this.row = i;
 		this.column = j;
 		this.variable = variable;
@@ -27,19 +25,19 @@ public class Indexing implements Statement,Expression {
 		return row;
 	}
 
-	public List<Expression> getArguments() {
+	public Expression getArguments() {
 		return arguments;
 	}
 
-	public void setArguments(List<Expression> arguments) {
+	public void setArguments(Expression arguments) {
 		this.arguments = arguments;
 	}
 
-	public Variable getVariable() {
+	public Expression getVariable() {
 		return variable;
 	}
 
-	public void setVariable(Variable variable) {
+	public void setVariable(Expression variable) {
 		this.variable = variable;
 	}
 
