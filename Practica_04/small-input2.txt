@@ -1,7 +1,45 @@
+# Variable and function definitions
+i, j, n: int;
+c: char;
 
-	if b>a:{
-		return a;
-		return b;
-	}
-	if a>b:
-		return b;
+# Empty function
+def p(): void { }
+
+def f(n: int,r: double): int {
+  	real: double;
+  	c1, c2: char;  
+	c1 = (char)n;
+  	real = c1 + n + r;
+  	return (int)c1;
+}
+
+def main(): void {
+	# Record
+  	pair: struct {
+    	integer: int;
+    	character: char;
+  	};
+  	
+  	# Array
+  	  
+  	i=0;
+  	j=0;
+  	while i<10 : {
+    	while j<5 : {
+      		j=j+1;
+		}
+		i=i+1;
+  	} 	
+  	
+  	i=0;
+	pair.character = '0';
+  	pair.integer = '0';
+  	while pair.integer >= i: {
+    	if pair.integer == 33 || !pair.character || i%2==0 :
+      		print 't', 'r', 'u', 'e', '\n';
+    	else 
+      		print 'f', 'a', 'l', 's', 'e', '\n';
+    	i=i+1;
+  	}
+  	print i; # Invocation as an expression
+}

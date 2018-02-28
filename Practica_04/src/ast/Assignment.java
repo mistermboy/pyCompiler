@@ -8,7 +8,7 @@ public class Assignment implements Statement {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Assignment(int i, int j, Variable variable, Arithmetic arithmetic) {
+	public Assignment(int i, int j, Expression variable, Expression arithmetic) {
 		this.row = i;
 		this.column = j;
 		this.left = variable;

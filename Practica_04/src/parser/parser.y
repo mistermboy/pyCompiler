@@ -61,13 +61,13 @@ import java.util.*;
 
 programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';	{ ast = new Program(0,0,(List<Definition>) $1,(List<Statement>) $9);}
 
-definiciones: definiciones definicion 							{List<Definition> def = (List<Definition>)$1;def.add((Definition)$2);$$=def;} 	
+definiciones: definiciones definicion 							{List<Definition> defs = (List<Definition>)$1;List<Definition> def = (List<Definition>)$2;for(Definition d:def){defs.add(d);}$$=defs;} 	
 	 | /* empty */												{$$ = new ArrayList<Definition>();}
 	 ;
 
 
 definicion: def ';'												{$$ = $1;}		
-			| funcion											{$$ = $1;} 				
+			| funcion											{List<FunDefinition> fd = new ArrayList<FunDefinition>(); fd.add((FunDefinition) $1);$$=fd;} 				
 			;
 
 // *********  FUNCIONES  *********
@@ -127,8 +127,8 @@ campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<V
 
 // *********  SENTENCIAS  *********
 
-sentencias: sentencia											{ List<Statement> states = new ArrayList<Statement>(); states.add((Statement)$1);$$=states;}
-		| sentencias sentencia									{ List<Statement> states = (List<Statement>)$1;states.add((Statement)$1);$$=states;}
+sentencias: sentencia											{ List<Statement> states = new ArrayList<Statement>(); List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}$$=states;}
+		| sentencias sentencia									{ List<Statement> states = (List<Statement>)$1;List<Statement> st = new ArrayList<Statement>();for(Statement s:st){states.add(s);}$$=states;}
 		;
 
 
@@ -147,34 +147,34 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		| INT_CONSTANT											{ $$ = new IntLiteral(scanner.getLine(),scanner.getColumn(),(int) $1);}
 		| CHAR_CONSTANT											{ $$ = new CharLiteral(scanner.getLine(),scanner.getColumn(),(char) $1);}
 		| REAL_CONSTANT											{ $$ = new RealLiteral(scanner.getLine(),scanner.getColumn(),(double) $1);}
-		| '(' expresion ')'										{ $$ = $1;}
-		| expresion '[' expresion ']'							// **********************  M I S S I N G  ***************************
+		| '(' expresion ')'										{ $$ = $2;}
+//		| expresion '[' expresion ']'							// **********************  M I S S I N G  ***************************
 		|  expresion '.' ID										{ $$ = new FieldAccess(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $3);}
 		| '(' tipo ')' expresion  %prec CAST					{ $$ = new Cast(scanner.getLine(),scanner.getColumn(),(Expression) $4,(Type) $2);}
 		| '-' expresion %prec UNARIO							{ $$ = new UnaryMinus(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
 		| '!' expresion											{ $$ = new Negation(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
-		|  expresion '*' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		|  expresion '/' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		|  expresion '+' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		|  expresion '-' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
+		|  expresion '*' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+		|  expresion '/' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+		|  expresion '+' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+		|  expresion '-' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
 		| expresion '>' expresion	 							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion GREATER expresion 							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion '<' expresion								{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion SMALLER expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion NEGATION expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion EQUALS expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
-		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Arithmetic) $1,(String)$2,(Arithmetic)$3);}
-		| ID '(' args ')'
+		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
+//		| ID '(' args ')'
 		;
 		
 		
 list: expresion													{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)$1);$$=exp;}
-	| list ',' expresion										{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$1);$$=exps;}
+	| list ',' expresion										{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$3);$$=exps;}
 	;
 	
-asignacion: expresion '=' expresion ;							{ $$ = new Assignment(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(Arithmetic)$3);}
+asignacion: expresion '=' expresion ;							{ $$ = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression)$1,(Expression)$3);}
 
 invocacion: ID '(' args ')'										{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
 
@@ -203,7 +203,7 @@ args:  /* empty */												{ $$ = new ArrayList<Expression>();}
 		;
 
 arg: expresion													{ List<Expression> exp = new ArrayList<Expression>();exp.add((Expression)$1);$$=exp;}
-	| arg ',' expresion											{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$1);$$=exps;}
+	| arg ',' expresion											{ List<Expression> exps = (List<Expression>) $1;exps.add((Expression)$3);$$=exps;}
 
 
 		         
