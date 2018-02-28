@@ -50,7 +50,12 @@ public class FunDefinition implements Definition {
 
 	@Override
 	public String toString() {
-		return "def " + this.name + type.toString();
+		String cad = "def " + this.name + type.toString() + "{\n";
+		for (Statement s : this.getStatements()) {
+			cad += "\n \t" + s.toString();
+		}
+		cad += "\n}";
+		return cad;
 	}
 
 }

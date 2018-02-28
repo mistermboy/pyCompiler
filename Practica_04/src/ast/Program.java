@@ -29,7 +29,11 @@ public class Program implements ASTNode {
 	}
 
 	public String toString() {
-		return "Program=";
+		String cad = "Program=";
+		for (Definition d : this.definitions) {
+			cad += d.toString();
+		}
+		return cad;
 	}
 
 }

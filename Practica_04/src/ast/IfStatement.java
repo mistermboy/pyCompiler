@@ -58,16 +58,17 @@ public class IfStatement implements Statement {
 	@Override
 	public String toString() {
 		String cad = "";
-		if (elseBody.isEmpty()) {
-			cad += "if " + this.condition;
-			for (Statement s : this.getIfBody()) {
+
+		cad += "if " + this.condition;
+		for (Statement s : this.getIfBody()) {
+			cad += "\n \t" + s.toString();
+		}
+
+		if (!elseBody.isEmpty()) {
+			cad += "\n else ";
+			for (Statement s : this.getElseBody()) {
 				cad += "\n \t" + s.toString();
 			}
-			return cad;
-		}
-		cad += "\n else";
-		for (Statement s : this.getElseBody()) {
-			cad += "\n \t" + s.toString();
 		}
 		return cad;
 	}

@@ -52,7 +52,7 @@ public class ArrayType implements Type {
 
 	@Override
 	public String toString() {
-		return "ArrayType [row=" + row + ", column=" + column + ", off=" + off + ", of=" + of + "]";
+		return "[ " + this.off + " ]" + this.of.toString();
 	}
 
 }
