@@ -2,21 +2,21 @@ package ast;
 
 import java.util.List;
 
-public class Invocation implements Statement,Expression {
+public class Invocation implements Statement, Expression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
 	private List<Expression> arguments;
 
-	private Variable funcion;
+	private Variable funcionName;
 
-	public Invocation(int row, int column, Variable funcion, List<Expression> arguments) {
+	public Invocation(int row, int column, Variable funcionName, List<Expression> arguments) {
 		super();
 		this.row = row;
 		this.column = column;
 		this.arguments = arguments;
-		this.funcion = funcion;
+		this.funcionName = funcionName;
 	}
 
 	@Override
@@ -46,11 +46,11 @@ public class Invocation implements Statement,Expression {
 	}
 
 	public Variable getFuncion() {
-		return funcion;
+		return funcionName;
 	}
 
 	public void setFuncion(Variable funcion) {
-		this.funcion = funcion;
+		this.funcionName = funcion;
 	}
 
 	public void setColumn(int column) {
@@ -59,8 +59,12 @@ public class Invocation implements Statement,Expression {
 
 	@Override
 	public String toString() {
-		return "Invocation [row=" + row + ", column=" + column + ", arguments=" + arguments + ", funcion=" + funcion
-				+ "]";
+		String cad = "" + this.funcionName + "( ";
+		for (Expression e : this.getArguments()) {
+			cad += " " + e.toString() + ",";
+		}
+		cad += " )";
+		return cad;
 	}
 
 }

@@ -40,7 +40,7 @@ public class VoidType implements Type {
 
 	@Override
 	public String toString() {
-		return "IntType [row=" + row + ", column=" + column + "]";
+		return "void";
 	}
 
 }

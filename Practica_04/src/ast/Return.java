@@ -46,7 +46,7 @@ public class Return implements Statement {
 
 	@Override
 	public String toString() {
-		return "Return [row=" + row + ", column=" + column + ", expression=" + expression + "]";
+		return "return " + this.expression;
 	}
 
 }

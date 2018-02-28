@@ -44,7 +44,12 @@ public class RecordType implements Type {
 
 	@Override
 	public String toString() {
-		return "RecordType [row=" + row + ", column=" + column + ", fields=" + fields + "]";
+		String cad = "STRUCT {";
+		for (RecordField r : this.getFields()) {
+			cad += "\n \t" + r.toString();
+		}
+		cad += "\n }";
+		return cad;
 	}
 
 }

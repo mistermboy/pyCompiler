@@ -10,12 +10,12 @@ public class Arithmetic implements Expression {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Arithmetic(int i, int j, Expression intLiteral, String string, Expression variable) {
+	public Arithmetic(int i, int j, Expression left, String string, Expression right) {
 		this.row = i;
 		this.column = j;
-		this.left = intLiteral;
+		this.left = left;
 		this.operator = string;
-		this.right = variable;
+		this.right = right;
 	}
 
 	/**

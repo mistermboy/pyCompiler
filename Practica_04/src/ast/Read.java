@@ -2,22 +2,22 @@ package ast;
 
 public class Read implements Statement {
 
-	private Expression read;
+	private Expression expresion;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Read(int i, int j, Expression variable) {
+	public Read(int i, int j, Expression expresion) {
 		this.row = i;
 		this.column = j;
-		this.read = variable;
+		this.expresion = expresion;
 	}
 
 	/**
 	 * @return the read
 	 */
 	public Expression getRead() {
-		return read;
+		return expresion;
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class Read implements Statement {
 	 *            the read to set
 	 */
 	public void setRead(Expression read) {
-		this.read = read;
+		this.expresion = read;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class Read implements Statement {
 
 	@Override
 	public String toString() {
-		return read.toString();
+		return "input" + expresion.toString();
 
 	}
 

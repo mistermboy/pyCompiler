@@ -62,7 +62,7 @@ public class Comparison implements Expression {
 	public String toString() {
 		String cad = "";
 		cad += this.left.toString() + "";
-		cad += "==";
+		cad += this.comparator + "";
 		cad += this.right.toString() + "";
 		return cad;
 	}

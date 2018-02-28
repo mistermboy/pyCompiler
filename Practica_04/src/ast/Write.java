@@ -2,15 +2,15 @@ package ast;
 
 public class Write implements Statement {
 
-	private Expression write;
+	private Expression expresion;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Write(int i, int j, Expression variable) {
+	public Write(int i, int j, Expression expresion) {
 		this.row = i;
 		this.column = j;
-		this.write = variable;
+		this.expresion = expresion;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Write implements Statement {
 
 	@Override
 	public String toString() {
-		return write.toString();
+		return "print "+expresion.toString();
 	}
 
 }

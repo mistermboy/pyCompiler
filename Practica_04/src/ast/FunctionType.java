@@ -52,5 +52,15 @@ public class FunctionType implements Type {
 		this.parameters = parameters;
 	}
 
+	@Override
+	public String toString() {
+		String cad = "(";
+		for (VarDefinition v : this.getParameters()) {
+			cad += " " + v.toString() + ",";
+		}
+		cad += " ):";
+		cad += "" + getReturnType().toString();
+		return cad;
+	}
 
 }

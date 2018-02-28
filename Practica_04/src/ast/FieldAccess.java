@@ -5,15 +5,15 @@ public class FieldAccess implements Expression {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	private Expression exp;
+	private Expression expresion;
 
 	private String name;
 
-	public FieldAccess(int row, int column, Expression exp, String name) {
+	public FieldAccess(int row, int column, Expression expresion, String name) {
 		super();
 		this.row = row;
 		this.column = column;
-		this.exp = exp;
+		this.expresion = expresion;
 		this.name = name;
 	}
 
@@ -28,11 +28,11 @@ public class FieldAccess implements Expression {
 	}
 
 	public Expression getExp() {
-		return exp;
+		return expresion;
 	}
 
 	public void setExp(Expression exp) {
-		this.exp = exp;
+		this.expresion = exp;
 	}
 
 	public String getName() {
@@ -57,7 +57,7 @@ public class FieldAccess implements Expression {
 
 	@Override
 	public String toString() {
-		return "FielAccess [row=" + row + ", column=" + column + ", exp=" + exp + ", name=" + name + "]";
+		return "" + this.expresion + "." + this.name;
 	}
 
 }

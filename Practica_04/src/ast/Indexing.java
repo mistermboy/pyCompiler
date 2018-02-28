@@ -2,17 +2,17 @@ package ast;
 
 public class Indexing implements Statement, Expression {
 
-	private Expression arguments;
-	private Expression variable;
+	private Expression left;
+	private Expression right;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Indexing(int i, int j, Expression variable, Expression arguments) {
+	public Indexing(int i, int j, Expression left, Expression right) {
 		this.row = i;
 		this.column = j;
-		this.variable = variable;
-		this.arguments = arguments;
+		this.right = right;
+		this.left = left;
 	}
 
 	@Override
@@ -26,25 +26,24 @@ public class Indexing implements Statement, Expression {
 	}
 
 	public Expression getArguments() {
-		return arguments;
+		return left;
 	}
 
 	public void setArguments(Expression arguments) {
-		this.arguments = arguments;
+		this.left = arguments;
 	}
 
 	public Expression getVariable() {
-		return variable;
+		return right;
 	}
 
 	public void setVariable(Expression variable) {
-		this.variable = variable;
+		this.right = variable;
 	}
 
 	@Override
 	public String toString() {
-		return "Indexing [arguments=" + arguments + ", variable=" + variable + ", row=" + row + ", column=" + column
-				+ "]";
+		return "" + this.left + "[ " + this.right + " ]";
 	}
 
 }

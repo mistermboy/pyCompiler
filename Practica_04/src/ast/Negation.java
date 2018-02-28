@@ -2,22 +2,22 @@ package ast;
 
 public class Negation implements Expression {
 
-	private Expression exp;
+	private Expression expresion;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Negation(int i, int j, Expression exp) {
+	public Negation(int i, int j, Expression expresion) {
 		this.row = i;
 		this.column = j;
-		this.exp = exp;
+		this.expresion = expresion;
 	}
 
 	/**
 	 * @return the operand
 	 */
 	public Expression getOperand() {
-		return exp;
+		return expresion;
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class Negation implements Expression {
 	 *            the operand to set
 	 */
 	public void setOperand(Expression operand) {
-		this.exp = operand;
+		this.expresion = operand;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class Negation implements Expression {
 
 	@Override
 	public String toString() {
-		return exp.toString();
+		return "! " + expresion.toString();
 	}
 
 }

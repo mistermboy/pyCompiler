@@ -40,7 +40,7 @@ public class RealType implements Type {
 
 	@Override
 	public String toString() {
-		return "IntType [row=" + row + ", column=" + column + "]";
+		return "real";
 	}
 
 }

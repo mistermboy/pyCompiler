@@ -924,11 +924,11 @@ case 28:
 break;
 case 29:
 //#line 123 "../../src/parser/parser.y"
-{ List<Definition> camps = (List<Definition>)val_peek(1); List<VarDefinition> def = (List<VarDefinition>) val_peek(0); for(VarDefinition var:def){camps.add(var);}yyval=camps;}
+{ List<RecordField> camps = (List<RecordField>)val_peek(1); List<RecordField> def = (List<RecordField>) val_peek(0); for(RecordField var:def){camps.add(var);}yyval=camps;}
 break;
 case 30:
 //#line 126 "../../src/parser/parser.y"
-{ List<String> ids = (List<String>) val_peek(3); List<VarDefinition> def = new ArrayList<VarDefinition>();for(String id:ids){def.add(new VarDefinition(scanner.getLine(),scanner.getColumn(),id, (Type) val_peek(1)));}yyval=def;}
+{ List<String> ids = (List<String>) val_peek(3); List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(id,(Type) val_peek(1),0));}yyval=def;}
 break;
 case 31:
 //#line 130 "../../src/parser/parser.y"

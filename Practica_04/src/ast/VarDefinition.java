@@ -68,8 +68,7 @@ public class VarDefinition implements Definition, Statement {
 
 	@Override
 	public String toString() {
-		return "VarDefinition [row=" + row + ", column=" + column + ", scope=" + scope + ", offset=" + offset
-				+ ", name=" + name + ", type=" + type + "]";
+		return "" + this.name + ":" + this.type;
 	}
 
 }

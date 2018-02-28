@@ -120,10 +120,10 @@ tipo: INT 														{ $$ = IntType.getInstance();}
 
 
 campos: campo													{$$=$1;}
-		|campos campo 											{ List<Definition> camps = (List<Definition>)$1; List<VarDefinition> def = (List<VarDefinition>) $2; for(VarDefinition var:def){camps.add(var);}$$=camps;}
+		|campos campo 											{ List<RecordField> camps = (List<RecordField>)$1; List<RecordField> def = (List<RecordField>) $2; for(RecordField var:def){camps.add(var);}$$=camps;}
 		;
 		
-campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<VarDefinition> def = new ArrayList<VarDefinition>();for(String id:ids){def.add(new VarDefinition(scanner.getLine(),scanner.getColumn(),id, (Type) $3));}$$=def;}
+campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(id,(Type) $3,0));}$$=def;}
 
 // *********  SENTENCIAS  *********
 

@@ -58,8 +58,12 @@ public class WhileStatement implements Statement {
 
 	@Override
 	public String toString() {
-		return "WhileStatement [row=" + row + ", column=" + column + ", body=" + body + ", condition=" + condition
-				+ "]";
+		String cad = "while" + this.condition + ":";
+		for (Statement s : this.getBody()) {
+			cad += "\n \t" + s.toString();
+		}
+		cad += "\n}";
+		return cad;
 	}
 
 }

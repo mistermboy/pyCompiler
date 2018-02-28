@@ -36,7 +36,7 @@ public class CharType implements Type {
 
 	@Override
 	public String toString() {
-		return "IntType [row=" + row + ", column=" + column + "]";
+		return "char";
 	}
 
 }

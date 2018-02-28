@@ -39,7 +39,7 @@ public class RecordField {
 
 	@Override
 	public String toString() {
-		return "RecordField [name=" + name + ", type=" + type + ", offset=" + offset + "]";
+		return "" + this.name + ":" + this.type.toString();
 	}
 
 }

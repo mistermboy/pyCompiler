@@ -8,11 +8,11 @@ public class Assignment implements Statement {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Assignment(int i, int j, Expression variable, Expression arithmetic) {
+	public Assignment(int i, int j, Expression left, Expression right) {
 		this.row = i;
 		this.column = j;
-		this.left = variable;
-		this.right = arithmetic;
+		this.left = left;
+		this.right = right;
 	}
 
 	@Override
@@ -59,6 +59,7 @@ public class Assignment implements Statement {
 	public String toString() {
 		String cad = "";
 		cad += this.left.toString() + "";
+		cad +="=";
 		cad += this.right.toString() + "";
 		return cad;
 	}
