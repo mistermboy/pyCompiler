@@ -141,7 +141,7 @@ expresion: ID
 		| CHAR_CONSTANT
 		| REAL_CONSTANT
 		| '(' expresion ')'
-		| expresion '[' expresion ']'
+		|  expresion '[' expresion ']'
 		|  expresion '.' ID
 		| '(' tipo ')' expresion %prec CAST
 		| '-' expresion %prec UNARIO

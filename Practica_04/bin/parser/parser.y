@@ -72,7 +72,7 @@ definicion: def ';'												{$$ = $1;}
 
 // *********  FUNCIONES  *********
 
-funcion: DEF ID '(' params ')' ':' retorno '{' body '}';     	{ FunctionType ft = new FunctionType(scanner.getLine(),scanner.getColumn(),(Type) $7,(List<VarDefinition>)$4);$$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $1,ft,(List<Statement>) $9);}
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}';     	{ FunctionType ft = new FunctionType(scanner.getLine(),scanner.getColumn(),(Type) $7,(List<VarDefinition>)$4);$$ = new FunDefinition(scanner.getLine(),scanner.getColumn(), (String) $2,ft,(List<Statement>) $9);}
 
 retorno: tipo 													{ $$ = $1;}
 		| VOID 													{ $$ = VoidType.getInstance();}
@@ -148,7 +148,7 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		| CHAR_CONSTANT											{ $$ = new CharLiteral(scanner.getLine(),scanner.getColumn(),(char) $1);}
 		| REAL_CONSTANT											{ $$ = new RealLiteral(scanner.getLine(),scanner.getColumn(),(double) $1);}
 		| '(' expresion ')'										{ $$ = $2;}
-//		| expresion '[' expresion ']'							// **********************  M I S S I N G  ***************************
+		| expresion '[' expresion ']'							{ $$ = new ArrayAccess(scanner.getLine(),scanner.getColumn(),(Expression)$1,(Expression)$3);}
 		|  expresion '.' ID										{ $$ = new FieldAccess(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $3);}
 		| '(' tipo ')' expresion  %prec CAST					{ $$ = new Cast(scanner.getLine(),scanner.getColumn(),(Expression) $4,(Type) $2);}
 		| '-' expresion %prec UNARIO							{ $$ = new UnaryMinus(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
