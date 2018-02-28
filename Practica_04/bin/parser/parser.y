@@ -166,7 +166,7 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		| expresion EQUALS expresion							{ $$ = new Comparison(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression)$3);}
 		| expresion AND expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
 		| expresion OR expresion								{ $$ = new Logical(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
-//		| ID '(' args ')'
+		| ID '(' args ')'										{ $$ = new Indexing(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String)$1),(List<Expression>) $3);}
 		;
 		
 		

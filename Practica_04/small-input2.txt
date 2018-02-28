@@ -43,6 +43,7 @@ def main(): void {
       		print 'f', 'a', 'l', 's', 'e', '\n';
     	i=i+1;
   	}
-  	print i; # Invocation as an expression
+  	print f(i, (double)i); # Invocation as an expression
   	vector[9][(int)4.3] = 5.6;
+  	f(1, 2.2); # Invocation as a statement
 }
