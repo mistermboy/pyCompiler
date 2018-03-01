@@ -1,13 +1,18 @@
 package ast;
 
-public class RecordField {
+public class RecordField implements ASTNode {
+
+	private int row = ASTNode.DEFAULT_ROW_COLUMN;
+	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
 	private String name;
 	private Type type;
 	private int offset;
 
-	public RecordField(String name, Type type, int offset) {
+	public RecordField(int i, int j, String name, Type type, int offset) {
 		super();
+		this.row = i;
+		this.column = j;
 		this.name = name;
 		this.type = type;
 		this.offset = offset;
@@ -40,6 +45,16 @@ public class RecordField {
 	@Override
 	public String toString() {
 		return "" + this.name + ":" + this.type.toString();
+	}
+
+	@Override
+	public int getLine() {
+		return row;
+	}
+
+	@Override
+	public int getColumn() {
+		return column;
 	}
 
 }

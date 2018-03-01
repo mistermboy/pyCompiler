@@ -928,7 +928,7 @@ case 29:
 break;
 case 30:
 //#line 126 "../../src/parser/parser.y"
-{ List<String> ids = (List<String>) val_peek(3); List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(id,(Type) val_peek(1),0));}yyval=def;}
+{ List<String> ids = (List<String>) val_peek(3); List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(scanner.getLine(),scanner.getColumn(),id,(Type) val_peek(1),0));}yyval=def;}
 break;
 case 31:
 //#line 130 "../../src/parser/parser.y"
