@@ -1,0 +1,15 @@
+"""
+	Errors Handler
+	DLP 17/18
+"""
+
+tuple: struct { 
+	key:int;	
+	value:int;	
+	key:double; # Error: duplicated field
+};
+
+# Main program
+def main():void {
+	tuple.key = 0;
+}

@@ -47,7 +47,7 @@ Digit  = [0-9]
 Ident = [_a-zA-Z][a-zA-Z_0-9]*
 
 IntConstant = [0-9]*
-Real = [.][0-9]+|[0-9]+[.][0-9]*
+Real = [.][0-9]+|[0-9]+[.] | [0-9]+[.][0-9]+
 RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
 Character = \'.\'
 CharacterASCII = [']\\[0-9]*[']
@@ -91,7 +91,7 @@ return				{this.yylval = yytext();
 void				{this.yylval = yytext();
 						return Parser.VOID;}
 main				{this.yylval = yytext();
-						return Parser.MAIN;}								
+						return Parser.MAIN;}							
 					
 // * OPERATORS		
 
@@ -124,7 +124,8 @@ main				{this.yylval = yytext();
 "||" 					{this.yylval = yytext();
 							return Parser.OR;}
 "&&" 					{this.yylval = yytext();
-							return Parser.AND;}																					
+							return Parser.AND;}							
+																				
 																																																														
  
 // * CONSTANTS
