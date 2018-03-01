@@ -47,8 +47,9 @@ Digit  = [0-9]
 Ident = [_a-zA-Z][a-zA-Z_0-9]*
 
 IntConstant = [0-9]*
-Real = [.][0-9]+|[0-9]+[.][0-9]*
-RealConstant = {Real}|{Real}E-[0-9]+| [0-9]+e[0-9]+
+RealType1= [0-9]+("."[0-9]*|[e|E]"-"?[0-9]+|"."[0-9]+[e|E]"-"?[0-9]+|[e|E]"+"?[0-9]+)
+RealType2="."[0-9]+
+RealConstant =  {RealType1} | {RealType2}
 Character = \'.\'
 CharacterASCII = [']\\[0-9]*[']
 
