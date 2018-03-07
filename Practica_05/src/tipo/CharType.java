@@ -1,18 +1,20 @@
-package ast;
+package tipo;
 
-public class RealType implements Type {
+import ast.ASTNode;
+
+public class CharType implements Type {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	private static RealType instance = new RealType();
+	private static CharType instance = new CharType();
 
-	private RealType() {
+	private CharType() {
 	}
 
-	public static RealType getInstance() {
+	public static CharType getInstance() {
 		if (instance == null)
-			instance = new RealType();
+			instance = new CharType();
 		return instance;
 	}
 
@@ -26,10 +28,6 @@ public class RealType implements Type {
 		return column;
 	}
 
-	public int getRow() {
-		return row;
-	}
-
 	public void setRow(int row) {
 		this.row = row;
 	}
@@ -40,7 +38,7 @@ public class RealType implements Type {
 
 	@Override
 	public String toString() {
-		return "real";
+		return "char";
 	}
 
 }

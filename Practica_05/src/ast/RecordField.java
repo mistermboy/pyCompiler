@@ -1,5 +1,7 @@
 package ast;
 
+import tipo.Type;
+
 public class RecordField implements ASTNode {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;

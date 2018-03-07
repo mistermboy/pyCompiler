@@ -2,6 +2,8 @@ package ast;
 
 import java.util.List;
 
+import tipo.Type;
+
 public class RecordType implements Type {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;

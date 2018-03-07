@@ -1,6 +1,7 @@
 package ast;
 
 import java.util.List;
+import tipo.Type;
 
 public class FunDefinition implements Definition {
 

@@ -83,7 +83,9 @@ def main():void { # Uncomment to test
 	date.year = 2016;
 	
 	character = (char)date.day;
-	real = 4.5 + 4. * 3e+3 - 5.4E-3;
+	real = 4.5 + 4. * 3e+3 - 5.4E-3 + .4E-3;
+	real = -3e-3;
+	real = 3.3E+4;
 	
 	#error:int; # Uncomment to test
 }

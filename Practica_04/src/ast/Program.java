@@ -3,6 +3,9 @@ package ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import tipo.FunctionType;
+import tipo.VoidType;
+
 public class Program implements ASTNode {
 
 	@SuppressWarnings("unused")

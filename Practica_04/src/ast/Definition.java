@@ -1,5 +1,7 @@
 package ast;
 
+import tipo.Type;
+
 public interface Definition extends ASTNode{
 	
 	String getName();

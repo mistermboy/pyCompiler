@@ -1,5 +1,7 @@
 package ast;
 
+import tipo.Type;
+
 public class Cast implements Expression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;

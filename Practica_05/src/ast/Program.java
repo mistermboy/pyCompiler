@@ -1,6 +1,10 @@
 package ast;
 
 import java.util.ArrayList;
+
+import tipo.FunctionType;
+import tipo.VoidType;
+
 import java.util.List;
 
 public class Program implements ASTNode {

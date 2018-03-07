@@ -1,4 +1,6 @@
-package ast;
+package tipo;
+
+import ast.ASTNode;
 
 public class ArrayType implements Type {
 

@@ -6,6 +6,7 @@ import scanner.Scanner;
 import java.io.Reader;
 
 import ast.*;
+import tipo.*;
 import java.util.*;
 
 %}

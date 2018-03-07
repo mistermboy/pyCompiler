@@ -1,5 +1,7 @@
 package ast;
 
+import tipo.Type;
+
 public class VarDefinition implements Definition, Statement {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;

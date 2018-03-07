@@ -1,18 +1,20 @@
-package ast;
+package tipo;
 
-public class IntType implements Type {
+import ast.ASTNode;
+
+public class RealType implements Type {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	private static IntType instance = new IntType();
+	private static RealType instance = new RealType();
 
-	private IntType() {
+	private RealType() {
 	}
 
-	public static IntType getInstance() {
+	public static RealType getInstance() {
 		if (instance == null)
-			instance = new IntType();
+			instance = new RealType();
 		return instance;
 	}
 
@@ -40,7 +42,7 @@ public class IntType implements Type {
 
 	@Override
 	public String toString() {
-		return "int";
+		return "real";
 	}
 
 }

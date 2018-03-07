@@ -1,6 +1,9 @@
-package ast;
+package tipo;
 
 import java.util.List;
+
+import ast.ASTNode;
+import ast.VarDefinition;
 
 public class FunctionType implements Type {
 
