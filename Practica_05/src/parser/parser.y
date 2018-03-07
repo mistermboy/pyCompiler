@@ -109,7 +109,7 @@ def: ids ':' tipo												{ List<String> ids = (List<String>) $1; List<VarDef
 
 
 ids: ID															{ List<String> ids = new ArrayList<String>(); ids.add((String) $1); $$=ids;}
-	| ids ',' ID												{ List<String> ids = (List<String>) $1; ids.add((String) $3); $$=ids;}
+	| ids ',' ID												{ List<String> ids = (List<String>) $1; if(!ids.contains((String) $3)){ids.add((String) $3);}else{new ErrorType(scanner.getLine(),scanner.getColumn(),"No puedes definir dos variables con el mismo nombre");}$$=ids;}
 	;
 								   
 tipo: INT 														{ $$ = IntType.getInstance();}
@@ -121,10 +121,10 @@ tipo: INT 														{ $$ = IntType.getInstance();}
 
 
 campos: campo													{$$=$1;}
-		|campos campo 											{ List<RecordField> camps = (List<RecordField>)$1; List<RecordField> def = (List<RecordField>) $2; for(RecordField var:def){camps.add(var);}$$=camps;}
+		|campos campo 											{List<RecordField> camps = (List<RecordField>)$1; List<RecordField> def = (List<RecordField>) $2;for(RecordField r:def){if(camps.contains(r)){r.setType(new ErrorType(r,"No puedes definir dos variables con el mismo nombre dentro de un struct"));}else{camps.add(r);}}$$=camps;}
 		;
 		
-campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1; List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(scanner.getLine(),scanner.getColumn(),id,(Type) $3,0));}$$=def;}
+campo: ids ':' tipo ';';										{ List<String> ids = (List<String>) $1;List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(scanner.getLine(),scanner.getColumn(),id,(Type) $3,0));}$$=def;}
 
 // *********  SENTENCIAS  *********
 

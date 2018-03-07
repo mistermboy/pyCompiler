@@ -27,15 +27,16 @@ public class Main {
 		// * Parsing
 		parser.run();
 
-//		// * Check errors
-//		if (EH.getEH().hasErrors()) {
-//			// * Show errors
-//			EH.getEH().showErrors(System.err);
-//		} else {
-//			// * Show AST
-//			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
-//			new IntrospectorTree("Introspector", model);
-//		}
+		// * Check errors
+		if (EH.getEH().hasErrors()) {
+			// * Show errors
+			EH.getEH().showErrors(System.err);
+		} else {
+			// * Show AST
+			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
+			new IntrospectorTree("Introspector", model);
+		}
+		
 	}
 
-}
+} 

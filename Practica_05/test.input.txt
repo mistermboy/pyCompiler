@@ -8,6 +8,9 @@ integer:int;
 character:char;
 real:double;
 
+
+i,i:int;
+
 MATRIXSIZE:int;
 matrix:[10][10]int;
 
@@ -26,6 +29,10 @@ def getValue(row:int, column:int):int {
 	}
 }
 def fill(value:int):void {
+	pair: struct {
+    	integer: int;
+    	integer: char;
+  	};
 	i,j:int;  # Multiple variable definition
 	i = 0;	
 	while i < MATRIXSIZE: {

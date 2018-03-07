@@ -59,4 +59,9 @@ public class RecordField implements ASTNode {
 		return column;
 	}
 
+	@Override
+	public boolean equals(Object r) {
+		return this.getName().equals(((RecordField) r).getName());
+	}
+
 }

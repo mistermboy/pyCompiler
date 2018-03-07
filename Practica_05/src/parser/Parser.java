@@ -897,7 +897,7 @@ case 21:
 break;
 case 22:
 //#line 112 "../../src/parser/parser.y"
-{ List<String> ids = (List<String>) val_peek(2); ids.add((String) val_peek(0)); yyval=ids;}
+{ List<String> ids = (List<String>) val_peek(2); if(!ids.contains((String) val_peek(0))){ids.add((String) val_peek(0));}else{new ErrorType(scanner.getLine(),scanner.getColumn(),"No puedes definir dos variables con el mismo nombre");}yyval=ids;}
 break;
 case 23:
 //#line 115 "../../src/parser/parser.y"
@@ -925,11 +925,11 @@ case 28:
 break;
 case 29:
 //#line 124 "../../src/parser/parser.y"
-{ List<RecordField> camps = (List<RecordField>)val_peek(1); List<RecordField> def = (List<RecordField>) val_peek(0); for(RecordField var:def){camps.add(var);}yyval=camps;}
+{List<RecordField> camps = (List<RecordField>)val_peek(1); List<RecordField> def = (List<RecordField>) val_peek(0);for(RecordField r:def){if(camps.contains(r)){r.setType(new ErrorType(r,"No puedes definir dos variables con el mismo nombre dentro de un struct"));}else{camps.add(r);}}yyval=camps;}
 break;
 case 30:
 //#line 127 "../../src/parser/parser.y"
-{ List<String> ids = (List<String>) val_peek(3); List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(scanner.getLine(),scanner.getColumn(),id,(Type) val_peek(1),0));}yyval=def;}
+{ List<String> ids = (List<String>) val_peek(3);List<RecordField> def = new ArrayList<RecordField>();for(String id:ids){def.add(new RecordField(scanner.getLine(),scanner.getColumn(),id,(Type) val_peek(1),0));}yyval=def;}
 break;
 case 31:
 //#line 131 "../../src/parser/parser.y"
