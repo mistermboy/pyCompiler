@@ -1009,7 +1009,7 @@ case 49:
 break;
 case 50:
 //#line 156 "../../src/parser/parser.y"
-{ yyval = new Negation(scanner.getLine(),scanner.getColumn(),(Expression) val_peek(0));}
+{ yyval = new UnaryNot(scanner.getLine(),scanner.getColumn(),(Expression) val_peek(0));}
 break;
 case 51:
 //#line 157 "../../src/parser/parser.y"

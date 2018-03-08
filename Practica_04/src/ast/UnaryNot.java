@@ -1,13 +1,13 @@
 package ast;
 
-public class Negation implements Expression {
+public class UnaryNot implements Expression {
 
 	private Expression expresion;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Negation(int i, int j, Expression expresion) {
+	public UnaryNot(int i, int j, Expression expresion) {
 		this.row = i;
 		this.column = j;
 		this.expresion = expresion;
