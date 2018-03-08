@@ -1,0 +1,6 @@
+# Lvalue required
+
+def main():void {
+	i:int;
+	(i+2) = 3;
+}
