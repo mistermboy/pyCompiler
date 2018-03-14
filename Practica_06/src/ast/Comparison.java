@@ -1,6 +1,6 @@
 package ast;
 
-public class Comparison implements Expression {
+public class Comparison extends AbstractExpression {
 
 	private Expression left;
 	private Expression right;

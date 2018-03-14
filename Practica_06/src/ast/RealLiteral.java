@@ -1,6 +1,6 @@
 package ast;
 
-public class RealLiteral implements Expression {
+public class RealLiteral extends AbstractExpression {
 
 	private double value;
 

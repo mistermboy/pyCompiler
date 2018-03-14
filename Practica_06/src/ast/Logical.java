@@ -1,6 +1,6 @@
 package ast;
 
-public class Logical implements Expression {
+public class Logical extends AbstractExpression {
 
 	private Expression left;
 	private Expression right;

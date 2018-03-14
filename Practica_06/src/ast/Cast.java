@@ -2,7 +2,7 @@ package ast;
 
 import tipo.Type;
 
-public class Cast implements Expression {
+public class Cast extends AbstractExpression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;

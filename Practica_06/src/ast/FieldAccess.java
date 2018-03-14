@@ -1,6 +1,6 @@
 package ast;
 
-public class FieldAccess implements Expression {
+public class FieldAccess extends AbstractExpression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;

@@ -2,7 +2,7 @@ package ast;
 
 import java.util.List;
 
-public class Invocation implements Statement, Expression {
+public class Invocation extends AbstractExpression implements Statement{
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;

@@ -1,6 +1,6 @@
 package ast;
 
-public class Indexing implements Statement, Expression {
+public class Indexing extends AbstractExpression implements Statement{
 
 	private Expression left;
 	private Expression right;

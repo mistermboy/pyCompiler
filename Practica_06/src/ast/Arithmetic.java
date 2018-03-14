@@ -83,15 +83,5 @@ public class Arithmetic extends AbstractExpression {
 		return cad;
 	}
 
-	@Override
-	public boolean getLValue() {
-		return 
-	}
-
-	@Override
-	public void setLValue(boolean value) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

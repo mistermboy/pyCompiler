@@ -2,18 +2,16 @@ package ast;
 
 public abstract class AbstractExpression implements Expression {
 
-	private boolean lValue;
+	private boolean lValue = false;
 
 	@Override
-	public abstract int getLine();
+	public boolean getLValue() {
+		return lValue;
+	}
 
 	@Override
-	public abstract int getColumn();
-
-	@Override
-	public abstract boolean getLValue();
-
-	@Override
-	public abstract void setLValue(boolean value);
+	public void setLValue(boolean lValue) {
+		this.lValue = lValue;
+	}
 
 }

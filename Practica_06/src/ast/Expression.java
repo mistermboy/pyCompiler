@@ -4,6 +4,6 @@ public interface Expression extends ASTNode {
 
 	boolean getLValue();
 
-	void setLValue(boolean value);
+	void setLValue(boolean lValue);
 
 }

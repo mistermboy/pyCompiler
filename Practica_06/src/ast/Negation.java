@@ -1,6 +1,6 @@
 package ast;
 
-public class Negation implements Expression {
+public class Negation extends AbstractExpression {
 
 	private Expression expresion;
 

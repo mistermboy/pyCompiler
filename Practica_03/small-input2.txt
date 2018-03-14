@@ -1,7 +1,0 @@
-
-	if b>a:{
-		return a;
-		return b;
-	}
-	if a>b:
-		return b;

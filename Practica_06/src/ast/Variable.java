@@ -1,6 +1,6 @@
 package ast;
 
-public class Variable implements Expression {
+public class Variable extends AbstractExpression {
 
 	private String nameString;
 

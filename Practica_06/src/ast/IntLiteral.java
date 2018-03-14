@@ -1,6 +1,6 @@
 package ast;
 
-public class IntLiteral implements Expression {
+public class IntLiteral extends AbstractExpression {
 
 	private int value;
 
