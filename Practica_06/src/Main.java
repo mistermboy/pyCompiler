@@ -3,6 +3,8 @@ import java.io.IOException;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import scanner.Scanner;
+import visitor.TypeCheckingVisitor;
+import visitor.Visitor;
 import parser.Parser;
 import errorHandler.*;
 
@@ -27,6 +29,9 @@ public class Main {
 		// * Parsing
 		parser.run();
 
+		Visitor v = new TypeCheckingVisitor();
+		parser.getAST().accept(v, null);
+
 		// * Check errors
 		if (EH.getEH().hasErrors()) {
 			// * Show errors
@@ -36,7 +41,7 @@ public class Main {
 			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
 			new IntrospectorTree("Introspector", model);
 		}
-		
+
 	}
 
-} 
+}

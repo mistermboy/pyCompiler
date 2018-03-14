@@ -56,7 +56,7 @@ public class TypeCheckingVisitor implements Visitor {
 		a.getLeft().accept(this, o);
 		a.getRight().accept(this, o);
 		if (!a.getLeft().getLValue()) {
-			new ErrorType(a, "Se esperaba un Lvalue");
+			new ErrorType(a.getLeft(), "Se esperaba un Lvalue");
 		}
 		return null;
 	}
@@ -172,7 +172,7 @@ public class TypeCheckingVisitor implements Visitor {
 	public Object visit(Read read, Object o) {
 		read.getExpression().accept(this, o);
 		if (!read.getExpression().getLValue()) {
-			new ErrorType(read, "Se esperaba un Lvalue");
+			new ErrorType(read.getExpression(), "Se esperaba un Lvalue");
 		}
 		return null;
 	}
@@ -228,9 +228,6 @@ public class TypeCheckingVisitor implements Visitor {
 	@Override
 	public Object visit(Write write, Object o) {
 		write.getExpresion().accept(this, o);
-		if (!write.getExpresion().getLValue()) {
-			new ErrorType(write, "Se esperaba un Lvalue");
-		}
 		return null;
 	}
 
