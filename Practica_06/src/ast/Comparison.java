@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Comparison extends AbstractExpression {
 
 	private Expression left;
@@ -73,6 +75,10 @@ public class Comparison extends AbstractExpression {
 
 	public void setComparator(String comparator) {
 		this.comparator = comparator;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

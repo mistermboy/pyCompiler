@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Logical extends AbstractExpression {
 
 	private Expression left;
@@ -75,4 +77,7 @@ public class Logical extends AbstractExpression {
 		return cad;
 	}
 
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

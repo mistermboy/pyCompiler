@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class RealLiteral extends AbstractExpression {
 
 	private double value;
@@ -43,4 +45,9 @@ public class RealLiteral extends AbstractExpression {
 		return "" + value;
 	}
 
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+	
 }

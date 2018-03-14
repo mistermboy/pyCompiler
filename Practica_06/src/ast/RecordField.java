@@ -1,6 +1,7 @@
 package ast;
 
 import tipo.Type;
+import visitor.Visitor;
 
 public class RecordField implements ASTNode {
 
@@ -62,6 +63,10 @@ public class RecordField implements ASTNode {
 	@Override
 	public boolean equals(Object r) {
 		return this.getName().equals(((RecordField) r).getName());
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

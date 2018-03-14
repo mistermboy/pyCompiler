@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class FieldAccess extends AbstractExpression {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -60,4 +62,7 @@ public class FieldAccess extends AbstractExpression {
 		return "" + this.expresion + "." + this.name;
 	}
 
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

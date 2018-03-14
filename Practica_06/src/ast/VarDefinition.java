@@ -1,6 +1,7 @@
 package ast;
 
 import tipo.Type;
+import visitor.Visitor;
 
 public class VarDefinition implements Definition, Statement {
 
@@ -71,6 +72,10 @@ public class VarDefinition implements Definition, Statement {
 	@Override
 	public String toString() {
 		return "" + this.name + ":" + this.type;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

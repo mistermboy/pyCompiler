@@ -2,6 +2,7 @@ package ast;
 
 import java.util.List;
 import tipo.Type;
+import visitor.Visitor;
 
 public class FunDefinition implements Definition {
 
@@ -57,6 +58,10 @@ public class FunDefinition implements Definition {
 		}
 		cad += "\n}";
 		return cad;
+	}
+
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

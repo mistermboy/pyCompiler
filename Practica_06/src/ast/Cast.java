@@ -1,6 +1,7 @@
 package ast;
 
 import tipo.Type;
+import visitor.Visitor;
 
 public class Cast extends AbstractExpression {
 
@@ -59,6 +60,10 @@ public class Cast extends AbstractExpression {
 	@Override
 	public String toString() {
 		return "( " + this.castType + " ) " + this.expresion;
+	}
+
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

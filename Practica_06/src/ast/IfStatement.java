@@ -2,6 +2,8 @@ package ast;
 
 import java.util.List;
 
+import visitor.Visitor;
+
 public class IfStatement implements Statement {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -61,24 +63,8 @@ public class IfStatement implements Statement {
 				+ ", condition=" + condition + "]";
 	}
 
-//	@Override
-//	public String toString() {
-//		String cad = "";
-//
-//		cad += "if " + this.condition;
-//		for (Statement s : this.getIfBody()) {
-//			cad += "\n \t" + s.toString();
-//		}
-//
-//		if (!elseBody.isEmpty()) {
-//			cad += "\n else ";
-//			for (Statement s : this.getElseBody()) {
-//				cad += "\n \t" + s.toString();
-//			}
-//		}
-//		return cad;
-//	}
-	
-	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 
 }

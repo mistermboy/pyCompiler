@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class IntLiteral extends AbstractExpression {
 
 	private int value;
@@ -43,4 +45,7 @@ public class IntLiteral extends AbstractExpression {
 		return "" + value;
 	}
 
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

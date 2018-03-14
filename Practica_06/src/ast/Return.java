@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Return implements Statement {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -49,4 +51,7 @@ public class Return implements Statement {
 		return "return " + this.expression;
 	}
 
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

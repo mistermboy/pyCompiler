@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Variable extends AbstractExpression {
 
 	private String nameString;
@@ -41,6 +43,10 @@ public class Variable extends AbstractExpression {
 	@Override
 	public String toString() {
 		return "" + nameString;
+	}
+
+	public Object accept(Visitor v, Object object) {
+		return v.visit(this, object);
 	}
 
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Read implements Statement {
 
 	private Expression expresion;
@@ -42,6 +44,10 @@ public class Read implements Statement {
 	public String toString() {
 		return "input" + expresion.toString();
 
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

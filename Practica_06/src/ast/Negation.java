@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Negation extends AbstractExpression {
 
 	private Expression expresion;
@@ -41,6 +43,10 @@ public class Negation extends AbstractExpression {
 	@Override
 	public String toString() {
 		return "! " + expresion.toString();
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

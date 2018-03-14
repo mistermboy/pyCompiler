@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Indexing extends AbstractExpression implements Statement{
 
 	private Expression left;
@@ -44,6 +46,10 @@ public class Indexing extends AbstractExpression implements Statement{
 	@Override
 	public String toString() {
 		return "" + this.left + "[ " + this.right + " ]";
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

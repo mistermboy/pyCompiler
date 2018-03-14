@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Write implements Statement {
 
 	private Expression expresion;
@@ -26,6 +28,10 @@ public class Write implements Statement {
 	@Override
 	public String toString() {
 		return "print "+expresion.toString();
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

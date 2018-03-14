@@ -2,6 +2,8 @@ package ast;
 
 import java.util.List;
 
+import visitor.Visitor;
+
 public class Invocation extends AbstractExpression implements Statement{
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -65,6 +67,10 @@ public class Invocation extends AbstractExpression implements Statement{
 		}
 		cad += " )";
 		return cad;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

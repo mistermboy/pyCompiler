@@ -2,6 +2,8 @@ package ast;
 
 import java.util.List;
 
+import visitor.Visitor;
+
 public class WhileStatement implements Statement {
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -64,6 +66,10 @@ public class WhileStatement implements Statement {
 		}
 		cad += "\n}";
 		return cad;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

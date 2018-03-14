@@ -3,6 +3,7 @@ package ast;
 import java.util.List;
 
 import tipo.Type;
+import visitor.Visitor;
 
 public class RecordType implements Type {
 
@@ -52,6 +53,10 @@ public class RecordType implements Type {
 		}
 		cad += "\n }";
 		return cad;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

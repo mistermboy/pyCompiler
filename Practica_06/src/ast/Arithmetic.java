@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Arithmetic extends AbstractExpression {
 
 	private String operator;
@@ -83,5 +85,8 @@ public class Arithmetic extends AbstractExpression {
 		return cad;
 	}
 
-	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
 }

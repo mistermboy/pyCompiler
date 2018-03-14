@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class Assignment implements Statement {
 
 	private Expression left;
@@ -62,6 +64,10 @@ public class Assignment implements Statement {
 		cad +="=";
 		cad += this.right.toString() + "";
 		return cad;
+	}
+	
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

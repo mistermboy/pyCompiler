@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import tipo.FunctionType;
 import tipo.VoidType;
+import visitor.Visitor;
 
 import java.util.List;
 
@@ -40,4 +41,7 @@ public class Program implements ASTNode {
 		return cad;
 	}
 
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }
