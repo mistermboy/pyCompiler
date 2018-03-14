@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Program implements ASTNode {
 
-	@SuppressWarnings("unused")
 	private List<Definition> definitions;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
@@ -39,6 +38,10 @@ public class Program implements ASTNode {
 			cad += d.toString();
 		}
 		return cad;
+	}
+
+	public List<Definition> getDefinitions() {
+		return definitions;
 	}
 
 	@Override

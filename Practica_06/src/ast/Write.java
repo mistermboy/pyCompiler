@@ -30,6 +30,10 @@ public class Write implements Statement {
 		return "print " + expresion.toString();
 	}
 
+	public Expression getExpresion() {
+		return expresion;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);

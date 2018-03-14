@@ -18,7 +18,7 @@ public class Read implements Statement {
 	/**
 	 * @return the read
 	 */
-	public Expression getRead() {
+	public Expression getExpression() {
 		return expresion;
 	}
 
@@ -26,7 +26,7 @@ public class Read implements Statement {
 	 * @param read
 	 *            the read to set
 	 */
-	public void setRead(Expression read) {
+	public void setExpression(Expression read) {
 		this.expresion = read;
 	}
 
@@ -45,7 +45,7 @@ public class Read implements Statement {
 		return "input" + expresion.toString();
 
 	}
-	
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
