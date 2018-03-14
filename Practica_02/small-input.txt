@@ -1,0 +1,37 @@
+
+""" 	234 asdasdInteger
+   constant s1234234234 """
+0 123	456      444
+1231
+# One line comment!	wefwefwe
+
+#asdsadsa
+324324
+
+input
+
+""" Identifiers """
+
+input print def while if else int double char struct return void
+
+qwerty
+qwe_rty123
+_qwerty
+qwerty
+_qwerty123
+qwer_ty3
+
+2.
+12.3
+.5
+12.3 34.12E-3 2. 3e3
+'a' 'b' 'M'
+'\124'
++ - / * % > < = == <= >= != ( ) !
+{}
+{
+}
+{{{{{
+}}}}}}}}
+{{}};,;
+;,;,

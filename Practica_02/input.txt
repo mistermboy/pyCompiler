@@ -1,0 +1,24 @@
+
+# One line comment!
+
+""" Integer
+   constants """
+    0 123	
+    0 12   
+
+""" Real
+   constants """
+    12.3  2.  .34
+    34.12E-3  3e3
+
+""" Identifiers """
+
+    var1  _var_1  VAR_1_AB_2
+
+""" Char
+   constants """
+    'a'  'b'  '.'  '-'  '~'
+    '\n'  '\t'
+    '\126'
+
+# Comment at the end of the file

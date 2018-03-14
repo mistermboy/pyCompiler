@@ -12,7 +12,7 @@ import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
-import ast.Negation;
+import ast.UnaryNot;
 import ast.Program;
 import ast.Read;
 import ast.RealLiteral;
@@ -60,7 +60,7 @@ public interface Visitor {
 
 	Object visit(Logical logical, Object o);
 
-	Object visit(Negation negation, Object o);
+	Object visit(UnaryNot negation, Object o);
 
 	Object visit(Program program, Object o);
 

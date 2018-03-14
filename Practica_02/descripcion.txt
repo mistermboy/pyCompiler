@@ -1,0 +1,19 @@
+
+Elementos léxicos sensibles a mayúsculas/minúsculas.
+
+Elementos:
+
+  Comentarios con # hasta el final de línea
+  Comentarios con varias líneas (de """ hasta """)
+  Identificadores { letra | _ (letra|digito)* }
+  Palabras Reservadas: input print def while if else int double char struct return void  	
+  Constantes Enteras sin signo
+  Constantes Reales con punto decimal y formato exponente
+	12.3, 34.12E-3, 2., 3e3
+  Constantes carácter entre '',
+  Constantes carácter entre mediante codigo ASCII	'\126' == '~'
+  Dos caracteres especiales '\n' y '\t'
+  Operadores + - / * % > < = == <= >= != ( ) !
+  Delimitadores de ámbito con llaves { }
+  El delimitador de sentencias ; y de declaración de variables ,
+  POR CONVENIO, el final de fichero es el token 0

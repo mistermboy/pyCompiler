@@ -1,0 +1,10 @@
+"""
+	Errors Handler
+	DLP 17/18
+"""
+i, i:int; # Error: duplicated variable
+
+# Main program
+def main():void {
+	i = 0;
+}

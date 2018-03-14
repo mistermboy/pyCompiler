@@ -14,7 +14,7 @@ import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
-import ast.Negation;
+import ast.UnaryNot;
 import ast.Program;
 import ast.Read;
 import ast.RealLiteral;
@@ -154,7 +154,7 @@ public class TypeCheckingVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Negation negation, Object o) {
+	public Object visit(UnaryNot negation, Object o) {
 		negation.getOperand().accept(this, o);
 		negation.setLValue(false);
 		return null;
