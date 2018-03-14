@@ -24,6 +24,13 @@ import ast.VarDefinition;
 import ast.Variable;
 import ast.WhileStatement;
 import ast.Write;
+import tipo.ArrayType;
+import tipo.CharType;
+import tipo.ErrorType;
+import tipo.FunctionType;
+import tipo.IntType;
+import tipo.RealType;
+import tipo.VoidType;
 
 public class TypeCheckingVisitor implements Visitor {
 
@@ -35,7 +42,9 @@ public class TypeCheckingVisitor implements Visitor {
 
 	@Override
 	public Object visit(Arithmetic a, Object object) {
-		// a.getLeft().a
+		a.getLeft().accept(this, object);
+		a.getRight().accept(this, object);
+		a.setLValue(false);
 		return null;
 	}
 
@@ -167,6 +176,48 @@ public class TypeCheckingVisitor implements Visitor {
 
 	@Override
 	public Object visit(Write write, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ArrayType arrayType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(CharType charType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ErrorType errorType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(FunctionType functionType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(IntType intType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(RealType realType, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(VoidType voidType, Object o) {
 		// TODO Auto-generated method stub
 		return null;
 	}

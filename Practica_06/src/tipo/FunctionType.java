@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.ASTNode;
 import ast.VarDefinition;
+import visitor.Visitor;
 
 public class FunctionType implements Type {
 
@@ -64,6 +65,11 @@ public class FunctionType implements Type {
 		cad += " ):";
 		cad += "" + getReturnType().toString();
 		return cad;
+	}
+	
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

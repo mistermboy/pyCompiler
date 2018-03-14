@@ -1,6 +1,7 @@
 package tipo;
 
 import ast.ASTNode;
+import visitor.Visitor;
 
 public class ArrayType implements Type {
 
@@ -55,6 +56,11 @@ public class ArrayType implements Type {
 	@Override
 	public String toString() {
 		return "[ " + this.off + " ]" + this.of.toString();
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

@@ -24,6 +24,13 @@ import ast.VarDefinition;
 import ast.Variable;
 import ast.WhileStatement;
 import ast.Write;
+import tipo.ArrayType;
+import tipo.CharType;
+import tipo.ErrorType;
+import tipo.FunctionType;
+import tipo.IntType;
+import tipo.RealType;
+import tipo.VoidType;
 
 public interface Visitor {
 
@@ -74,5 +81,19 @@ public interface Visitor {
 	Object visit(WhileStatement whileStatement, Object o);
 
 	Object visit(Write write, Object o);
+
+	Object visit(ArrayType arrayType, Object o);
+
+	Object visit(CharType charType, Object o);
+
+	Object visit(ErrorType errorType, Object o);
+
+	Object visit(FunctionType functionType, Object o);
+
+	Object visit(IntType intType, Object o);
+
+	Object visit(RealType realType, Object o);
+
+	Object visit(VoidType voidType, Object o);
 
 }

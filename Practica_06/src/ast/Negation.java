@@ -45,6 +45,7 @@ public class Negation extends AbstractExpression {
 		return "! " + expresion.toString();
 	}
 	
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

@@ -74,6 +74,7 @@ public class VarDefinition implements Definition, Statement {
 		return "" + this.name + ":" + this.type;
 	}
 	
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

@@ -62,6 +62,7 @@ public class Cast extends AbstractExpression {
 		return "( " + this.castType + " ) " + this.expresion;
 	}
 
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

@@ -55,6 +55,7 @@ public class RecordType implements Type {
 		return cad;
 	}
 	
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

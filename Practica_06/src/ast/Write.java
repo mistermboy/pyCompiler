@@ -27,9 +27,10 @@ public class Write implements Statement {
 
 	@Override
 	public String toString() {
-		return "print "+expresion.toString();
+		return "print " + expresion.toString();
 	}
-	
+
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

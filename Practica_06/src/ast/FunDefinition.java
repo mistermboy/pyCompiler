@@ -60,6 +60,7 @@ public class FunDefinition implements Definition {
 		return cad;
 	}
 
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

@@ -61,11 +61,12 @@ public class Assignment implements Statement {
 	public String toString() {
 		String cad = "";
 		cad += this.left.toString() + "";
-		cad +="=";
+		cad += "=";
 		cad += this.right.toString() + "";
 		return cad;
 	}
-	
+
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

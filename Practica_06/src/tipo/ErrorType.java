@@ -2,6 +2,7 @@ package tipo;
 
 import ast.ASTNode;
 import errorHandler.EH;
+import visitor.Visitor;
 
 public class ErrorType implements Type {
 
@@ -59,6 +60,11 @@ public class ErrorType implements Type {
 	@Override
 	public String toString() {
 		return "ErrorType at row=" + row + " column=" + column + "\n" + message;
+	}
+	
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

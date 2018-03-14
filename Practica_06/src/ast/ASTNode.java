@@ -1,10 +1,14 @@
 package ast;
 
+import visitor.Visitor;
+
 public interface ASTNode {
 
 	int DEFAULT_ROW_COLUMN = 0;
 
-	public int getLine();
+	int getLine();
 
-	public int getColumn();
+	int getColumn();
+
+	Object accept(Visitor v, Object o);
 }

@@ -2,7 +2,7 @@ package ast;
 
 import visitor.Visitor;
 
-public class Indexing extends AbstractExpression implements Statement{
+public class Indexing extends AbstractExpression implements Statement {
 
 	private Expression left;
 	private Expression right;
@@ -47,7 +47,8 @@ public class Indexing extends AbstractExpression implements Statement{
 	public String toString() {
 		return "" + this.left + "[ " + this.right + " ]";
 	}
-	
+
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}

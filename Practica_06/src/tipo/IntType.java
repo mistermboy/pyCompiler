@@ -1,6 +1,7 @@
 package tipo;
 
 import ast.ASTNode;
+import visitor.Visitor;
 
 public class IntType implements Type {
 
@@ -45,4 +46,8 @@ public class IntType implements Type {
 		return "int";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

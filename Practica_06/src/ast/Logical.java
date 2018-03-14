@@ -77,6 +77,7 @@ public class Logical extends AbstractExpression {
 		return cad;
 	}
 
+	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
