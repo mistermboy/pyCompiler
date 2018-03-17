@@ -1,0 +1,21 @@
+# Global variables
+i,n:int;
+c:char;
+record:struct {
+  intField:int;
+  realField:double;
+};
+# Functions
+def f(a:int, c:double):int {
+  real:double;
+  real = c;
+  i = a;
+  return n;
+}
+# Main program
+def main():void {
+  i:int;
+  r:double;
+  print i, f(n,r), record.intField, record.realField;
+}
+
