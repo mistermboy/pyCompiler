@@ -1,12 +1,14 @@
 import java.io.FileReader;
 import java.io.IOException;
+
+import errorHandler.EH;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
+import parser.Parser;
 import scanner.Scanner;
+import visitor.IdentificationVisitor;
 import visitor.TypeCheckingVisitor;
 import visitor.Visitor;
-import parser.Parser;
-import errorHandler.*;
 
 public class Main {
 	public static void main(String args[]) throws IOException {
@@ -28,6 +30,9 @@ public class Main {
 		Parser parser = new Parser(lexico);
 		// * Parsing
 		parser.run();
+
+		Visitor i = new IdentificationVisitor();
+		parser.getAST().accept(i, null);
 
 		Visitor v = new TypeCheckingVisitor();
 		parser.getAST().accept(v, null);

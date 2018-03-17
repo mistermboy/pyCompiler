@@ -1,0 +1,14 @@
+m:int;
+character:char;
+real, m:double; # Error 1
+
+def p(a:int):void {
+ 	print b;
+ 	f();
+}
+
+
+
+def main():void {
+                # Error 4
+}
