@@ -1,10 +1,14 @@
 m:int;
 character:char;
+i,i:char;
 real, m:double; 
 
 def p(a:int):void {
 	a:int;
  	print b;
+ 	3=3;
+ 	(i+2) = 3;
+ 	input (a+b);
  	f();
 }
 
