@@ -59,7 +59,7 @@ public class ErrorType implements Type {
 
 	@Override
 	public String toString() {
-		return "ErrorType at row=" + row + " column=" + column + "\n" + message;
+		return "ErrorType at row=" + getLine() + " column=" + getColumn() + "\n" + message;
 	}
 	
 	@Override

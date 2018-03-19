@@ -108,6 +108,7 @@ public class IdentificationVisitor implements Visitor {
 				statement.accept(this, o);
 			}
 		}
+		symboltable.reset();
 		return null;
 
 	}

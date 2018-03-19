@@ -1,6 +1,13 @@
 m:int;
 character:char;
-real, m:double; # Error 1
+real, m:double; 
+
+def p(a:int):void {
+	a:int;
+ 	print b;
+ 	f();
+}
+
 
 def p(a:int):void {
  	print b;
@@ -8,7 +15,6 @@ def p(a:int):void {
 }
 
 
-
 def main():void {
-                # Error 4
+               
 }
