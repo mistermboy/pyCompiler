@@ -1,0 +1,53 @@
+package visitor;
+
+import ast.FunDefinition;
+import ast.Statement;
+import ast.VarDefinition;
+import ast.Variable;
+import symboltable.SymbolTable;
+import tipo.ErrorType;
+
+public class IdentificationVisitor extends AbstractVisitor {
+
+	private SymbolTable symboltable;
+
+	public IdentificationVisitor() {
+		symboltable = new SymbolTable();
+	}
+
+	@Override
+	public Object visit(Variable v, Object object) {
+		if (symboltable.find(v.getNameString()) == null) {
+			new ErrorType(v, "ERROR: No puedes utilizar una variable que no ha sido previamente definida");
+			//HAY QUE CREAR UNA DEFINICION DE VARIABLE Y SE LO ASIGNAMOS A V.GETDEFINICION();
+		}
+		return null;
+	}
+
+	@Override
+	public Object visit(FunDefinition funDefinition, Object o) {
+		if (!symboltable.insert(funDefinition)) {
+			new ErrorType(funDefinition, "ERROR: No puedes definir una función que ya ha sido previamente definida");
+		}
+		symboltable.set();
+		funDefinition.getType().accept(this, o);
+		if (funDefinition.getStatements() != null) {
+			for (Statement statement : funDefinition.getStatements()) {
+				statement.accept(this, o);
+			}
+		}
+		symboltable.reset();
+		return null;
+
+	}
+
+	@Override
+	public Object visit(VarDefinition varDefinition, Object o) {
+		if (!symboltable.insert(varDefinition)) {
+			new ErrorType(varDefinition, "ERROR: No puedes definir una variable que ya ha sido previamente definida");
+		}
+		varDefinition.getType().accept(this, o);
+		return null;
+	}
+
+}

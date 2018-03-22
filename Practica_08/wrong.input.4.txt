@@ -1,0 +1,21 @@
+
+i:int;
+
+def f(a:int):int {
+  a:double;						# Error 1
+  return 34.5;					# Error 2
+}
+
+def g(b:int, b:double):void {	# Error 3
+  return 3;						# Error 4
+}
+
+def g():void {					# Error 5
+}
+
+def main():void {
+  f();       					# Error 6
+  f(3.2);    					# Error 7
+  i = g();     					# Error 8
+}
+
