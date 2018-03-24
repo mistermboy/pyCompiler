@@ -9,6 +9,7 @@ public class FunDefinition implements Definition {
 	private List<Statement> statements;
 	private String name;
 	private Type type;
+	private int scope;
 
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
@@ -63,6 +64,16 @@ public class FunDefinition implements Definition {
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
+	}
+
+	@Override
+	public int getScope() {
+		return this.scope;
+	}
+
+	@Override
+	public void setScope(int scope) {
+		this.scope = scope;
 	}
 
 }
