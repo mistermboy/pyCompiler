@@ -46,7 +46,6 @@ public class AbstractVisitor implements Visitor {
 	public Object visit(Arithmetic a, Object object) {
 		a.getLeft().accept(this, object);
 		a.getRight().accept(this, object);
-		a.setLValue(false);
 		return null;
 	}
 
@@ -61,13 +60,11 @@ public class AbstractVisitor implements Visitor {
 	public Object visit(Cast cast, Object o) {
 		cast.getExp().accept(this, o);
 		cast.getCastType().accept(this, o);
-		cast.setLValue(false);
 		return null;
 	}
 
 	@Override
 	public Object visit(CharLiteral charLiteral, Object o) {
-		charLiteral.setLValue(false);
 		return null;
 	}
 
@@ -75,14 +72,12 @@ public class AbstractVisitor implements Visitor {
 	public Object visit(Comparison comparison, Object o) {
 		comparison.getLeft().accept(this, o);
 		comparison.getRight().accept(this, o);
-		comparison.setLValue(false);
 		return null;
 	}
 
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object o) {
 		fieldAccess.getExp().accept(this, o);
-		fieldAccess.setLValue(false);
 		return null;
 	}
 
@@ -117,15 +112,13 @@ public class AbstractVisitor implements Visitor {
 
 	@Override
 	public Object visit(Indexing indexing, Object o) {
-		indexing.getVariable().accept(this, o);
-		indexing.getArguments().accept(this, o);
-		indexing.setLValue(true);
+		indexing.getRight().accept(this, o);
+		indexing.getLeft().accept(this, o);
 		return true;
 	}
 
 	@Override
 	public Object visit(IntLiteral intLiteral, Object o) {
-		intLiteral.setLValue(false);
 		return true;
 	}
 
@@ -137,7 +130,6 @@ public class AbstractVisitor implements Visitor {
 				e.accept(this, o);
 			}
 		}
-		invocation.setLValue(false);
 		return null;
 	}
 
@@ -145,14 +137,12 @@ public class AbstractVisitor implements Visitor {
 	public Object visit(Logical logical, Object o) {
 		logical.getLeft().accept(this, o);
 		logical.getRight().accept(this, o);
-		logical.setLValue(false);
 		return null;
 	}
 
 	@Override
 	public Object visit(UnaryNot negation, Object o) {
 		negation.getOperand().accept(this, o);
-		negation.setLValue(false);
 		return null;
 	}
 
@@ -172,7 +162,6 @@ public class AbstractVisitor implements Visitor {
 
 	@Override
 	public Object visit(RealLiteral realLiteral, Object o) {
-		realLiteral.setLValue(false);
 		return null;
 	}
 
@@ -199,7 +188,6 @@ public class AbstractVisitor implements Visitor {
 	@Override
 	public Object visit(UnaryMinus unaryMinus, Object o) {
 		unaryMinus.getOperand().accept(this, o);
-		unaryMinus.setLValue(false);
 		return null;
 	}
 

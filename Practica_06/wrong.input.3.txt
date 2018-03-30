@@ -1,0 +1,10 @@
+# Lvalue required
+
+def main():void {
+	i:int;	
+	i=1;
+	i.a=4;
+	(1+2).a=4;
+	v[5]=7;
+	i+v[2]=3;
+}

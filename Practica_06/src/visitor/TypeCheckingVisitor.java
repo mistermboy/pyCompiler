@@ -86,7 +86,11 @@ public class TypeCheckingVisitor implements Visitor {
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object o) {
 		fieldAccess.getExp().accept(this, o);
-		fieldAccess.setLValue(false);
+		if (!fieldAccess.getExp().getLValue()) {
+			new ErrorType(fieldAccess, "Se esperaba un Lvalue");
+		} else {
+			fieldAccess.setLValue(true);
+		}
 		return null;
 	}
 
@@ -121,9 +125,14 @@ public class TypeCheckingVisitor implements Visitor {
 
 	@Override
 	public Object visit(Indexing indexing, Object o) {
-		indexing.getVariable().accept(this, o);
-		indexing.getArguments().accept(this, o);
-		indexing.setLValue(true);
+		indexing.getRight().accept(this, o);
+		indexing.getLeft().accept(this, o);
+		if (!indexing.getLeft().getLValue()) {
+			new ErrorType(indexing, "Se esperaba un Lvalue");
+		} else {
+			indexing.setLValue(true);
+		}
+
 		return true;
 	}
 
