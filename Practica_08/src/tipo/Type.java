@@ -13,5 +13,7 @@ public interface Type extends ASTNode {
 	Type comparison(Type type);
 	
 	Type logical(Type type);
+	
+	Type logical();
 
 }

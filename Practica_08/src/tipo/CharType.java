@@ -50,5 +50,10 @@ public class CharType extends AbstractType {
 
 		return null;
 	}
+	
+	@Override
+	public Type logical() {
+		return this;
+	}
 
 }

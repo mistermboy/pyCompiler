@@ -153,6 +153,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(UnaryNot negation, Object o) {
 		negation.getOperand().accept(this, o);
+		
+		negation.setType(negation.getOperand().getType().logical());
+		if (negation.getType() == null) {
+			negation.setType(new ErrorType(negation,
+					"ERROR: Se esperaba un tipo entero o caracter en " + negation.toString()));
+		}
+		
 		negation.setLValue(false);
 		return null;
 	}

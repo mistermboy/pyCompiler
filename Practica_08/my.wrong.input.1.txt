@@ -74,7 +74,12 @@ def main():void {
   f = 1 || 0;			
   f = 'a' && 'b' ;		
   
-  
+  f = !2;
+  i = !'c';
+  i = !c;
+  i = !i;
+  i = !f;				# Error 19
+  i = !4.4;				# Error 19
   
 }
 
