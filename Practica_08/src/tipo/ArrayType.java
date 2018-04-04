@@ -63,4 +63,9 @@ public class ArrayType implements Type {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public boolean isLogical() {
+		return false;
+	}
+
 }

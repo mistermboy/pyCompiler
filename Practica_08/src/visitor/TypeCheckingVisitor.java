@@ -7,15 +7,18 @@ import ast.CharLiteral;
 import ast.Comparison;
 import ast.Expression;
 import ast.FieldAccess;
+import ast.IfStatement;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
 import ast.Read;
 import ast.RealLiteral;
+import ast.Statement;
 import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
+import ast.WhileStatement;
 import tipo.ErrorType;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
@@ -91,7 +94,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		indexing.getRight().accept(this, o);
 		indexing.getLeft().accept(this, o);
 		if (!indexing.getLeft().getLValue()) {
-			new ErrorType(indexing, "Se esperaba un Lvalue en: " + indexing.getLeft());
+			new ErrorType(indexing, "ERROR: Se esperaba un Lvalue en: " + indexing.getLeft());
 		} else {
 			indexing.setLValue(true);
 		}
@@ -147,4 +150,43 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return null;
 	}
 
+	@Override
+	public Object visit(WhileStatement whileStatement, Object o) {
+		whileStatement.getCondition().accept(this, o);
+		
+		if (whileStatement.getCondition().getType().isLogical()) {
+			whileStatement.getCondition().setType(new ErrorType(whileStatement.getCondition(),
+					"ERROR: No se ha encontrado un valor booleano en " + whileStatement.getCondition().toString()));
+		}
+
+		for (Statement s : whileStatement.getBody()) {
+			s.accept(this, o);
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Object visit(IfStatement ifStatement, Object o) {
+		ifStatement.getCondition().accept(this, o);
+		
+		if (ifStatement.getCondition().getType().isLogical()) {
+			ifStatement.getCondition().setType(new ErrorType(ifStatement.getCondition(),
+					"ERROR: No se ha encontrado un valor booleano en " + ifStatement.getCondition().toString()));
+		}
+		
+		if (ifStatement.getIfBody() != null) {
+			for (Statement statement : ifStatement.getIfBody()) {
+				statement.accept(this, o);
+			}
+		}
+
+		if (ifStatement.getElseBody() != null) {
+			for (Statement statement : ifStatement.getElseBody()) {
+				statement.accept(this, o);
+			}
+		}
+		return null;
+	}
+	
 }

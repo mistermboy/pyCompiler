@@ -1,8 +1,9 @@
-package ast;
+package tipo;
 
 import java.util.List;
 
-import tipo.Type;
+import ast.ASTNode;
+import ast.RecordField;
 import visitor.Visitor;
 
 public class RecordType implements Type {
@@ -54,10 +55,14 @@ public class RecordType implements Type {
 		cad += "\n }";
 		return cad;
 	}
-	
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public boolean isLogical() {
+		return false;
+	}
 }

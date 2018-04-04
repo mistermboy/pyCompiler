@@ -50,4 +50,9 @@ public class IntType implements Type {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	@Override
+	public boolean isLogical() {
+		return true;
+	}
 }

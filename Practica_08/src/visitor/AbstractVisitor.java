@@ -18,7 +18,6 @@ import ast.Program;
 import ast.Read;
 import ast.RealLiteral;
 import ast.RecordField;
-import ast.RecordType;
 import ast.Return;
 import ast.Statement;
 import ast.UnaryMinus;
@@ -33,6 +32,7 @@ import tipo.ErrorType;
 import tipo.FunctionType;
 import tipo.IntType;
 import tipo.RealType;
+import tipo.RecordType;
 import tipo.VoidType;
 
 public class AbstractVisitor implements Visitor {

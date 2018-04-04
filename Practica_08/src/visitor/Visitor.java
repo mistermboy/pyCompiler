@@ -17,7 +17,6 @@ import ast.Program;
 import ast.Read;
 import ast.RealLiteral;
 import ast.RecordField;
-import ast.RecordType;
 import ast.Return;
 import ast.UnaryMinus;
 import ast.VarDefinition;
@@ -30,6 +29,7 @@ import tipo.ErrorType;
 import tipo.FunctionType;
 import tipo.IntType;
 import tipo.RealType;
+import tipo.RecordType;
 import tipo.VoidType;
 
 public interface Visitor {

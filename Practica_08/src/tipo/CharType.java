@@ -46,4 +46,9 @@ public class CharType implements Type {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+	
+	@Override
+	public boolean isLogical() {
+		return false;
+	}
 }

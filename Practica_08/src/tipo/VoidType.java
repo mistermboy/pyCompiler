@@ -45,10 +45,15 @@ public class VoidType implements Type {
 	public String toString() {
 		return "void";
 	}
-	
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
+	}
+
+	@Override
+	public boolean isLogical() {
+		return false;
 	}
 
 }
