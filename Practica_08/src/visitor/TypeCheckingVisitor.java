@@ -153,6 +153,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(UnaryMinus unaryMinus, Object o) {
 		unaryMinus.getOperand().accept(this, o);
+
+		unaryMinus.setType(unaryMinus.getOperand().getType().arithmetic());
+		if (unaryMinus.getType() == null) {
+			unaryMinus.setType(
+					new ErrorType(unaryMinus, "ERROR: Se esperaba un tipo entero o real en" + unaryMinus.toString()));
+		}
+
 		unaryMinus.setLValue(false);
 		return null;
 	}

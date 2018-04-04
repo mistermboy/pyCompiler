@@ -39,6 +39,17 @@ def main():void {
   
   i = 'a' + 'b' ;		# Error 11
   
+  i = -i;
+  i = -f;
+  
+  i = -c;				# Error 12
+  i = -'a';				# Error 13
+  
+  i = -3;
+  i = -4.4;
+  
+  
+  
   
 	
 }

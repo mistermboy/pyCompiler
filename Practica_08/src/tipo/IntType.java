@@ -44,4 +44,9 @@ public class IntType extends AbstractType {
 		return null;
 	}
 
+	@Override
+	public Type arithmetic() {
+		return this;
+	}
+
 }
