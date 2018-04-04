@@ -46,6 +46,11 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Arithmetic a, Object object) {
 		a.getLeft().accept(this, object);
 		a.getRight().accept(this, object);
+
+		a.setType(a.getLeft().getType().arithmetic(a.getRight().getType()));
+		if (a.getType() == null) {
+			a.setType(new ErrorType(a, "ERROR: Se esperaban tipos iguales (Reales o Enteros) en " + a.toString()));
+		}
 		a.setLValue(false);
 		return null;
 	}

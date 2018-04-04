@@ -29,4 +29,19 @@ public class IntType extends AbstractType {
 	public boolean isLogical() {
 		return true;
 	}
+
+	@Override
+	public Type arithmetic(Type type) {
+
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof IntType) {
+			return this;
+		}
+
+		return null;
+	}
+
 }

@@ -28,4 +28,14 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type arithmetic(Type type) {
+		return null;
+	}
+
+	@Override
+	public Type arithmetic() {
+		return null;
+	}
+
 }

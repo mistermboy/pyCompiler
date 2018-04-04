@@ -16,6 +16,30 @@ def main():void {
   
   if i:
   	print a;		# Error 4
+  	
+  if c: {			# Error 5
+  	print c;
+  	while c:{       # Error 6
+  	 while i:{
+  	  print c;
+  	 }
+  	 print i;
+  	}
+  }	
+  
+  f = f + i;    		# Error 7
+  f = i / f;    		# Error 8
+  
+  f = f * f;			
+  
+  f = f * c;    		# Error 9
+  f = c + c;    		# Error 10  
+  
+  i = f + 2.2;
+  
+  i = 'a' + 'b' ;		# Error 11
+  
+  
 	
 }
 
