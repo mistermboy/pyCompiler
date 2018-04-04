@@ -1,12 +1,8 @@
 package tipo;
 
-import ast.ASTNode;
 import visitor.Visitor;
 
-public class VoidType implements Type {
-
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+public class VoidType extends AbstractType {
 
 	private static VoidType instance = new VoidType();
 
@@ -17,16 +13,6 @@ public class VoidType implements Type {
 		if (instance == null)
 			instance = new VoidType();
 		return instance;
-	}
-
-	@Override
-	public int getLine() {
-		return row;
-	}
-
-	@Override
-	public int getColumn() {
-		return column;
 	}
 
 	public int getRow() {
@@ -49,11 +35,6 @@ public class VoidType implements Type {
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
-	}
-
-	@Override
-	public boolean isLogical() {
-		return false;
 	}
 
 }

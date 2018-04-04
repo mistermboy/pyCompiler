@@ -52,7 +52,7 @@ import java.util.*;
 %nonassoc '[' ']'
 %nonassoc '(' ')'
 
-%nonassoc CUERPO
+%nonassoc ':'
 %nonassoc ELSE
 
 
@@ -153,7 +153,7 @@ expresion: ID 													{ $$ = new Variable(scanner.getLine(),scanner.getColu
 		|  expresion '.' ID										{ $$ = new FieldAccess(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $3);}
 		| '(' tipo ')' expresion  %prec CAST					{ $$ = new Cast(scanner.getLine(),scanner.getColumn(),(Expression) $4,(Type) $2);}
 		| '-' expresion %prec UNARIO							{ $$ = new UnaryMinus(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
-		| '!' expresion											{ $$ = new Negation(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
+		| '!' expresion											{ $$ = new UnaryNot(scanner.getLine(),scanner.getColumn(),(Expression) $2);}
 		|  expresion '*' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
 		|  expresion '/' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
 		|  expresion '%' expresion	 							{ $$ = new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String)$2,(Expression)$3);}
@@ -187,7 +187,7 @@ while: WHILE expresion ':' '{' sentencias '}' ;					{ $$ = new WhileStatement(sc
 // *********  IF-ELSE  *********
 
 
-condicionalSimple: IF expresion ':' cuerpo %prec CUERPO; 		{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,null,(Expression) $2);}
+condicionalSimple: IF expresion ':' cuerpo; 		{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,null,(Expression) $2);}
 condicionalComplejo: IF expresion ':' cuerpo else;				{ $$ = new IfStatement(scanner.getLine(),scanner.getColumn(),(List<Statement>) $4,(List<Statement>) $5,(Expression) $2);}
 
 else: ELSE cuerpo ;												{ $$=$2;}

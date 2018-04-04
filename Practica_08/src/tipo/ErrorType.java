@@ -4,10 +4,7 @@ import ast.ASTNode;
 import errorHandler.EH;
 import visitor.Visitor;
 
-public class ErrorType implements Type {
-
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+public class ErrorType extends AbstractType {
 
 	private String message;
 	private ASTNode node;
@@ -67,9 +64,4 @@ public class ErrorType implements Type {
 		return v.visit(this, o);
 	}
 	
-	@Override
-	public boolean isLogical() {
-		return false;
-	}
-
 }

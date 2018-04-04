@@ -2,14 +2,10 @@ package tipo;
 
 import java.util.List;
 
-import ast.ASTNode;
 import ast.RecordField;
 import visitor.Visitor;
 
-public class RecordType implements Type {
-
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
+public class RecordType extends AbstractType {
 
 	private List<RecordField> fields;
 
@@ -20,30 +16,12 @@ public class RecordType implements Type {
 		this.fields = fields;
 	}
 
-	@Override
-	public int getLine() {
-		return row;
-	}
-
-	@Override
-	public int getColumn() {
-		return column;
-	}
-
 	public List<RecordField> getFields() {
 		return fields;
 	}
 
 	public void setFields(List<RecordField> fields) {
 		this.fields = fields;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
 	}
 
 	@Override
@@ -61,8 +39,4 @@ public class RecordType implements Type {
 		return v.visit(this, o);
 	}
 
-	@Override
-	public boolean isLogical() {
-		return false;
-	}
 }

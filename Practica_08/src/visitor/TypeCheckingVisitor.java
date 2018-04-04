@@ -25,7 +25,9 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(Variable v, Object object) {
-		v.setType(v.getVarDefinition().getType());
+		if (v.getVarDefinition() != null) {
+			v.setType(v.getVarDefinition().getType());
+		}
 		v.setLValue(true);
 		return null;
 	}
@@ -153,10 +155,12 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(WhileStatement whileStatement, Object o) {
 		whileStatement.getCondition().accept(this, o);
-		
-		if (whileStatement.getCondition().getType().isLogical()) {
-			whileStatement.getCondition().setType(new ErrorType(whileStatement.getCondition(),
-					"ERROR: No se ha encontrado un valor booleano en " + whileStatement.getCondition().toString()));
+
+		if (whileStatement.getCondition().getType() != null) {
+			if (!whileStatement.getCondition().getType().isLogical()) {
+				whileStatement.getCondition().setType(new ErrorType(whileStatement.getCondition(),
+						"ERROR: No se ha encontrado un valor booleano en " + whileStatement.getCondition().toString()));
+			}
 		}
 
 		for (Statement s : whileStatement.getBody()) {
@@ -165,16 +169,15 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return null;
 	}
 
-	
 	@Override
 	public Object visit(IfStatement ifStatement, Object o) {
 		ifStatement.getCondition().accept(this, o);
-		
-		if (ifStatement.getCondition().getType().isLogical()) {
+
+		if (!ifStatement.getCondition().getType().isLogical()) {
 			ifStatement.getCondition().setType(new ErrorType(ifStatement.getCondition(),
 					"ERROR: No se ha encontrado un valor booleano en " + ifStatement.getCondition().toString()));
 		}
-		
+
 		if (ifStatement.getIfBody() != null) {
 			for (Statement statement : ifStatement.getIfBody()) {
 				statement.accept(this, o);
@@ -188,5 +191,5 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		}
 		return null;
 	}
-	
+
 }

@@ -1,0 +1,21 @@
+i:int;
+f:double;
+
+
+def main():void {
+  c:char;
+  
+  while asd: {    	# Error 1
+  	print i;
+  }
+  
+  while f: {		# Error 2
+  	 if f:      	# Error 3
+      print f;   	
+  }
+  
+  if i:
+  	print a;		# Error 4
+	
+}
+

@@ -20,8 +20,7 @@ public class IdentificationVisitor extends AbstractVisitor {
 		if (symboltable.find(v.getNameString()) == null) {
 			new ErrorType(v, "ERROR: No puedes utilizar una variable que no ha sido previamente definida");
 		}
-		v.setVarDefinition(new VarDefinition(v.getLine(), v.getColumn(), v.getNameString(), v.getType()));
-		//v.setVarDefinition(symboltable.find(v.getNameString()));  ??????????
+		v.setVarDefinition(symboltable.find(v.getNameString()));
 		return null;
 	}
 

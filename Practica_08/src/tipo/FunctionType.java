@@ -2,15 +2,10 @@ package tipo;
 
 import java.util.List;
 
-import ast.ASTNode;
 import ast.VarDefinition;
 import visitor.Visitor;
 
-public class FunctionType implements Type {
-
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
+public class FunctionType extends AbstractType {
 	private Type returnType;
 	private List<VarDefinition> parameters;
 
@@ -22,15 +17,6 @@ public class FunctionType implements Type {
 		this.parameters = parameters;
 	}
 
-	@Override
-	public int getLine() {
-		return row;
-	}
-
-	@Override
-	public int getColumn() {
-		return column;
-	}
 
 	public void setRow(int row) {
 		this.row = row;
@@ -72,9 +58,5 @@ public class FunctionType implements Type {
 		return v.visit(this, o);
 	}
 	
-	@Override
-	public boolean isLogical() {
-		return false;
-	}
 
 }

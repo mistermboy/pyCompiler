@@ -182,7 +182,6 @@ public final static short OR=278;
 public final static short AND=279;
 public final static short CAST=280;
 public final static short UNARIO=281;
-public final static short CUERPO=282;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
     0,    1,    1,    3,    3,    5,    7,    7,    2,    2,
@@ -509,7 +508,7 @@ yycheck = new short[] {                         37,
 };
 }
 final static short YYFINAL=1;
-final static short YYMAXTOKEN=282;
+final static short YYMAXTOKEN=281;
 final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -530,7 +529,7 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,"INT_CONSTANT","INPUT","PRINT",
 "DEF","WHILE","IF","ELSE","INT","DOUBLE","CHAR","STRUCT","RETURN","VOID","ID",
 "REAL_CONSTANT","CHAR_CONSTANT","GREATER","SMALLER","EQUALS","NEGATION","MAIN",
-"OR","AND","CAST","UNARIO","CUERPO",
+"OR","AND","CAST","UNARIO",
 };
 final static String yyrule[] = {
 "$accept : programa",
@@ -657,7 +656,7 @@ public void yyerror (String error) {
 public Parser(Scanner scanner) {
 	this.scanner = scanner;
 }
-//#line 597 "Parser.java"
+//#line 596 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1123,7 +1122,7 @@ case 78:
 //#line 207 "../../src/parser/parser.y"
 { List<Expression> exps = (List<Expression>) val_peek(2);exps.add((Expression)val_peek(0));yyval=exps;}
 break;
-//#line 1058 "Parser.java"
+//#line 1057 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
