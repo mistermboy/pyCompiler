@@ -53,4 +53,9 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type dot(String s) {
+		return null;
+	}
+
 }

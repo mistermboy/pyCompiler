@@ -9,6 +9,12 @@ def main():void {
   
   f:double;
   
+  a:struct{
+  	b:int;
+  	m:double;
+  };
+  
+  
   while asd: {    	# Error 1
   	print i;
   }
@@ -79,7 +85,12 @@ def main():void {
   i = !c;
   i = !i;
   i = !f;				# Error 19
-  i = !4.4;				# Error 19
+  i = !4.4;				# Error 20
+  
+  a.c = 3;				# Error 21
+  a.b = 3;
+  
+  struucs.a = 4;
   
 }
 

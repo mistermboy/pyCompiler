@@ -15,5 +15,7 @@ public interface Type extends ASTNode {
 	Type logical(Type type);
 	
 	Type logical();
+	
+	Type dot(String s);
 
 }

@@ -97,6 +97,15 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object o) {
 		fieldAccess.getExp().accept(this, o);
+
+		if (fieldAccess.getExp().getType() != null) {
+			fieldAccess.setType(fieldAccess.getExp().getType().dot(fieldAccess.getName()));
+			if (fieldAccess.getType() == null) {
+				fieldAccess.setType(new ErrorType(fieldAccess,
+						"ERROR: No es posible acceder al campo del registro en " + fieldAccess.toString()));
+			}
+		}
+
 		if (fieldAccess.getExp().getLValue()) {
 			fieldAccess.setLValue(true);
 		}
@@ -153,13 +162,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(UnaryNot negation, Object o) {
 		negation.getOperand().accept(this, o);
-		
+
 		negation.setType(negation.getOperand().getType().logical());
 		if (negation.getType() == null) {
-			negation.setType(new ErrorType(negation,
-					"ERROR: Se esperaba un tipo entero o caracter en " + negation.toString()));
+			negation.setType(
+					new ErrorType(negation, "ERROR: Se esperaba un tipo entero o caracter en " + negation.toString()));
 		}
-		
+
 		negation.setLValue(false);
 		return null;
 	}

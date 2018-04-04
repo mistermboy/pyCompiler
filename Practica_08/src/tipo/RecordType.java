@@ -39,4 +39,14 @@ public class RecordType extends AbstractType {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public Type dot(String s) {
+		for (RecordField r : getFields()) {
+			if (r.getName().equals(s)) {
+				return r.getType();
+			}
+		}
+		return null;
+	}
+
 }
