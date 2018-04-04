@@ -27,19 +27,19 @@ public class Indexing extends AbstractExpression implements Statement {
 		return row;
 	}
 
-	public Expression getArguments() {
+	public Expression getLeft() {
 		return left;
 	}
 
-	public void setArguments(Expression arguments) {
+	public void setLeft(Expression arguments) {
 		this.left = arguments;
 	}
 
-	public Expression getVariable() {
+	public Expression getRight() {
 		return right;
 	}
 
-	public void setVariable(Expression variable) {
+	public void setRight(Expression variable) {
 		this.right = variable;
 	}
 
