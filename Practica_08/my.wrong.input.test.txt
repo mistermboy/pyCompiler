@@ -1,0 +1,20 @@
+i:int;
+f:double;
+
+f:double;
+
+def a(f:double):void{
+	f:double;
+}
+
+
+def a():void{
+	
+}
+
+
+def main():void {
+  c:char;
+  f:double;
+}
+

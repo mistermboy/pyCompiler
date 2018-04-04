@@ -5,6 +5,10 @@ f:double;
 def main():void {
   c:char;
   
+  f:double;
+  
+  f:double;
+  
   while asd: {    	# Error 1
   	print i;
   }
@@ -48,9 +52,8 @@ def main():void {
   i = -3;
   i = -4.4;
   
+  i = asfd;
   
   
-  
-	
 }
 

@@ -17,7 +17,7 @@ public class RealType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "real";
+		return "double";
 	}
 
 	@Override

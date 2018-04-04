@@ -157,7 +157,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		unaryMinus.setType(unaryMinus.getOperand().getType().arithmetic());
 		if (unaryMinus.getType() == null) {
 			unaryMinus.setType(
-					new ErrorType(unaryMinus, "ERROR: Se esperaba un tipo entero o real en" + unaryMinus.toString()));
+					new ErrorType(unaryMinus, "ERROR: Se esperaba un tipo entero o real en " + unaryMinus.toString()));
 		}
 
 		unaryMinus.setLValue(false);
