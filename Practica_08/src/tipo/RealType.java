@@ -43,5 +43,18 @@ public class RealType extends AbstractType {
 	public Type arithmetic() {
 		return this;
 	}
+	
+	@Override
+	public Type comparison(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof RealType) {
+			return this;
+		}
+		
+		return null;
+	}
 
 }

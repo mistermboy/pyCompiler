@@ -49,4 +49,30 @@ public class IntType extends AbstractType {
 		return this;
 	}
 
+	@Override
+	public Type comparison(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof IntType) {
+			return this;
+		}
+
+		return null;
+	}
+
+	@Override
+	public Type logical(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof IntType) {
+			return this;
+		}
+
+		return null;
+	}
+
 }

@@ -55,5 +55,26 @@ def main():void {
   i = asfd;
   
   
+  i = i > 3;
+  
+  i = i > f;			# Error 14
+  i = f < f;		
+  i = i == f;			# Error 15
+  i = i != 33;
+  
+  f = i != 3.3;			# Error 16
+  
+  f = i || 3 ;
+  f = i && f ;			# Error 17
+  
+  f = f || f ;			# Error 18
+  
+  f = c && c ;			
+  
+  f = 1 || 0;			
+  f = 'a' && 'b' ;		
+  
+  
+  
 }
 

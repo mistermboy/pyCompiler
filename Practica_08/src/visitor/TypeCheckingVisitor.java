@@ -67,6 +67,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Comparison comparison, Object o) {
 		comparison.getLeft().accept(this, o);
 		comparison.getRight().accept(this, o);
+
+		comparison.setType(comparison.getLeft().getType().comparison(comparison.getRight().getType()));
+		if (comparison.getType() == null) {
+			comparison.setType(
+					new ErrorType(comparison, "ERROR: Se esperaban tipos iguales en " + comparison.toString()));
+		}
+
 		comparison.setLValue(false);
 		return null;
 	}
@@ -132,6 +139,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Logical logical, Object o) {
 		logical.getLeft().accept(this, o);
 		logical.getRight().accept(this, o);
+
+		logical.setType(logical.getLeft().getType().logical(logical.getRight().getType()));
+		if (logical.getType() == null) {
+			logical.setType(new ErrorType(logical,
+					"ERROR: Se esperaban tipos iguales (Enteros o Carácteres) en " + logical.toString()));
+		}
+
 		logical.setLValue(false);
 		return null;
 	}

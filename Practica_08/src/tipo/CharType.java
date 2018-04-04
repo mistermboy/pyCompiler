@@ -24,5 +24,31 @@ public class CharType extends AbstractType {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
-	
+
+	@Override
+	public Type comparison(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		return null;
+	}
+
+	@Override
+	public Type logical(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		return null;
+	}
+
 }

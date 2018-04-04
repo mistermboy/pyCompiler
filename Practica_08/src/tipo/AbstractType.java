@@ -38,4 +38,14 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type comparison(Type type) {
+		return null;
+	}
+
+	@Override
+	public Type logical(Type type) {
+		return null;
+	}
+
 }
