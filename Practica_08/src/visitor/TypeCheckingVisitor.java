@@ -22,6 +22,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(Variable v, Object object) {
+		v.setType(v.getVarDefinition().getType());
 		v.setLValue(true);
 		return null;
 	}
@@ -62,6 +63,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(CharLiteral charLiteral, Object o) {
+		charLiteral.setType(tipo.CharType.getInstance());
 		charLiteral.setLValue(false);
 		return null;
 	}
@@ -99,6 +101,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(IntLiteral intLiteral, Object o) {
+		intLiteral.setType(tipo.IntType.getInstance());
 		intLiteral.setLValue(false);
 		return true;
 	}
@@ -132,6 +135,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(RealLiteral realLiteral, Object o) {
+		realLiteral.setType(tipo.RealType.getInstance());
 		realLiteral.setLValue(false);
 		return null;
 	}
