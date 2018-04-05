@@ -68,4 +68,9 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type promotesTo(Type type) {
+		return null;
+	}
+
 }

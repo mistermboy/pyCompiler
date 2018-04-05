@@ -101,5 +101,21 @@ def main():void {
   f = (double) i;		# Error 24
   f = (int) fs;			# Error 23
   
+  f = i;
+  f = 33.3;
+  
+  i=f;
+  i=i;
+  i=33.3;
+  i=0;
+  
+  i='a';
+  
+  c=33;
+  c=i;
+  c='s';
+  
+  
+  
 }
 

@@ -39,6 +39,15 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		if (!a.getLeft().getLValue()) {
 			new ErrorType(a.getLeft(), "ERROR: Se esperaba un Lvalue en: " + a.getLeft());
 		}
+
+		if (a.getLeft().getType() != null && a.getRight().getType() != null) {
+			a.getLeft().setType(a.getRight().getType().promotesTo(a.getLeft().getType()));
+			if (a.getLeft().getType() == null) {
+				a.getLeft().setType(new ErrorType(a.getLeft(),
+						"ERROR: No es posible realizar la asignación entre dos tipos distintos en " + a.toString()));
+			}
+		}
+
 		return null;
 	}
 

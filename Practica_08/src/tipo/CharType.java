@@ -69,5 +69,19 @@ public class CharType extends AbstractType {
 
 		return null;
 	}
+	
+	@Override
+	public Type promotesTo(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		return null;
+	}
+
 
 }

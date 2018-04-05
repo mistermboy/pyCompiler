@@ -70,4 +70,17 @@ public class RealType extends AbstractType {
 		return null;
 	}
 
+	@Override
+	public Type promotesTo(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof RealType) {
+			return this;
+		}
+
+		return null;
+	}
+
 }
