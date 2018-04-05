@@ -58,4 +58,9 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type squareBrackets(Type type) {
+		return null;
+	}
+
 }

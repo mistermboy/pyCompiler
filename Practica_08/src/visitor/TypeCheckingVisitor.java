@@ -116,6 +116,13 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Indexing indexing, Object o) {
 		indexing.getRight().accept(this, o);
 		indexing.getLeft().accept(this, o);
+
+		indexing.setType(indexing.getLeft().getType().squareBrackets(indexing.getRight().getType()));
+		if (indexing.getType() == null) {
+			indexing.setType(
+					new ErrorType(indexing, "ERROR: No es posible acceder al array en " + indexing.toString()));
+		}
+
 		if (!indexing.getLeft().getLValue()) {
 			new ErrorType(indexing, "ERROR: Se esperaba un Lvalue en: " + indexing.getLeft());
 		} else {

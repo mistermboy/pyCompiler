@@ -11,11 +11,13 @@ public interface Type extends ASTNode {
 	Type arithmetic();
 
 	Type comparison(Type type);
-	
+
 	Type logical(Type type);
-	
+
 	Type logical();
-	
+
 	Type dot(String s);
+
+	Type squareBrackets(Type type);
 
 }

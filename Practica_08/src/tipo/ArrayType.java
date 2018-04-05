@@ -41,4 +41,19 @@ public class ArrayType extends AbstractType {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public Type squareBrackets(Type type) {
+
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof ArrayType) {
+			return of;
+		}
+
+		return null;
+
+	}
+
 }
