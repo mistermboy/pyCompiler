@@ -63,4 +63,9 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public Type canBeCast(Type type) {
+		return null;
+	}
+
 }

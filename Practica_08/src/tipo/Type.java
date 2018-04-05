@@ -20,4 +20,6 @@ public interface Type extends ASTNode {
 
 	Type squareBrackets(Type type);
 
+	Type canBeCast(Type type);
+
 }

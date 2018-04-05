@@ -43,7 +43,7 @@ public class RealType extends AbstractType {
 	public Type arithmetic() {
 		return this;
 	}
-	
+
 	@Override
 	public Type comparison(Type type) {
 		if (type instanceof ErrorType) {
@@ -53,7 +53,20 @@ public class RealType extends AbstractType {
 		if (type instanceof RealType) {
 			return this;
 		}
-		
+
+		return null;
+	}
+
+	@Override
+	public Type canBeCast(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof RealType) {
+			return this;
+		}
+
 		return null;
 	}
 

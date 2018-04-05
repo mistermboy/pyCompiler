@@ -74,10 +74,23 @@ public class IntType extends AbstractType {
 
 		return null;
 	}
-	
+
 	@Override
 	public Type logical() {
 		return this;
+	}
+
+	@Override
+	public Type canBeCast(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof IntType) {
+			return this;
+		}
+
+		return null;
 	}
 
 }

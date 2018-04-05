@@ -92,5 +92,14 @@ def main():void {
   
   struucs.a = 4;
   
+  f = (double) 4.5;
+  f = (int) 4.5;		# Error 22
+  
+  f = (double) f;
+  f = (int) f;			# Error 23
+  
+  f = (double) i;		# Error 24
+  f = (int) fs;			# Error 23
+  
 }
 

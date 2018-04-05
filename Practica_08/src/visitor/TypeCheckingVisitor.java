@@ -59,6 +59,12 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Cast cast, Object o) {
 		cast.getExp().accept(this, o);
 		cast.getCastType().accept(this, o);
+
+		cast.setType(cast.getCastType().canBeCast(cast.getExp().getType()));
+		if (cast.getType() == null) {
+			cast.setType(new ErrorType(cast, "ERROR: No es posible realizar el casteo en " + cast.toString()));
+		}
+
 		cast.setLValue(false);
 		return null;
 	}

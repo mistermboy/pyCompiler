@@ -55,5 +55,19 @@ public class CharType extends AbstractType {
 	public Type logical() {
 		return this;
 	}
+	
+
+	@Override
+	public Type canBeCast(Type type) {
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		return null;
+	}
 
 }
