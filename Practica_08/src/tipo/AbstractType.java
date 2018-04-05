@@ -1,5 +1,7 @@
 package tipo;
 
+import java.util.List;
+
 import ast.ASTNode;
 import visitor.Visitor;
 
@@ -70,6 +72,11 @@ public class AbstractType implements Type {
 
 	@Override
 	public Type promotesTo(Type type) {
+		return null;
+	}
+
+	@Override
+	public Type parentesis(List<Type> types) {
 		return null;
 	}
 

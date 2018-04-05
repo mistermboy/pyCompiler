@@ -17,7 +17,6 @@ public class FunctionType extends AbstractType {
 		this.parameters = parameters;
 	}
 
-
 	public void setRow(int row) {
 		this.row = row;
 	}
@@ -52,11 +51,23 @@ public class FunctionType extends AbstractType {
 		cad += "" + getReturnType().toString();
 		return cad;
 	}
-	
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
-	
+
+	@Override
+	public Type parentesis(List<Type> types) {
+		if (types.size() == parameters.size()) {
+			for (int i = 0; i < types.size(); i++) {
+				if (types.get(i).promotesTo(parameters.get(i).getType()) == null) {
+					return null;
+				}
+			}
+			return returnType;
+		}
+		return null;
+	}
 
 }

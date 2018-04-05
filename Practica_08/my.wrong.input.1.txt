@@ -2,6 +2,20 @@ i:int;
 f:double;
 
 
+def road():void{
+
+}
+
+def play(a:double):void{
+
+}
+
+
+def playFornite(a:int,b:double,c:char):void{
+
+}
+
+
 def main():void {
   c:char;
   
@@ -116,6 +130,24 @@ def main():void {
   c='s';
   
   
+  road();
+  
+  road(2);
+  
+  play();
+  
+  play(i);
+  
+  play(f);
+  
+  play(c);
+  
+  
+  playFornite();
+  
+  playFornite(i,f,c);
+  
+  playFornite(f,i,c);
   
 }
 

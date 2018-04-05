@@ -1,5 +1,8 @@
 package visitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ast.Arithmetic;
 import ast.Assignment;
 import ast.Cast;
@@ -20,6 +23,7 @@ import ast.UnaryNot;
 import ast.Variable;
 import ast.WhileStatement;
 import tipo.ErrorType;
+import tipo.Type;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
 
@@ -157,11 +161,22 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(Invocation invocation, Object o) {
 		invocation.getFuncion().accept(this, o);
+
+		List<Type> types = new ArrayList<Type>();
 		if (invocation.getArguments() != null) {
+
 			for (Expression e : invocation.getArguments()) {
 				e.accept(this, o);
+				types.add(e.getType());
 			}
 		}
+
+		invocation.setType(invocation.getFuncion().getType().parentesis(types));
+		if (invocation.getType() == null) {
+			invocation.setType(new ErrorType(invocation,
+					"ERROR: No ha sido posible invocar a la función en: " + invocation.toString()));
+		}
+
 		invocation.setLValue(false);
 		return null;
 	}
