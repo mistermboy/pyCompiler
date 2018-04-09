@@ -86,7 +86,7 @@ public class AbstractVisitor implements Visitor {
 		funDefinition.getType().accept(this, o);
 		if (funDefinition.getStatements() != null) {
 			for (Statement statement : funDefinition.getStatements()) {
-				statement.accept(this, o);
+				statement.accept(this, funDefinition.getType());
 			}
 		}
 		return null;

@@ -1,9 +1,31 @@
 v:[10]int ;
 
+s:struct{
+	s:int;
+};
+
+def f():int{
+a:int;
+b:double;
+c:int;
+return a&&b;
+
+if b:{
+	return 3.3;
+	}
+
+
+}
+
 def main():void {
-  i:int;
-  i[0] = 0;			# Error 1
-  v[3] = 3.4;		# Error 2
-  v[1][2] = 'a';	# Error 3
+	a:int;
+	a = (int) c;
+	a = dsfsd;
+	if(a>=c):{
+		a=3;
+	}
+	while(a>asd):{
+		a=3;
+	}
 }
 

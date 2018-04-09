@@ -9,8 +9,9 @@ a:struct  {
 def main():void {
   print i && f; 	# Error 1
   print a >= 3; 	# Error 2
-  while f:     		# Error 3
+  while f:{     	# Error 3
     if f:      		# Error 4
-      print !f;   	# Error 5
+      print !f; 	# Error 5
+   }  	
 }
 

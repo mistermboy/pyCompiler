@@ -17,12 +17,14 @@ import ast.Invocation;
 import ast.Logical;
 import ast.Read;
 import ast.RealLiteral;
+import ast.Return;
 import ast.Statement;
 import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
 import ast.WhileStatement;
 import tipo.ErrorType;
+import tipo.FunctionType;
 import tipo.Type;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
@@ -267,6 +269,21 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 			for (Statement statement : ifStatement.getElseBody()) {
 				statement.accept(this, o);
 			}
+		}
+		return null;
+	}
+
+	@Override
+	public Object visit(Return return1, Object o) {
+		return1.getExpression().accept(this, o);
+
+		FunctionType fType = (FunctionType) o;
+		return1.getExpression().setType(return1.getExpression().getType().promotesTo(fType.getReturnType()));
+
+		if (return1.getExpression().getType() == null) {
+			return1.getExpression().setType(
+					new ErrorType(return1, "ERROR: El valor retornado no es el esperado en: " + return1.toString()));
+			;
 		}
 		return null;
 	}
