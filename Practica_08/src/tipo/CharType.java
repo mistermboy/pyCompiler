@@ -50,12 +50,11 @@ public class CharType extends AbstractType {
 
 		return null;
 	}
-	
+
 	@Override
 	public Type logical() {
 		return this;
 	}
-	
 
 	@Override
 	public Type canBeCast(Type type) {
@@ -69,7 +68,7 @@ public class CharType extends AbstractType {
 
 		return null;
 	}
-	
+
 	@Override
 	public Type promotesTo(Type type) {
 		if (type instanceof ErrorType) {
@@ -83,5 +82,9 @@ public class CharType extends AbstractType {
 		return null;
 	}
 
+	@Override
+	public boolean isBuildingType() {
+		return true;
+	}
 
 }

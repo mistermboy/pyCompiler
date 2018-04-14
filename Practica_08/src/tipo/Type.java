@@ -27,5 +27,6 @@ public interface Type extends ASTNode {
 	Type promotesTo(Type type);
 
 	Type parentesis(List<Type> types);
-
+	
+	boolean isBuildingType();
 }

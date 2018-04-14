@@ -80,4 +80,9 @@ public class AbstractType implements Type {
 		return null;
 	}
 
+	@Override
+	public boolean isBuildingType() {
+		return false;
+	}
+
 }

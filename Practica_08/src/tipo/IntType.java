@@ -106,4 +106,8 @@ public class IntType extends AbstractType {
 		return null;
 	}
 
+	@Override
+	public boolean isBuildingType() {
+		return true;
+	}
 }

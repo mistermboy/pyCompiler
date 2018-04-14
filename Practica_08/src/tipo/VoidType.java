@@ -37,4 +37,9 @@ public class VoidType extends AbstractType {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public boolean isBuildingType() {
+		return true;
+	}
+
 }

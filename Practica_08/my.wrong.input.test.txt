@@ -1,31 +1,10 @@
-v:[10]int ;
 
-s:struct{
-	s:int;
-};
-
-def f():int{
-a:int;
-b:double;
-c:int;
-return a&&b;
-
-if b:{
-	return 3.3;
-	}
-
-
+def f():[4][4]struct{a:int;}{
+	a:double;
 }
 
 def main():void {
-	a:int;
-	a = (int) c;
-	a = dsfsd;
-	if(a>=c):{
-		a=3;
-	}
-	while(a>asd):{
-		a=3;
-	}
+	a:double;
+	
 }
 

@@ -288,4 +288,17 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return null;
 	}
 
+	@Override
+	public Object visit(FunctionType functionType, Object o) {
+		if (!functionType.getReturnType().isBuildingType()) {
+			new ErrorType(functionType, "ERROR: El valor de retorno de la función no es un tipo simple en: "
+					+ functionType.getReturnType().toString());
+		}
+		functionType.getReturnType().accept(this, o);
+		for (Statement s : functionType.getParameters()) {
+			s.accept(this, o);
+		}
+		return null;
+	}
+
 }

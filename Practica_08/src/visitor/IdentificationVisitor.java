@@ -30,6 +30,7 @@ public class IdentificationVisitor extends AbstractVisitor {
 		if (!symboltable.insert(funDefinition)) {
 			new ErrorType(funDefinition, "ERROR: No puedes definir una función que ya ha sido previamente definida en " + funDefinition.getName().toString());
 		}
+
 		symboltable.set();
 		funDefinition.getType().accept(this, o);
 		if (funDefinition.getStatements() != null) {
