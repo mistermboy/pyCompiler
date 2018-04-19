@@ -1,0 +1,29 @@
+
+# Global variables
+i: int;
+r: double;
+c: char;
+
+# Functions
+def f(pi:int, pr:double ): int {
+  lr:double;
+  li:int;
+  li = pi;
+  lr = pr;
+  return pi;
+}
+
+# Main program
+def main():void {
+  pair: struct { 
+    integer:int;
+    character:char;
+  };
+
+  i = 3;
+  c = 'a';
+  r = 3.8;
+  pair.integer = i;
+  pair.character = c;
+  f(i, r);
+}

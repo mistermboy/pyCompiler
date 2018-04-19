@@ -1,29 +1,28 @@
-
-# Global variables
+c: char;
 i: int;
 r: double;
-c: char;
 
-# Functions
-def f(pi:int, pr:double ): int {
-  lr:double;
-  li:int;
-  li = pi;
-  lr = pr;
-  return pi;
-}
-
-# Main program
 def main():void {
-  pair: struct { 
-    integer:int;
-    character:char;
-  };
+	a, i:int;
+	
+	c='a';
+	print c,'\n';
 
-  i = 3;
-  c = 'a';
-  r = 3.8;
-  pair.integer = i;
-  pair.character = c;
-  f(i, r);
+	a=1;
+	i=(int)'0'*3;
+	print a, ' ', i, '\n';
+		
+	input r;
+	print (double)2*r, '\n';
+	
+	print (double)3-4.5, ' ', 
+            (double)'0'/48.0, ' ',
+            '0'%'1', ' ',
+            '0'+'1', '\n';
+	print 1<2, ' ',
+	      4>=3, ' ',
+	      5==5, ' ',
+	      1&&2, ' ',
+	      0||3, ' ',
+	      !0, '\n';
 }
