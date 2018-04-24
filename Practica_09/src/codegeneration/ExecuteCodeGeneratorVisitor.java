@@ -1,14 +1,20 @@
 package codegeneration;
 
 import ast.Arithmetic;
+import ast.Assignment;
 import ast.Definition;
+import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.Invocation;
+import ast.Logical;
 import ast.Program;
 import ast.Read;
 import ast.Statement;
 import ast.VarDefinition;
+import ast.WhileStatement;
 import ast.Write;
+import tipo.FunctionType;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -35,6 +41,18 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	}
 
 	@Override
+	public Object visit(FunDefinition funDefinition, Object o) {
+
+		cg.etiqueta(funDefinition.getName());
+
+		// for(Definition d: funDefinition.getType())
+		// Como accedo a los parámetros???
+		// cg.enter(funDefinition.get)
+
+		return null;
+	}
+
+	@Override
 	public Object visit(Write write, Object o) {
 
 		write.getExpresion().accept(valueCgVisitor, o);
@@ -54,46 +72,112 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	}
 
 	@Override
-	public Object visit(Arithmetic arithmetic, Object object) {
+	public Object visit(Assignment assignment, Object o) {
 
-		arithmetic.getLeft().accept(valueCgVisitor, object);
-		arithmetic.getLeft().accept(valueCgVisitor, object);
-
-		if (arithmetic.getOperator() == "+") {
-			cg.add(arithmetic.getType());
-		}
-
-		if (arithmetic.getOperator() == "-") {
-			cg.sub(arithmetic.getType());
-		}
-
-		if (arithmetic.getOperator() == "*") {
-			cg.mul(arithmetic.getType());
-		}
-
-		if (arithmetic.getOperator() == "/") {
-			cg.div(arithmetic.getType());
-		}
+		assignment.getLeft().accept(adressCgVisitor, o);
+		assignment.getRight().accept(valueCgVisitor, o);
+		// CONVERSIÓN IMPLÍCITA RELLENAR
+		cg.store(assignment.getLeft().getType());
 
 		return null;
 	}
 
-	@Override
-	public Object visit(IfStatement ifStatement, Object o) {
-
-		ifStatement.getCondition().accept(valueCgVisitor, o);
-		cg.jz("cuerpoElse");
-		for (Statement s : ifStatement.getIfBody()) {
-			s.accept(valueCgVisitor, o);
-		}
-		cg.jmp("cuerpoElse");
-		cg.etiqueta("cuerpoElse");
-		for (Statement s : ifStatement.getElseBody()) {
-			s.accept(valueCgVisitor, o);
-		}
-		cg.incrementaContador();
-
-		return null;
-	}
+	// @Override
+	// public Object visit(Arithmetic arithmetic, Object object) {
+	//
+	// arithmetic.getLeft().accept(valueCgVisitor, object);
+	// arithmetic.getLeft().accept(valueCgVisitor, object);
+	//
+	// if (arithmetic.getOperator() == "+") {
+	// cg.add(arithmetic.getType());
+	// }
+	//
+	// if (arithmetic.getOperator() == "-") {
+	// cg.sub(arithmetic.getType());
+	// }
+	//
+	// if (arithmetic.getOperator() == "*") {
+	// cg.mul(arithmetic.getType());
+	// }
+	//
+	// if (arithmetic.getOperator() == "/") {
+	// cg.div(arithmetic.getType());
+	// }
+	//
+	// return null;
+	// }
+	//
+	// @Override
+	// public Object visit(IfStatement ifStatement, Object o) {
+	//
+	// ifStatement.getCondition().accept(valueCgVisitor, o);
+	// cg.jz("cuerpoElse");
+	// for (Statement s : ifStatement.getIfBody()) {
+	// s.accept(valueCgVisitor, o);
+	// }
+	// cg.jmp("cuerpoElse");
+	// cg.etiqueta("cuerpoElse");
+	// for (Statement s : ifStatement.getElseBody()) {
+	// s.accept(valueCgVisitor, o);
+	// }
+	// cg.incrementaContador();
+	//
+	// return null;
+	// }
+	//
+	// @Override
+	// public Object visit(WhileStatement whileStatement, Object o) {
+	//
+	// cg.etiqueta("bucleWhile");
+	// whileStatement.getCondition().accept(valueCgVisitor, o);
+	// cg.jz("finBucle");
+	// for (Statement s : whileStatement.getBody()) {
+	// s.accept(valueCgVisitor, o);
+	// }
+	// cg.jmp("bucleWhile");
+	// cg.incrementaContador();
+	//
+	// return null;
+	// }
+	//
+	// @Override
+	// public Object visit(Logical logical, Object o) {
+	//
+	// logical.getLeft().accept(valueCgVisitor, o);
+	// logical.getRight().accept(valueCgVisitor, o);
+	//
+	// if (logical.getLogicalOperator() == "<") {
+	// cg.lt();
+	// }
+	//
+	// if (logical.getLogicalOperator() == "<=") {
+	// cg.le();
+	// }
+	//
+	// if (logical.getLogicalOperator() == ">") {
+	// cg.gt();
+	// }
+	//
+	// if (logical.getLogicalOperator() == ">=") {
+	// cg.ge();
+	// }
+	//
+	// return null;
+	//
+	// }
+	//
+	// @Override
+	// public Object visit(Invocation invocation, Object o) {
+	//
+	// for (Expression s : invocation.getArguments()) {
+	// s.accept(valueCgVisitor, o);
+	// }
+	// cg.call(invocation.getFuncion().getNameString());
+	// // if(invocation.getFuncion().getVarDefinition())
+	//
+	// // COMO ACCEDO A EL RETORNO PA SABER SI HAY QUE HACER POP
+	// return null;
+	//
+	// }
 
 }

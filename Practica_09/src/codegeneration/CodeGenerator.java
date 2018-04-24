@@ -105,4 +105,29 @@ public class CodeGenerator {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void lt() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void le() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void gt() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ge() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void call(String nameString) {
+		// TODO Auto-generated method stub
+		
+	}
 }
