@@ -103,7 +103,7 @@ public class RealType extends AbstractType {
 	
 	@Override
 	public char suffix() {
-		return 'R';
+		return 'F';
 	}
 
 }

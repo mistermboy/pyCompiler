@@ -1,5 +1,5 @@
 package codegeneration;
 
-public class AdressCodeGeneratorVisitor {
+public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor{
 
 }

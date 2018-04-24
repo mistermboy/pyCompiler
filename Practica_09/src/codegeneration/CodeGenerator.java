@@ -8,12 +8,13 @@ import tipo.Type;
 public class CodeGenerator {
 
 	private FileWriter out;
+	private int contadorEtiquetas = 1;
 
 	public CodeGenerator(String entrada, String salida) {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void pushb() {
+	public void pushbp() {
 
 	}
 
@@ -42,4 +43,66 @@ public class CodeGenerator {
 		out.flush();
 	}
 
+	public void callMain() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void halt() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void out(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void in(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void store(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void add(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void sub(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void mul(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void div(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void jz(String string) {
+
+	}
+
+	public void jmp(String string) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void incrementaContador() {
+		this.contadorEtiquetas++;
+	}
+
+	public void etiqueta(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
