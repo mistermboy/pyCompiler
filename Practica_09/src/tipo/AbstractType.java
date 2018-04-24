@@ -90,4 +90,10 @@ public class AbstractType implements Type {
 		return 0;
 	}
 
+	@Override
+	public char suffix() {
+		return 0;
+
+	}
+
 }
