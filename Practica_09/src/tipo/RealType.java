@@ -63,6 +63,14 @@ public class RealType extends AbstractType {
 			return type;
 		}
 
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		if (type instanceof IntType) {
+			return this;
+		}
+
 		if (type instanceof RealType) {
 			return this;
 		}
@@ -82,12 +90,12 @@ public class RealType extends AbstractType {
 
 		return null;
 	}
-	
+
 	@Override
 	public boolean isBuildingType() {
 		return true;
 	}
-	
+
 	@Override
 	public int numberOfBytes() {
 		return 4;

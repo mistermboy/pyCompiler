@@ -26,6 +26,21 @@ public class CharType extends AbstractType {
 	}
 
 	@Override
+	public Type arithmetic(Type type) {
+
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof CharType) {
+			return this;
+		}
+
+		return null;
+
+	}
+
+	@Override
 	public Type comparison(Type type) {
 		if (type instanceof ErrorType) {
 			return type;
@@ -66,6 +81,14 @@ public class CharType extends AbstractType {
 			return this;
 		}
 
+		if (type instanceof IntType) {
+			return this;
+		}
+
+		if (type instanceof RealType) {
+			return this;
+		}
+
 		return null;
 	}
 
@@ -86,7 +109,7 @@ public class CharType extends AbstractType {
 	public boolean isBuildingType() {
 		return true;
 	}
-	
+
 	@Override
 	public int numberOfBytes() {
 		return 1;

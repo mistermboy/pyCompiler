@@ -54,7 +54,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 						"ERROR: No es posible realizar la asignación entre dos tipos distintos en " + a.toString()));
 			}
 		}
-
+		
 		return null;
 	}
 
