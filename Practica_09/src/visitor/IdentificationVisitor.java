@@ -1,6 +1,5 @@
 package visitor;
 
-import ast.Definition;
 import ast.FunDefinition;
 import ast.Statement;
 import ast.VarDefinition;
@@ -29,7 +28,8 @@ public class IdentificationVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(FunDefinition funDefinition, Object o) {
 		if (!symboltable.insert(funDefinition)) {
-			new ErrorType(funDefinition, "ERROR: No puedes definir una función que ya ha sido previamente definida en " + funDefinition.getName().toString());
+			new ErrorType(funDefinition, "ERROR: No puedes definir una función que ya ha sido previamente definida en "
+					+ funDefinition.getName().toString());
 		}
 
 		symboltable.set();
@@ -47,7 +47,8 @@ public class IdentificationVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(VarDefinition varDefinition, Object o) {
 		if (!symboltable.insert(varDefinition)) {
-			new ErrorType(varDefinition, "ERROR: No puedes definir una variable que ya ha sido previamente definida en " + varDefinition.toString());
+			new ErrorType(varDefinition, "ERROR: No puedes definir una variable que ya ha sido previamente definida en "
+					+ varDefinition.toString());
 		}
 		varDefinition.getType().accept(this, o);
 		return null;
