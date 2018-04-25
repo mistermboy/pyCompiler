@@ -8,7 +8,6 @@ import tipo.Type;
 public class CodeGenerator {
 
 	private FileWriter out;
-	private int contadorEtiquetas = 1;
 
 	public CodeGenerator(String entrada, String salida) {
 		// TODO Auto-generated constructor stub
@@ -18,29 +17,29 @@ public class CodeGenerator {
 
 	}
 
-	public void pusha(int n) throws IOException {
-		out.write("PUSHA" + n);
-		out.flush();
+	public void load(Type type) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public void push(int n) throws IOException {
-		out.write("PUSH" + n);
-		out.flush();
+	public void pusha(int n) {
+		// out.write("PUSHA" + n);
+		// out.flush();
 	}
 
-	public void push(double n) throws IOException {
-		out.write("PUSHF" + n);
-		out.flush();
+	public void push(int n) {
+		// out.write("PUSH" + n);
+		// out.flush();
 	}
 
-	public void push(char n) throws IOException {
-		out.write("PUSHB" + n);
-		out.flush();
+	public void push(double n) {
+		// out.write("PUSHF" + n);
+		// out.flush();
 	}
 
-	public void push(Type type) throws IOException {
-		out.write("LOAD" + type.suffix());
-		out.flush();
+	public void push(char n) {
+		// out.write("PUSHB" + n);
+		// out.flush();
 	}
 
 	public void callMain() {
@@ -68,66 +67,82 @@ public class CodeGenerator {
 
 	}
 
-	public void add(Type type) {
+	public void call(String nameString) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void sub(Type type) {
+	public void convert(Type type, Type type2) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void mul(Type type) {
+	public void aritmetic(String operator, Type type) {
 		// TODO Auto-generated method stub
 
-	}
-
-	public void div(Type type) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void jz(String string) {
-
-	}
-
-	public void jmp(String string) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void incrementaContador() {
-		this.contadorEtiquetas++;
 	}
 
 	public void etiqueta(String string) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void lt() {
+	public void pushi(int offset) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public void le() {
-		// TODO Auto-generated method stub
-		
+	public void add(Type type) {
+
 	}
 
-	public void gt() {
-		// TODO Auto-generated method stub
-		
-	}
+	// public void add(Type type) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void sub(Type type) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void mul(Type type) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void div(Type type) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void jz(String string) {
+	//
+	// }
+	//
+	// public void jmp(String string) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void lt() {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void le() {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void gt() {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// public void ge() {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
-	public void ge() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void call(String nameString) {
-		// TODO Auto-generated method stub
-		
-	}
 }

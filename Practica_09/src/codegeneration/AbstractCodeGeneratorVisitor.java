@@ -37,6 +37,8 @@ public class AbstractCodeGeneratorVisitor implements Visitor {
 
 	protected ValueCodeGeneratorVisitor valueCgVisitor = new ValueCodeGeneratorVisitor();
 	protected AdressCodeGeneratorVisitor adressCgVisitor = new AdressCodeGeneratorVisitor();
+	
+	protected CodeGenerator cg;
 
 	@Override
 	public Object visit(Arithmetic arithmetic, Object object) {

@@ -18,8 +18,6 @@ import tipo.FunctionType;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
-	private CodeGenerator cg;
-
 	@Override
 	public Object visit(Program program, Object o) {
 		for (Definition def : program.getDefinitions()) {
@@ -33,7 +31,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		for (Definition def : program.getDefinitions()) {
 			if (def instanceof FunDefinition) {
-				def.accept(valueCgVisitor, o);
+				def.accept(this, o);
 			}
 		}
 

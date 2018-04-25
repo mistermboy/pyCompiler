@@ -87,13 +87,18 @@ public class AbstractType implements Type {
 
 	@Override
 	public int numberOfBytes() {
-		return 0;
+		throw new IllegalStateException("Número de bytes no disponibles");
 	}
 
 	@Override
 	public char suffix() {
-		return 0;
+		throw new IllegalStateException("Sufijo no disponible");
 
+	}
+
+	@Override
+	public Type superType(Type type) {
+		return null;
 	}
 
 }

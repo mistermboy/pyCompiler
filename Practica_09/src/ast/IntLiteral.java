@@ -49,4 +49,5 @@ public class IntLiteral extends AbstractExpression {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
 }

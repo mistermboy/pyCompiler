@@ -33,4 +33,6 @@ public interface Type extends ASTNode {
 	int numberOfBytes();
 
 	char suffix();
+
+	Type superType(Type type);
 }

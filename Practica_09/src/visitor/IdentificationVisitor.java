@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.Definition;
 import ast.FunDefinition;
 import ast.Statement;
 import ast.VarDefinition;

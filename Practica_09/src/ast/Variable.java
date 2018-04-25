@@ -9,7 +9,7 @@ public class Variable extends AbstractExpression {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	private Definition varDefinition;
+	private VarDefinition varDefinition;
 
 	public Variable(int i, int j, String nameString) {
 		this.row = i;
@@ -52,12 +52,12 @@ public class Variable extends AbstractExpression {
 		return v.visit(this, object);
 	}
 
-	public Definition getVarDefinition() {
+	public VarDefinition getVarDefinition() {
 		return varDefinition;
 	}
 
 	public void setVarDefinition(Definition definition) {
-		this.varDefinition = definition;
+		this.varDefinition = (VarDefinition) definition;
 	}
 
 }
