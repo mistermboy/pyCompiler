@@ -21,13 +21,14 @@ public class CodeGenerator {
 
 	}
 
-	public void pushbp() {
-
+	public void pushabp() {
+		out.println("PUSHA BP");
+		out.flush();
 	}
 
 	public void load(Type type) {
-		// TODO Auto-generated method stub
-
+		out.println("LOAD " + type.suffix());
+		out.flush();
 	}
 
 	public void pusha(int n) {
@@ -79,70 +80,85 @@ public class CodeGenerator {
 	}
 
 	public void convert(Type type, Type type2) {
-		// TODO Auto-generated method stub
-
+		out.println(type.suffix() + "2" + type.suffix());
+		out.flush();
 	}
 
 	public void aritmetic(String operator, Type type) {
-		// TODO Auto-generated method stub
+		String op = "";
+		if (operator == "+") {
+			op = "ADD";
+		}
 
+		if (operator == "-") {
+			op = "SUB";
+		}
+
+		if (operator == "*") {
+			op = "MUL";
+		}
+
+		if (operator == "/") {
+			op = "DIV";
+		}
+
+		out.println(op + "" + type.suffix());
+		out.flush();
 	}
 
-	public void etiqueta(String string) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void pushi(int offset) {
-		// TODO Auto-generated method stub
-
+	public void etiqueta(int num) {
+		out.println("LABEL " + num);
+		out.flush();
 	}
 
 	public void add(Type type) {
-
+		out.println("ADD " + type.suffix());
+		out.flush();
 	}
 
 	public void sub(Type type) {
-		// TODO Auto-generated method stub
-
+		out.println("SUB " + type.suffix());
+		out.flush();
 	}
 
 	public void mul(Type type) {
-		// TODO Auto-generated method stub
-
+		out.println("MUL " + type.suffix());
+		out.flush();
 	}
 
 	public void div(Type type) {
-		// TODO Auto-generated method stub
-
+		out.println("DIV " + type.suffix());
+		out.flush();
 	}
 
 	public void jz(String string) {
-
+		out.println("JZ " + string);
+		out.flush();
 	}
 
 	public void jmp(String string) {
-		// TODO Auto-generated method stub
-
+		out.println("JMP " + string);
+		out.flush();
 	}
 
 	public void lt() {
-		// TODO Auto-generated method stub
-
+		out.println("LT");
+		out.flush();
 	}
 
 	public void le() {
-		// TODO Auto-generated method stub
-
+		out.println("LE");
+		out.flush();
 	}
 
 	public void gt() {
-		// TODO Auto-generated method stub
-
+		out.println("GT");
+		out.flush();
 	}
 
 	public void ge() {
-		// TODO Auto-generated method stub
+		out.println("GE");
+		out.flush();
 
 	}
 

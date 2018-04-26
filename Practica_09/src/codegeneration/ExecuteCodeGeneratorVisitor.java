@@ -19,12 +19,12 @@ import tipo.FunctionType;
 public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	ValueCodeGeneratorVisitor valueCgVisitor;
 	AdressCodeGeneratorVisitor adressCgVisitor;
-	
+
 	public ExecuteCodeGeneratorVisitor(String entrada, String salida) {
 		super(new CodeGenerator(entrada, salida));
 		adressCgVisitor = new AdressCodeGeneratorVisitor(this.cg);
-		valueCgVisitor = new ValueCodeGeneratorVisitor(this.cg,adressCgVisitor);
-		
+		valueCgVisitor = new ValueCodeGeneratorVisitor(this.cg, adressCgVisitor);
+
 	}
 
 	@Override
@@ -50,9 +50,11 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(FunDefinition funDefinition, Object o) {
 
-		cg.etiqueta(funDefinition.getName());
+		// cg.etiqueta(funDefinition.getName());
 
-		// for(Definition d: funDefinition.getType())
+		for (Statement d : funDefinition.getStatements()) {
+			d.accept(this, o);
+		}
 		// Como accedo a los parámetros???
 		// cg.enter(funDefinition.get)
 
