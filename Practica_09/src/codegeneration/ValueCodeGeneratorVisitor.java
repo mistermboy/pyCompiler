@@ -10,6 +10,14 @@ import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
+	AdressCodeGeneratorVisitor adressCgVisitor;
+	
+	
+	public ValueCodeGeneratorVisitor(CodeGenerator cg, AdressCodeGeneratorVisitor adressCgVisitor) {
+		super(cg);
+		this.adressCgVisitor = adressCgVisitor;
+	}
+
 	@Override
 	public Object visit(IntLiteral intLiteral, Object o) {
 

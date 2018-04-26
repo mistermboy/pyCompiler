@@ -17,6 +17,15 @@ import ast.Write;
 import tipo.FunctionType;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
+	ValueCodeGeneratorVisitor valueCgVisitor;
+	AdressCodeGeneratorVisitor adressCgVisitor;
+	
+	public ExecuteCodeGeneratorVisitor(String entrada, String salida) {
+		super(new CodeGenerator(entrada, salida));
+		adressCgVisitor = new AdressCodeGeneratorVisitor(this.cg);
+		valueCgVisitor = new ValueCodeGeneratorVisitor(this.cg,adressCgVisitor);
+		
+	}
 
 	@Override
 	public Object visit(Program program, Object o) {
@@ -26,7 +35,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			}
 		}
 
-		cg.callMain();
+		cg.call("MAIN");
 		cg.halt();
 
 		for (Definition def : program.getDefinitions()) {

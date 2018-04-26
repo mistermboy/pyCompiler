@@ -5,6 +5,10 @@ import ast.Variable;
 
 public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
+	public AdressCodeGeneratorVisitor(CodeGenerator cg) {
+		super(cg);
+	}
+
 	@Override
 	public Object visit(Variable variable, Object object) {
 

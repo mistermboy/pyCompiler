@@ -1,16 +1,24 @@
 package codegeneration;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import tipo.Type;
 
 public class CodeGenerator {
 
-	private FileWriter out;
+	private PrintWriter out;
 
 	public CodeGenerator(String entrada, String salida) {
-		// TODO Auto-generated constructor stub
+
+		try {
+			out = new PrintWriter(new File(salida));
+			// thi.out = system.out;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void pushbp() {
@@ -23,52 +31,50 @@ public class CodeGenerator {
 	}
 
 	public void pusha(int n) {
-		// out.write("PUSHA" + n);
-		// out.flush();
+		out.println("PUSHA " + n);
+		out.flush();
 	}
 
 	public void push(int n) {
-		// out.write("PUSH" + n);
-		// out.flush();
+		out.println("PUSH " + n);
+		out.flush();
 	}
 
 	public void push(double n) {
-		// out.write("PUSHF" + n);
-		// out.flush();
+		out.println("PUSHF " + n);
+		out.flush();
 	}
 
 	public void push(char n) {
-		// out.write("PUSHB" + n);
-		// out.flush();
-	}
-
-	public void callMain() {
-		// TODO Auto-generated method stub
-
+		out.println("PUSHB " + n);
+		out.flush();
 	}
 
 	public void halt() {
-		// TODO Auto-generated method stub
-
+		out.println("HALT");
+		out.flush();
 	}
 
 	public void out(Type type) {
-		// TODO Auto-generated method stub
-
+		out.println("OUT" + type.suffix());
+		out.flush();
 	}
 
 	public void in(Type type) {
-		// TODO Auto-generated method stub
+		out.println("HALT" + type.suffix());
+		out.flush();
 
 	}
 
 	public void store(Type type) {
-		// TODO Auto-generated method stub
+		out.println("STORE");
+		out.flush();
 
 	}
 
 	public void call(String nameString) {
-		// TODO Auto-generated method stub
+		out.println("CALL " + nameString);
+		out.flush();
 
 	}
 
@@ -96,53 +102,48 @@ public class CodeGenerator {
 
 	}
 
-	// public void add(Type type) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void sub(Type type) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void mul(Type type) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void div(Type type) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void jz(String string) {
-	//
-	// }
-	//
-	// public void jmp(String string) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void lt() {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void le() {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void gt() {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// public void ge() {
-	// // TODO Auto-generated method stub
-	//
-	// }
+	public void sub(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void mul(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void div(Type type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void jz(String string) {
+
+	}
+
+	public void jmp(String string) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void lt() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void le() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void gt() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void ge() {
+		// TODO Auto-generated method stub
+
+	}
 
 }

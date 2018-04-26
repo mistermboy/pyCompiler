@@ -35,14 +35,16 @@ import visitor.Visitor;
 
 public class AbstractCodeGeneratorVisitor implements Visitor {
 
-	protected ValueCodeGeneratorVisitor valueCgVisitor = new ValueCodeGeneratorVisitor();
-	protected AdressCodeGeneratorVisitor adressCgVisitor = new AdressCodeGeneratorVisitor();
-	
 	protected CodeGenerator cg;
 
 	@Override
 	public Object visit(Arithmetic arithmetic, Object object) {
 		throw new IllegalStateException("Plantilla no definida en Arithmetic");
+	}
+
+	public AbstractCodeGeneratorVisitor(CodeGenerator cg) {
+		super();
+		this.cg = cg;
 	}
 
 	@Override
