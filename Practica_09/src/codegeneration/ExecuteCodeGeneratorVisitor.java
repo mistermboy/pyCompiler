@@ -10,11 +10,14 @@ import ast.Invocation;
 import ast.Logical;
 import ast.Program;
 import ast.Read;
+import ast.Return;
 import ast.Statement;
 import ast.VarDefinition;
 import ast.WhileStatement;
 import ast.Write;
 import tipo.FunctionType;
+import tipo.Type;
+import tipo.VoidType;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	ValueCodeGeneratorVisitor valueCgVisitor;
@@ -35,7 +38,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			}
 		}
 
-		cg.call("MAIN");
+		cg.call("main");
 		cg.halt();
 
 		for (Definition def : program.getDefinitions()) {
@@ -50,15 +53,37 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(FunDefinition funDefinition, Object o) {
 
-		// cg.etiqueta(funDefinition.getName());
+		cg.etiqueta(funDefinition.getName());
+
+		int locals = 0;
+		for (Statement d : funDefinition.getStatements()) {
+			if (d instanceof VarDefinition) {
+				locals += ((VarDefinition) d).getType().numberOfBytes();
+			}
+		}
+
+		cg.enter(locals);
 
 		for (Statement d : funDefinition.getStatements()) {
-			d.accept(this, o);
+			if (!(d instanceof VarDefinition)) {
+				d.accept(this, o);
+			}
 		}
-		// Como accedo a los parámetros???
-		// cg.enter(funDefinition.get)
+
+		int params = 0;
+		for (VarDefinition d : ((FunctionType) funDefinition.getType()).getParameters()) {
+			params += d.getType().numberOfBytes();
+		}
+
+		Type ret = ((FunctionType) funDefinition.getType()).getReturnType();
+		if (ret == VoidType.getInstance()) {
+			cg.ret(0, locals, params);
+		} else {
+			cg.ret(ret.numberOfBytes(), locals, params);
+		}
 
 		return null;
+
 	}
 
 	@Override

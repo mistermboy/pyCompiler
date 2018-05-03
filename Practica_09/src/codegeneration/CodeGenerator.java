@@ -27,7 +27,7 @@ public class CodeGenerator {
 	}
 
 	public void load(Type type) {
-		out.println("LOAD " + type.suffix());
+		out.println("LOAD" + type.suffix());
 		out.flush();
 	}
 
@@ -107,27 +107,27 @@ public class CodeGenerator {
 	}
 
 	public void etiqueta(int num) {
-		out.println("LABEL " + num);
+		out.println(" LABEL " + num + ":");
 		out.flush();
 	}
 
 	public void add(Type type) {
-		out.println("ADD " + type.suffix());
+		out.println("ADD" + type.suffix());
 		out.flush();
 	}
 
 	public void sub(Type type) {
-		out.println("SUB " + type.suffix());
+		out.println("SUB" + type.suffix());
 		out.flush();
 	}
 
 	public void mul(Type type) {
-		out.println("MUL " + type.suffix());
+		out.println("MUL" + type.suffix());
 		out.flush();
 	}
 
 	public void div(Type type) {
-		out.println("DIV " + type.suffix());
+		out.println("DIV" + type.suffix());
 		out.flush();
 	}
 
@@ -158,6 +158,23 @@ public class CodeGenerator {
 
 	public void ge() {
 		out.println("GE");
+		out.flush();
+
+	}
+
+	public void etiqueta(String name) {
+		out.println(" " + name + ":");
+		out.flush();
+
+	}
+
+	public void enter(int locals) {
+		out.println("enter " + locals);
+		out.flush();
+	}
+
+	public void ret(int ret, int locals, int params) {
+		out.println("ret " + ret + "," + locals + "," + params);
 		out.flush();
 
 	}

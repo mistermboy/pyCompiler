@@ -2,6 +2,7 @@ package codegeneration;
 
 import ast.VarDefinition;
 import ast.Variable;
+import tipo.IntType;
 
 public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -19,7 +20,7 @@ public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		} else {
 			cg.pushabp();
 			cg.push(v.getOffset());
-			cg.add(variable.getVarDefinition().getType());
+			cg.add(IntType.getInstance());
 		}
 
 		return null;

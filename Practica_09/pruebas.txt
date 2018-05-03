@@ -1,0 +1,13 @@
+c: char;
+i: int;
+r: double;
+
+def main():void {
+	a, i:int;
+	
+	print a;
+	print i;
+	print c;
+	print r;
+	
+}
