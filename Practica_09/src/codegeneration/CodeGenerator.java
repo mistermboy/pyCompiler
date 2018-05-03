@@ -47,7 +47,7 @@ public class CodeGenerator {
 	}
 
 	public void push(char n) {
-		out.println("PUSHB " + n);
+		out.println("PUSHB " + (int) n);
 		out.flush();
 	}
 
@@ -59,12 +59,6 @@ public class CodeGenerator {
 	public void out(Type type) {
 		out.println("OUT" + type.suffix());
 		out.flush();
-	}
-
-	public void in(Type type) {
-		out.println("HALT" + type.suffix());
-		out.flush();
-
 	}
 
 	public void store(Type type) {
@@ -80,7 +74,7 @@ public class CodeGenerator {
 	}
 
 	public void convert(Type type, Type type2) {
-		out.println(type.suffix() + "2" + type.suffix());
+		out.println(type.suffix() + "2" + type2.suffix());
 		out.flush();
 	}
 
@@ -177,6 +171,11 @@ public class CodeGenerator {
 		out.println("ret " + ret + "," + locals + "," + params);
 		out.flush();
 
+	}
+
+	public void in(Type type) {
+		out.println("IN " + type.suffix());
+		out.flush();
 	}
 
 }

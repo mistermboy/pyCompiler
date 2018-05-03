@@ -5,9 +5,19 @@ r: double;
 def main():void {
 	a, i:int;
 	
-	print a;
-	print i;
-	print c;
-	print r;
+	c='a';
+	print c,'\n';
+
+	a=1;
+	i=(int)'0'*3;
+	print a, ' ', i, '\n';
+		
+	input r;
+	print (double)2*r, '\n';
 	
+	print (double)3-4.5, ' ', 
+            (double)'0'/48.0, ' ',
+            '0'%'1', ' ',
+            '0'+'1', '\n';
+
 }
