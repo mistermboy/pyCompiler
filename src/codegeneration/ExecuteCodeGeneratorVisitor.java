@@ -1,16 +1,13 @@
 package codegeneration;
 
-import ast.Arithmetic;
 import ast.Assignment;
 import ast.Definition;
 import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
 import ast.Invocation;
-import ast.Logical;
 import ast.Program;
 import ast.Read;
-import ast.Return;
 import ast.Statement;
 import ast.VarDefinition;
 import ast.WhileStatement;
@@ -116,102 +113,52 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		return null;
 	}
 
-	// @Override
-	// public Object visit(Arithmetic arithmetic, Object object) {
-	//
-	// arithmetic.getLeft().accept(valueCgVisitor, object);
-	// arithmetic.getLeft().accept(valueCgVisitor, object);
-	//
-	// if (arithmetic.getOperator() == "+") {
-	// cg.add(arithmetic.getType());
-	// }
-	//
-	// if (arithmetic.getOperator() == "-") {
-	// cg.sub(arithmetic.getType());
-	// }
-	//
-	// if (arithmetic.getOperator() == "*") {
-	// cg.mul(arithmetic.getType());
-	// }
-	//
-	// if (arithmetic.getOperator() == "/") {
-	// cg.div(arithmetic.getType());
-	// }
-	//
-	// return null;
-	// }
-	//
-	// @Override
-	// public Object visit(IfStatement ifStatement, Object o) {
-	//
-	// ifStatement.getCondition().accept(valueCgVisitor, o);
-	// cg.jz("cuerpoElse");
-	// for (Statement s : ifStatement.getIfBody()) {
-	// s.accept(valueCgVisitor, o);
-	// }
-	// cg.jmp("cuerpoElse");
-	// cg.etiqueta("cuerpoElse");
-	// for (Statement s : ifStatement.getElseBody()) {
-	// s.accept(valueCgVisitor, o);
-	// }
-	// cg.incrementaContador();
-	//
-	// return null;
-	// }
-	//
-	// @Override
-	// public Object visit(WhileStatement whileStatement, Object o) {
-	//
-	// cg.etiqueta("bucleWhile");
-	// whileStatement.getCondition().accept(valueCgVisitor, o);
-	// cg.jz("finBucle");
-	// for (Statement s : whileStatement.getBody()) {
-	// s.accept(valueCgVisitor, o);
-	// }
-	// cg.jmp("bucleWhile");
-	// cg.incrementaContador();
-	//
-	// return null;
-	// }
-	//
-	// @Override
-	// public Object visit(Logical logical, Object o) {
-	//
-	// logical.getLeft().accept(valueCgVisitor, o);
-	// logical.getRight().accept(valueCgVisitor, o);
-	//
-	// if (logical.getLogicalOperator() == "<") {
-	// cg.lt();
-	// }
-	//
-	// if (logical.getLogicalOperator() == "<=") {
-	// cg.le();
-	// }
-	//
-	// if (logical.getLogicalOperator() == ">") {
-	// cg.gt();
-	// }
-	//
-	// if (logical.getLogicalOperator() == ">=") {
-	// cg.ge();
-	// }
-	//
-	// return null;
-	//
-	// }
-	//
-	// @Override
-	// public Object visit(Invocation invocation, Object o) {
-	//
-	// for (Expression s : invocation.getArguments()) {
-	// s.accept(valueCgVisitor, o);
-	// }
-	// cg.call(invocation.getFuncion().getNameString());
-	// // if(invocation.getFuncion().getVarDefinition())
-	//
-	// // COMO ACCEDO A EL RETORNO PA SABER SI HAY QUE HACER POP
-	// return null;
-	//
-	// }
+	@Override
+	public Object visit(IfStatement ifStatement, Object o) {
+		int label = cg.getLabels(2);
+		ifStatement.getCondition().accept(valueCgVisitor, o);
+		cg.jz(label);
+		for (Statement s : ifStatement.getIfBody()) {
+			s.accept(valueCgVisitor, o);
+		}
+		cg.jmp(label + 1);
+		cg.etiqueta(label);
+		for (Statement s : ifStatement.getElseBody()) {
+			s.accept(valueCgVisitor, o);
+		}
+		cg.etiqueta(label + 1);
+
+		return null;
+	}
+
+	@Override
+	public Object visit(WhileStatement whileStatement, Object o) {
+		int label = cg.getLabels(2);
+		cg.etiqueta(label);
+		whileStatement.getCondition().accept(valueCgVisitor, o);
+		cg.jz(label + 1);
+		for (Statement s : whileStatement.getBody()) {
+			s.accept(valueCgVisitor, o);
+		}
+		cg.jmp(label);
+		cg.etiqueta(label + 1);
+
+		return null;
+	}
+
+	@Override
+	public Object visit(Invocation invocation, Object o) {
+
+		for (Expression s : invocation.getArguments()) {
+			s.accept(valueCgVisitor, o);
+		}
+		cg.call(invocation.getFuncion().getNameString());
+		if (((FunctionType) invocation.getFuncion().getType()).getReturnType() != VoidType.getInstance()) {
+			cg.pop(((FunctionType) invocation.getFuncion().getType()).getReturnType().suffix());
+		}
+
+		return null;
+
+	}
 
 }

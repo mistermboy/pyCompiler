@@ -19,7 +19,7 @@ public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		if (variable.getVarDefinition().getScope() == 0) {
 			cg.pusha(v.getOffset());
 		} else {
-			cg.pushabp();
+			cg.pushbp();
 			cg.push(v.getOffset());
 			cg.add(IntType.getInstance());
 		}

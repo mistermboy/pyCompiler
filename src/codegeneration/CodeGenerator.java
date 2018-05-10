@@ -12,11 +12,13 @@ import tipo.Type;
 public class CodeGenerator {
 
 	private PrintWriter out;
+	private int labelCont;
 
 	public CodeGenerator(String entrada, String salida) {
 
 		try {
 			out = new PrintWriter(new File(salida));
+			labelCont = 0;
 			// thi.out = system.out;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -24,7 +26,7 @@ public class CodeGenerator {
 
 	}
 
-	public void pushabp() {
+	public void pushbp() {
 		out.println("PUSH BP");
 		out.flush();
 	}
@@ -108,11 +110,6 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	public void etiqueta(int num) {
-		out.println(" LABEL " + num + ":");
-		out.flush();
-	}
-
 	public void add(Type type) {
 		out.println("ADD" + type.suffix());
 		out.flush();
@@ -133,15 +130,20 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	public void jz(String string) {
-		out.println("JZ " + string);
+	public void jz(int label) {
+		out.println("JZ Label" + label);
 		out.flush();
 	}
 
-	public void jmp(String string) {
-		out.println("JMP " + string);
+	public void jmp(int label) {
+		out.println("JMP Label" + label);
 		out.flush();
 	}
+
+	// public void jnz(int label) {
+	// out.println("JNZ Label" + label);
+	// out.flush();
+	// }
 
 	public void lt() {
 		out.println("LT");
@@ -284,6 +286,21 @@ public class CodeGenerator {
 		out.println("NOT");
 		out.flush();
 
+	}
+
+	public void etiqueta(int num) {
+		out.println("Label " + num + ":");
+		out.flush();
+	}
+
+	public int getLabels(int i) {
+		labelCont += i;
+		return labelCont - i;
+	}
+
+	public void pop(char suffix) {
+		out.println("POP" + suffix);
+		out.flush();
 	}
 
 }
