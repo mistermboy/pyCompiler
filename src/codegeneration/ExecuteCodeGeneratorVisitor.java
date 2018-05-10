@@ -120,7 +120,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		ifStatement.getCondition().accept(valueCgVisitor, o);
 		cg.jz(label);
 		for (Statement s : ifStatement.getIfBody()) {
-			s.accept(valueCgVisitor, o);
+			s.accept(this, o);
 		}
 		cg.jmp(label + 1);
 		cg.etiqueta(label);
