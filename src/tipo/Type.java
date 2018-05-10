@@ -3,6 +3,7 @@ package tipo;
 import java.util.List;
 
 import ast.ASTNode;
+import ast.RecordField;
 
 public interface Type extends ASTNode {
 
@@ -35,4 +36,6 @@ public interface Type extends ASTNode {
 	char suffix();
 
 	Type superType(Type type);
+
+	public RecordField get(String identificador);
 }

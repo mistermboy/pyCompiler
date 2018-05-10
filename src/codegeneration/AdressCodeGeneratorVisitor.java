@@ -1,5 +1,6 @@
 package codegeneration;
 
+import ast.FieldAccess;
 import ast.VarDefinition;
 import ast.Variable;
 import tipo.IntType;
@@ -23,6 +24,14 @@ public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			cg.add(IntType.getInstance());
 		}
 
+		return null;
+	}
+
+	@Override
+	public Object visit(FieldAccess fieldAccess, Object o) {
+		fieldAccess.getExp().accept(this, o);
+		cg.push(fieldAccess.getExp().getType().get(fieldAccess.getName()).getOffset());
+		cg.add(IntType.getInstance());
 		return null;
 	}
 

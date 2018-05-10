@@ -4,12 +4,12 @@ import ast.Arithmetic;
 import ast.Cast;
 import ast.CharLiteral;
 import ast.Comparison;
+import ast.FieldAccess;
 import ast.IntLiteral;
 import ast.Logical;
 import ast.RealLiteral;
 import ast.UnaryNot;
 import ast.Variable;
-import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -113,6 +113,13 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(UnaryNot negation, Object o) {
 		negation.getOperand().accept(this, o);
 		cg.not();
+		return null;
+	}
+
+	@Override
+	public Object visit(FieldAccess fieldAccess, Object o) {
+		fieldAccess.getExp().accept(adressCgVisitor, o);
+		cg.load(fieldAccess.getType());
 		return null;
 	}
 

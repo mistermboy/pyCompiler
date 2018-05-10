@@ -1,30 +1,43 @@
-c: char;
-i: int;
-r: double;
+v:[10]double;
 
+# Main program
 def main():void {
-	a, i:int;
+	value:double;
+	i,j:int;
+	w:[4][5]int;
+	date:struct { 
+		day, month, year:int;		
+	};
 	
-	c='a';
-	print c,'\n';
-
-	a=1;
-	i=(int)'0'*3;
-	print a, ' ', i, '\n';
+	input date.day; 
+	date.year = (int)'a'; 
+	date.month = date.day*date.year%12+1;
+	print date.day, '\n', date.month, '\n', (double)(date.year), '\n';
+	
+	input value;
 		
-	input r;
-	print (double)2*r, '\n';
-	
-	print (double)3-4.5, ' ', 
-            (double)'0'/48.0, ' ',
-            '0'%'1', ' ',
-            '0'+'1', '\n';
+	i=0;	
+	while i<10: {
+		v[i]=value;
+		print i,':',v[i], ' ';
+		if i%2:
+			print 'o','d','d','\n';
+		else 
+			print 'e','v','e','n','\n';
+		i=i+1;
+	}
+	print '\n';
 
-	print 1<2, ' ',
-	      4>=3, ' ',
-	      5==5, ' ',
-	      1&&2, ' ',
-	      0||3, ' ',
-	      !0, '\n';
-
+	i=0;
+	while i<4: {
+		j=0;
+		while j<5: {
+			w[i][j]=i+j;
+			print w[i][j], ' ';
+			j=j+1;
+		}
+		print '\n';
+		i=i+1;
+	}
 }
+	

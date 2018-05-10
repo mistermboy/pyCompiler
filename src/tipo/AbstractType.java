@@ -3,6 +3,7 @@ package tipo;
 import java.util.List;
 
 import ast.ASTNode;
+import ast.RecordField;
 import visitor.Visitor;
 
 public class AbstractType implements Type {
@@ -98,6 +99,11 @@ public class AbstractType implements Type {
 
 	@Override
 	public Type superType(Type type) {
+		return null;
+	}
+
+	@Override
+	public RecordField get(String identificador) {
 		return null;
 	}
 

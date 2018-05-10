@@ -58,4 +58,14 @@ public class RecordType extends AbstractType {
 		return bytes;
 	}
 
+	@Override
+	public RecordField get(String nombre) {
+		for (RecordField r : fields) {
+			if (nombre.equals(r.getName())) {
+				return r;
+			}
+		}
+		return null;
+	}
+
 }
