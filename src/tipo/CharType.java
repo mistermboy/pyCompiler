@@ -33,7 +33,7 @@ public class CharType extends AbstractType {
 		}
 
 		if (type instanceof CharType) {
-			return this;
+			return IntType.getInstance();
 		}
 
 		return null;
@@ -47,7 +47,7 @@ public class CharType extends AbstractType {
 		}
 
 		if (type instanceof CharType) {
-			return this;
+			return IntType.getInstance();
 		}
 
 		return null;
@@ -114,11 +114,10 @@ public class CharType extends AbstractType {
 	public int numberOfBytes() {
 		return 1;
 	}
-	
+
 	@Override
 	public char suffix() {
 		return 'B';
 	}
-	
 
 }

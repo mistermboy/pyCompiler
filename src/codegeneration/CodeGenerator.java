@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import tipo.CharType;
+import tipo.IntType;
+import tipo.RealType;
 import tipo.Type;
 
 public class CodeGenerator {
@@ -22,7 +25,7 @@ public class CodeGenerator {
 	}
 
 	public void pushabp() {
-		out.println("PUSHA BP");
+		out.println("PUSH BP");
 		out.flush();
 	}
 
@@ -37,7 +40,7 @@ public class CodeGenerator {
 	}
 
 	public void push(int n) {
-		out.println("PUSH " + n);
+		out.println("PUSHI " + n);
 		out.flush();
 	}
 
@@ -62,7 +65,7 @@ public class CodeGenerator {
 	}
 
 	public void store(Type type) {
-		out.println("STORE");
+		out.println("STORE" + type.suffix());
 		out.flush();
 
 	}
@@ -80,23 +83,28 @@ public class CodeGenerator {
 
 	public void aritmetic(String operator, Type type) {
 		String op = "";
-		if (operator == "+") {
+		if (operator.equals("+")) {
 			op = "ADD";
 		}
 
-		if (operator == "-") {
+		if (operator.equals("-")) {
 			op = "SUB";
 		}
 
-		if (operator == "*") {
+		if (operator.equals("*")) {
 			op = "MUL";
 		}
 
-		if (operator == "/") {
+		if (operator.equals("/")) {
 			op = "DIV";
 		}
 
+		if (operator.equals("%")) {
+			op = "MOD";
+		}
+
 		out.println(op + "" + type.suffix());
+
 		out.flush();
 	}
 
@@ -174,8 +182,108 @@ public class CodeGenerator {
 	}
 
 	public void in(Type type) {
-		out.println("IN " + type.suffix());
+		out.println("IN" + type.suffix());
 		out.flush();
+	}
+
+	public void b2i() {
+		out.println("B2I");
+		out.flush();
+	}
+
+	public void i2f() {
+		out.println("I2F");
+		out.flush();
+	}
+
+	public void f2i() {
+		out.println("F2I");
+		out.flush();
+	}
+
+	public void i2b() {
+		out.println("I2B");
+		out.flush();
+	}
+
+	public void cast(Type type, Type castType) {
+		if (type.equals(CharType.getInstance()) && castType.equals(IntType.getInstance())) {
+			b2i();
+		}
+
+		if (type.equals(IntType.getInstance()) && castType.equals(RealType.getInstance())) {
+			i2f();
+		}
+
+		if (type.equals(RealType.getInstance()) && castType.equals(IntType.getInstance())) {
+			f2i();
+		}
+
+		if (type.equals(IntType.getInstance()) && castType.equals(CharType.getInstance())) {
+			i2b();
+		}
+
+		if (type.equals(CharType.getInstance()) && castType.equals(RealType.getInstance())) {
+			b2i();
+			i2f();
+		}
+
+		if (type.equals(RealType.getInstance()) && castType.equals(CharType.getInstance())) {
+			f2i();
+			i2b();
+		}
+
+	}
+
+	public void logic(String logicalOperator) {
+		String op = "";
+		if (logicalOperator.equals("&&")) {
+			op = "AND";
+		}
+
+		if (logicalOperator.equals("||")) {
+			op = "OR";
+		}
+
+		out.println(op);
+		out.flush();
+
+	}
+
+	public void comparison(String comparator, Type type) {
+		String op = "";
+		if (comparator.equals(">")) {
+			op = "GT";
+		}
+
+		if (comparator.equals("<")) {
+			op = "LT";
+		}
+
+		if (comparator.equals(">=")) {
+			op = "GE";
+		}
+
+		if (comparator.equals("<=")) {
+			op = "LE";
+		}
+
+		if (comparator.equals("==")) {
+			op = "EQ";
+		}
+
+		if (comparator.equals("!=")) {
+			op = "NE";
+		}
+
+		out.println(op + "" + type.suffix());
+		out.flush();
+	}
+
+	public void not() {
+		out.println("NOT");
+		out.flush();
+
 	}
 
 }

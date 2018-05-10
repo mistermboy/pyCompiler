@@ -1,18 +1,20 @@
 package codegeneration;
 
 import ast.Arithmetic;
+import ast.Cast;
 import ast.CharLiteral;
 import ast.Comparison;
 import ast.IntLiteral;
+import ast.Logical;
 import ast.RealLiteral;
+import ast.UnaryNot;
 import ast.Variable;
 import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	AdressCodeGeneratorVisitor adressCgVisitor;
-	
-	
+
 	public ValueCodeGeneratorVisitor(CodeGenerator cg, AdressCodeGeneratorVisitor adressCgVisitor) {
 		super(cg);
 		this.adressCgVisitor = adressCgVisitor;
@@ -53,10 +55,16 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(Arithmetic arithmetic, Object object) {
 
 		arithmetic.getLeft().accept(this, object);
-		cg.convert(arithmetic.getLeft().getType(), arithmetic.getRight().getType());
+		// cg.convert(arithmetic.getLeft().getType(), arithmetic.getRight().getType());
+		if (arithmetic.getLeft().getType().suffix() == 'B') {
+			cg.b2i();
+		}
 		arithmetic.getRight().accept(this, object);
-		cg.convert(arithmetic.getType(), arithmetic.getLeft().getType());
-		cg.aritmetic(arithmetic.getOperator(), arithmetic.getLeft().getType());
+		// cg.convert(arithmetic.getType(), arithmetic.getLeft().getType());
+		if (arithmetic.getRight().getType().suffix() == 'B') {
+			cg.b2i();
+		}
+		cg.aritmetic(arithmetic.getOperator(), arithmetic.getType());
 
 		return null;
 
@@ -65,13 +73,46 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(Comparison comparison, Object o) {
 
-		Type superType = comparison.getLeft().getType().superType(comparison.getType());
+		// Type superType =
+		// comparison.getLeft().getType().superType(comparison.getType());
 		comparison.getLeft().accept(this, o);
-		cg.convert(comparison.getLeft().getType(), superType);
+		// cg.convert(comparison.getLeft().getType(), superType);
+		if (comparison.getLeft().getType().suffix() == 'B') {
+			cg.b2i();
+		}
 		comparison.getRight().accept(this, o);
-		cg.convert(comparison.getRight().getType(), superType);
-		cg.aritmetic(comparison.getComparator(), superType);
+		// cg.convert(comparison.getRight().getType(), superType);
+		if (comparison.getRight().getType().suffix() == 'B') {
+			cg.b2i();
+		}
+		// cg.aritmetic(comparison.getComparator(), superType);
+		cg.comparison(comparison.getComparator(), comparison.getType());
 
+		return null;
+	}
+
+	@Override
+	public Object visit(Cast cast, Object o) {
+		cast.getExp().accept(this, o);
+		cg.cast(cast.getExp().getType(), cast.getCastType());
+		return null;
+	}
+
+	@Override
+	public Object visit(Logical logical, Object o) {
+		logical.getLeft().accept(this, o);
+		logical.getRight().accept(this, o);
+
+		cg.logic(logical.getLogicalOperator());
+
+		return null;
+
+	}
+
+	@Override
+	public Object visit(UnaryNot negation, Object o) {
+		negation.getOperand().accept(this, o);
+		cg.not();
 		return null;
 	}
 

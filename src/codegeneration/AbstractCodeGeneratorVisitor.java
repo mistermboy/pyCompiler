@@ -62,7 +62,7 @@ public class AbstractCodeGeneratorVisitor implements Visitor {
 	@Override
 	public Object visit(Cast cast, Object o) {
 
-		return null;
+		throw new IllegalStateException("Plantilla no definida en Cast");
 	}
 
 	@Override
