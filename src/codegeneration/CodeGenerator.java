@@ -289,7 +289,7 @@ public class CodeGenerator {
 	}
 
 	public void etiqueta(int num) {
-		out.println("Label " + num + ":");
+		out.println(" Label" + num + ":");
 		out.flush();
 	}
 

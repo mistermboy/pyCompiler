@@ -25,7 +25,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		super(new CodeGenerator(entrada, salida));
 		adressCgVisitor = new AdressCodeGeneratorVisitor(this.cg);
 		valueCgVisitor = new ValueCodeGeneratorVisitor(this.cg, adressCgVisitor);
-
+		adressCgVisitor.setValueVisitor(valueCgVisitor);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		cg.jmp(label + 1);
 		cg.etiqueta(label);
 		for (Statement s : ifStatement.getElseBody()) {
-			s.accept(valueCgVisitor, o);
+			s.accept(this, o);
 		}
 		cg.etiqueta(label + 1);
 
@@ -139,7 +139,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		whileStatement.getCondition().accept(valueCgVisitor, o);
 		cg.jz(label + 1);
 		for (Statement s : whileStatement.getBody()) {
-			s.accept(valueCgVisitor, o);
+			s.accept(this, o);
 		}
 		cg.jmp(label);
 		cg.etiqueta(label + 1);

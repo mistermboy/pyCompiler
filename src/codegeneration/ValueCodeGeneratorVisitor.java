@@ -6,15 +6,13 @@ import ast.CharLiteral;
 import ast.Comparison;
 import ast.Expression;
 import ast.FieldAccess;
+import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
 import ast.RealLiteral;
-import ast.Return;
 import ast.UnaryNot;
 import ast.Variable;
-import tipo.FunctionType;
-import tipo.VoidType;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -125,6 +123,13 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(FieldAccess fieldAccess, Object o) {
 		fieldAccess.accept(adressCgVisitor, o);
 		cg.load(fieldAccess.getType());
+		return null;
+	}
+
+	@Override
+	public Object visit(Indexing indexing, Object o) {
+		indexing.accept(adressCgVisitor, o);
+		cg.load(indexing.getType());
 		return null;
 	}
 

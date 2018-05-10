@@ -94,7 +94,6 @@ public class AbstractType implements Type {
 	@Override
 	public char suffix() {
 		throw new IllegalStateException("Sufijo no disponible");
-
 	}
 
 	@Override

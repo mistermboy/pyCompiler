@@ -1,14 +1,21 @@
 package codegeneration;
 
 import ast.FieldAccess;
+import ast.Indexing;
 import ast.VarDefinition;
 import ast.Variable;
 import tipo.IntType;
 
 public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
+	private ValueCodeGeneratorVisitor valueCgVisitor;
+
 	public AdressCodeGeneratorVisitor(CodeGenerator cg) {
 		super(cg);
+	}
+
+	public void setValueVisitor(ValueCodeGeneratorVisitor valueVisitor) {
+		this.valueCgVisitor = valueVisitor;
 	}
 
 	@Override
@@ -31,6 +38,16 @@ public class AdressCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(FieldAccess fieldAccess, Object o) {
 		fieldAccess.getExp().accept(this, o);
 		cg.push(fieldAccess.getExp().getType().get(fieldAccess.getName()).getOffset());
+		cg.add(IntType.getInstance());
+		return null;
+	}
+
+	@Override
+	public Object visit(Indexing indexing, Object o) {
+		indexing.getLeft().accept(this, o);
+		indexing.getRight().accept(valueCgVisitor, o);
+		cg.push(indexing.getType().numberOfBytes());
+		cg.mul(IntType.getInstance());
 		cg.add(IntType.getInstance());
 		return null;
 	}

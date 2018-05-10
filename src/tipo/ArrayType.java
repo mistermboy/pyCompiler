@@ -48,7 +48,7 @@ public class ArrayType extends AbstractType {
 			return type;
 		}
 
-		if (type instanceof ArrayType) {
+		if (type instanceof IntType) {
 			return of;
 		}
 

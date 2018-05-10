@@ -16,6 +16,9 @@ def main():void {
 	
 	input value;
 		
-	
+	i=0;	
+	while i<10: {
+		v[i]=value;
+	}
 }
 	
