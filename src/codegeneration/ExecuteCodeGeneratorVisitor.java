@@ -64,7 +64,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		for (Statement d : funDefinition.getStatements()) {
 			if (!(d instanceof VarDefinition)) {
-				d.accept(this, o);
+				d.accept(this, funDefinition);
 			}
 		}
 
@@ -76,8 +76,6 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		Type ret = ((FunctionType) funDefinition.getType()).getReturnType();
 		if (ret == VoidType.getInstance()) {
 			cg.ret(0, locals, params);
-		} else {
-			cg.ret(ret.numberOfBytes(), locals, params);
 		}
 
 		return null;
