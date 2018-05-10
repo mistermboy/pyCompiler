@@ -4,12 +4,17 @@ import ast.Arithmetic;
 import ast.Cast;
 import ast.CharLiteral;
 import ast.Comparison;
+import ast.Expression;
 import ast.FieldAccess;
 import ast.IntLiteral;
+import ast.Invocation;
 import ast.Logical;
 import ast.RealLiteral;
+import ast.Return;
 import ast.UnaryNot;
 import ast.Variable;
+import tipo.FunctionType;
+import tipo.VoidType;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -118,9 +123,26 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object o) {
-		fieldAccess.getExp().accept(adressCgVisitor, o);
+		fieldAccess.accept(adressCgVisitor, o);
 		cg.load(fieldAccess.getType());
 		return null;
+	}
+
+	@Override
+	public Object visit(Invocation invocation, Object o) {
+		// int i = 0;
+		for (Expression s : invocation.getArguments()) {
+			s.accept(this, o);
+
+			// CONVERSION INPLÍCITAAA
+
+			// cg.convert(invocation.getType(),
+			// ((FunctionType)
+			// invocation.getFuncion().getType()).getParameters().get(i++).getType());
+		}
+		cg.call(invocation.getFuncion().getNameString());
+		return null;
+
 	}
 
 }

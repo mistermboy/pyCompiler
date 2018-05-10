@@ -170,8 +170,8 @@ public class AbstractCodeGeneratorVisitor implements Visitor {
 	@Override
 	public Object visit(VarDefinition varDefinition, Object o) {
 
-		throw new IllegalStateException("Plantilla no definida en VarDefinition");
-
+		// throw new IllegalStateException("Plantilla no definida en VarDefinition");
+		return null;
 	}
 
 	@Override

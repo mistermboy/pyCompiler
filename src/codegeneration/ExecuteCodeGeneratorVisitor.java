@@ -8,6 +8,7 @@ import ast.IfStatement;
 import ast.Invocation;
 import ast.Program;
 import ast.Read;
+import ast.Return;
 import ast.Statement;
 import ast.VarDefinition;
 import ast.WhileStatement;
@@ -159,6 +160,17 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		return null;
 
+	}
+
+	@Override
+	public Object visit(Return return1, Object o) {
+		return1.getExpression().accept(valueCgVisitor, o);
+
+		FunDefinition f = (FunDefinition) o;
+		// cg.convert(return1.getExpression().getType(), ((FunctionType)
+		// f.getType()).getReturnType().suffix());
+		cg.ret(((FunctionType) f.getType()).getReturnType().numberOfBytes(), f.localBytes(), f.paramBytes());
+		return null;
 	}
 
 }

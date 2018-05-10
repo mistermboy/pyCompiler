@@ -1,6 +1,8 @@
 package ast;
 
 import java.util.List;
+
+import tipo.FunctionType;
 import tipo.Type;
 import visitor.Visitor;
 
@@ -74,6 +76,25 @@ public class FunDefinition implements Definition {
 	@Override
 	public void setScope(int scope) {
 		this.scope = scope;
+	}
+
+	public int localBytes() {
+		int total = 0;
+		for (Statement s : statements) {
+			if (s instanceof VarDefinition) {
+				total += ((VarDefinition) s).getType().numberOfBytes();
+			}
+		}
+		return total;
+	}
+
+	public int paramBytes() {
+		int total = 0;
+		for (VarDefinition v : ((FunctionType) getType()).getParameters()) {
+			total += v.getType().numberOfBytes();
+
+		}
+		return total;
 	}
 
 }

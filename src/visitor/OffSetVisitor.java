@@ -1,9 +1,11 @@
 package visitor;
 
 import ast.FunDefinition;
+import ast.RecordField;
 import ast.Statement;
 import ast.VarDefinition;
 import tipo.FunctionType;
+import tipo.RecordType;
 
 public class OffSetVisitor extends AbstractVisitor {
 
@@ -13,6 +15,9 @@ public class OffSetVisitor extends AbstractVisitor {
 
 	@Override
 	public Object visit(VarDefinition varDefinition, Object o) {
+
+		varDefinition.getType().accept(this, o);
+
 		if (varDefinition.getScope() == 0) {
 			varDefinition.setOffset(globalOffSet);
 			globalOffSet += varDefinition.getType().numberOfBytes();
@@ -53,4 +58,14 @@ public class OffSetVisitor extends AbstractVisitor {
 		return null;
 	}
 
+	@Override
+	public Object visit(RecordType recordType, Object o) {
+		int fieldOffset = 0;
+		for (RecordField r : recordType.getFields()) {
+			r.accept(this, o);
+			r.setOffset(fieldOffset);
+			fieldOffset += r.getType().numberOfBytes();
+		}
+		return null;
+	}
 }
