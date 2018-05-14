@@ -287,8 +287,7 @@ public class CodeGenerator {
 	// ####################### COMMENTS ############################
 
 	public void varComment(Definition d) {
-		out.println(
-				"\t' * var " + d.getName() + " " + d.getType() + " (offset " + ((VarDefinition) d).getOffset() + ")");
+		out.println("\t' * " + d.getType() + " " + d.getName() + " (offset " + ((VarDefinition) d).getOffset() + ")");
 		out.flush();
 	}
 
@@ -307,16 +306,6 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	public void voidRetComment() {
-		out.println("\t' Void Return");
-		out.flush();
-	}
-
-	public void retComment() {
-		out.println("\t' Return");
-		out.flush();
-	}
-
 	public void mainComment() {
 		out.println(" ' Invocation to the main function");
 		out.flush();
@@ -324,11 +313,17 @@ public class CodeGenerator {
 
 	public void sourceComment(String constante) {
 		out.println("#source \"" + constante + "\"");
+		out.println();
 		out.flush();
 	}
 
 	public void lineComment(int constante) {
 		out.println("#line\t" + constante);
+		out.flush();
+	}
+
+	public void white() {
+		out.println();
 		out.flush();
 	}
 

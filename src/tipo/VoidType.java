@@ -29,7 +29,7 @@ public class VoidType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "void";
+		return "VoidType";
 	}
 
 	@Override

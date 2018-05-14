@@ -17,7 +17,7 @@ public class RealType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "double";
+		return "RealType";
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class RealType extends AbstractType {
 	public int numberOfBytes() {
 		return 4;
 	}
-	
+
 	@Override
 	public char suffix() {
 		return 'F';

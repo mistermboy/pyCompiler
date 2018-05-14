@@ -47,7 +47,7 @@ public class RecordField implements ASTNode {
 
 	@Override
 	public String toString() {
-		return "" + this.name + ":" + this.type.toString();
+		return "Field[name:" + this.name + ",type:" + this.getType() + " offset:" + this.offset;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class RecordField implements ASTNode {
 	public boolean equals(Object r) {
 		return this.getName().equals(((RecordField) r).getName());
 	}
-	
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);

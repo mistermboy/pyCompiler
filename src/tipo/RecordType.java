@@ -24,14 +24,20 @@ public class RecordType extends AbstractType {
 		this.fields = fields;
 	}
 
+	// @Override
+	// public String toString() {
+	// // String cad = "STRUCT {";
+	// // for (RecordField r : this.getFields()) {
+	// // cad += "\n \t" + r.toString();
+	// // }
+	// // cad += "\n }";
+	// // return cad;
+	// return "struct";
+	// }
+
 	@Override
 	public String toString() {
-		String cad = "STRUCT {";
-		for (RecordField r : this.getFields()) {
-			cad += "\n \t" + r.toString();
-		}
-		cad += "\n }";
-		return cad;
+		return "RecordType [fields=" + fields + "]";
 	}
 
 	@Override

@@ -21,21 +21,30 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	ValueCodeGeneratorVisitor valueCgVisitor;
 	AdressCodeGeneratorVisitor adressCgVisitor;
 
+	private String inputName;
+
 	public ExecuteCodeGeneratorVisitor(String entrada, String salida) {
 		super(new CodeGenerator(entrada, salida));
 		adressCgVisitor = new AdressCodeGeneratorVisitor(this.cg);
 		valueCgVisitor = new ValueCodeGeneratorVisitor(this.cg, adressCgVisitor);
 		adressCgVisitor.setValueVisitor(valueCgVisitor);
+
+		this.inputName = entrada;
 	}
 
 	@Override
 	public Object visit(Program program, Object o) {
+
+		cg.sourceComment(inputName);
+
 		for (Definition def : program.getDefinitions()) {
 			if (def instanceof VarDefinition) {
 				def.accept(this, o);
+				cg.varComment(def);
 			}
 		}
-
+		cg.white();
+		cg.mainComment();
 		cg.call("main");
 		cg.halt();
 
@@ -53,14 +62,26 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		cg.etiqueta(funDefinition.getName());
 
-		int locals = 0;
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		// Comentarios parámetros
+		cg.paramComment();
+		for (VarDefinition v : ((FunctionType) funDefinition.getType()).getParameters()) {
+			cg.varComment(v);
+		}
+		cg.white();
+
+		// Comentarios locales
+		cg.localComment();
 		for (Statement d : funDefinition.getStatements()) {
 			if (d instanceof VarDefinition) {
-				locals += ((VarDefinition) d).getType().numberOfBytes();
+				cg.varComment((VarDefinition) d);
 			}
 		}
+		cg.white();
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		cg.enter(locals);
+		cg.enter(funDefinition.localBytes());
 
 		for (Statement d : funDefinition.getStatements()) {
 			if (!(d instanceof VarDefinition)) {
@@ -68,14 +89,9 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			}
 		}
 
-		int params = 0;
-		for (VarDefinition d : ((FunctionType) funDefinition.getType()).getParameters()) {
-			params += d.getType().numberOfBytes();
-		}
-
 		Type ret = ((FunctionType) funDefinition.getType()).getReturnType();
 		if (ret == VoidType.getInstance()) {
-			cg.ret(0, locals, params);
+			cg.ret(0, funDefinition.localBytes(), funDefinition.paramBytes());
 		}
 
 		return null;
