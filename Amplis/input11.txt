@@ -1,0 +1,43 @@
+v:[10]double;
+
+# Main program
+def main():void {
+	value:double;
+	i,j:int;
+	w:[4][5]int;
+	date:struct { 
+		day, month, year:int;		
+	};
+	
+	input date.day; 
+	date.year = (int)'a'; 
+	date.month = date.day*date.year%12+1;
+	print date.day, '\n', date.month, '\n', (double)(date.year), '\n';
+	
+	input value;
+		
+	i=0;	
+	while i<10: {
+		v[i]=value;
+		print i,':',v[i], ' ';
+		if i%2:
+			print 'o','d','d','\n';
+		else 
+			print 'e','v','e','n','\n';
+		i=i+1;
+	}
+	print '\n';
+
+	i=0;
+	while i<4: {
+		j=0;
+		while j<5: {
+			w[i][j]=i+j;
+			print w[i][j], ' ';
+			j=j+1;
+		}
+		print '\n';
+		i=i+1;
+	}
+}
+	

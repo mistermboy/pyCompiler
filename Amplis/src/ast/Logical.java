@@ -2,9 +2,7 @@ package ast;
 
 import visitor.Visitor;
 
-public class Arithmetic extends AbstractExpression {
-
-	private String operator;
+public class Logical extends AbstractExpression {
 
 	private Expression left;
 	private Expression right;
@@ -12,28 +10,14 @@ public class Arithmetic extends AbstractExpression {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	public Arithmetic(int i, int j, Expression left, String string, Expression right) {
-		super();
+	private String logicalOperator;
+
+	public Logical(int i, int j, Expression left, String logicalOperator, Expression right) {
 		this.row = i;
 		this.column = j;
 		this.left = left;
-		this.operator = string;
+		this.logicalOperator = logicalOperator;
 		this.right = right;
-	}
-
-	/**
-	 * @return the operator
-	 */
-	public String getOperator() {
-		return operator;
-	}
-
-	/**
-	 * @param operator
-	 *            the operator to set
-	 */
-	public void setOperator(String operator) {
-		this.operator = operator;
 	}
 
 	/**
@@ -68,19 +52,27 @@ public class Arithmetic extends AbstractExpression {
 
 	@Override
 	public int getLine() {
-		return this.row;
+		return column;
+	}
+
+	public String getLogicalOperator() {
+		return logicalOperator;
+	}
+
+	public void setLogicalOperator(String logicalOperator) {
+		this.logicalOperator = logicalOperator;
 	}
 
 	@Override
 	public int getColumn() {
-		return this.column;
+		return row;
 	}
 
 	@Override
 	public String toString() {
 		String cad = "";
 		cad += this.left.toString() + "";
-		cad += this.operator + "";
+		cad += this.logicalOperator;
 		cad += this.right.toString() + "";
 		return cad;
 	}
@@ -89,5 +81,4 @@ public class Arithmetic extends AbstractExpression {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
-
 }
