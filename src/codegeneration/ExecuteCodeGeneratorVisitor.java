@@ -121,11 +121,11 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 			s.accept(this, o);
 		}
 		cg.jmp(label + 1);
-		cg.etiqueta(label);
+		cg.label(label);
 		for (Statement s : ifStatement.getElseBody()) {
 			s.accept(this, o);
 		}
-		cg.etiqueta(label + 1);
+		cg.label(label + 1);
 
 		return null;
 	}
@@ -133,14 +133,14 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(WhileStatement whileStatement, Object o) {
 		int label = cg.getLabels(2);
-		cg.etiqueta(label);
+		cg.label(label);
 		whileStatement.getCondition().accept(valueCgVisitor, o);
 		cg.jz(label + 1);
 		for (Statement s : whileStatement.getBody()) {
 			s.accept(this, o);
 		}
 		cg.jmp(label);
-		cg.etiqueta(label + 1);
+		cg.label(label + 1);
 
 		return null;
 	}

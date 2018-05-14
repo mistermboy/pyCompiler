@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import ast.Definition;
+import ast.VarDefinition;
 import tipo.CharType;
 import tipo.IntType;
 import tipo.RealType;
@@ -27,53 +29,53 @@ public class CodeGenerator {
 	}
 
 	public void pushbp() {
-		out.println("PUSH BP");
+		out.println("\tPUSH BP");
 		out.flush();
 	}
 
 	public void load(Type type) {
-		out.println("LOAD" + type.suffix());
+		out.println("\tLOAD" + type.suffix());
 		out.flush();
 	}
 
 	public void pusha(int n) {
-		out.println("PUSHA " + n);
+		out.println("\tPUSHA " + n);
 		out.flush();
 	}
 
 	public void push(int n) {
-		out.println("PUSHI " + n);
+		out.println("\tPUSHI " + n);
 		out.flush();
 	}
 
 	public void push(double n) {
-		out.println("PUSHF " + n);
+		out.println("\tPUSHF " + n);
 		out.flush();
 	}
 
 	public void push(char n) {
-		out.println("PUSHB " + (int) n);
+		out.println("\tPUSHB " + (int) n);
 		out.flush();
 	}
 
 	public void halt() {
-		out.println("HALT");
+		out.println("\tHALT");
 		out.flush();
 	}
 
 	public void out(Type type) {
-		out.println("OUT" + type.suffix());
+		out.println("\tOUT" + type.suffix());
 		out.flush();
 	}
 
 	public void store(Type type) {
-		out.println("STORE" + type.suffix());
+		out.println("\tSTORE" + type.suffix());
 		out.flush();
 
 	}
 
 	public void call(String nameString) {
-		out.println("CALL " + nameString);
+		out.println("\tCALL " + nameString);
 		out.flush();
 
 	}
@@ -86,23 +88,23 @@ public class CodeGenerator {
 	public void aritmetic(String operator, Type type) {
 		String op = "";
 		if (operator.equals("+")) {
-			op = "ADD";
+			op = "\tADD";
 		}
 
 		if (operator.equals("-")) {
-			op = "SUB";
+			op = "\tSUB";
 		}
 
 		if (operator.equals("*")) {
-			op = "MUL";
+			op = "\tMUL";
 		}
 
 		if (operator.equals("/")) {
-			op = "DIV";
+			op = "\tDIV";
 		}
 
 		if (operator.equals("%")) {
-			op = "MOD";
+			op = "\tMOD";
 		}
 
 		out.println(op + "" + type.suffix());
@@ -111,59 +113,38 @@ public class CodeGenerator {
 	}
 
 	public void add(Type type) {
-		out.println("ADD" + type.suffix());
+		out.println("\tADD" + type.suffix());
 		out.flush();
 	}
 
 	public void sub(Type type) {
-		out.println("SUB" + type.suffix());
+		out.println("\tSUB" + type.suffix());
 		out.flush();
 	}
 
 	public void mul(Type type) {
-		out.println("MUL" + type.suffix());
+		out.println("\tMUL" + type.suffix());
 		out.flush();
 	}
 
 	public void div(Type type) {
-		out.println("DIV" + type.suffix());
+		out.println("\tDIV" + type.suffix());
 		out.flush();
 	}
 
 	public void jz(int label) {
-		out.println("JZ Label" + label);
+		out.println("\tJZ Label" + label);
 		out.flush();
 	}
 
 	public void jmp(int label) {
-		out.println("JMP Label" + label);
+		out.println("\tJMP Label" + label);
 		out.flush();
 	}
 
-	// public void jnz(int label) {
-	// out.println("JNZ Label" + label);
-	// out.flush();
-	// }
-
-	public void lt() {
-		out.println("LT");
+	public void jnz(int label) {
+		out.println("\tJNZ Label" + label);
 		out.flush();
-	}
-
-	public void le() {
-		out.println("LE");
-		out.flush();
-	}
-
-	public void gt() {
-		out.println("GT");
-		out.flush();
-	}
-
-	public void ge() {
-		out.println("GE");
-		out.flush();
-
 	}
 
 	public void etiqueta(String name) {
@@ -173,38 +154,38 @@ public class CodeGenerator {
 	}
 
 	public void enter(int locals) {
-		out.println("enter " + locals);
+		out.println("\tenter " + locals);
 		out.flush();
 	}
 
 	public void ret(int ret, int locals, int params) {
-		out.println("ret " + ret + "," + locals + "," + params);
+		out.println("\tret " + ret + "," + locals + "," + params);
 		out.flush();
 
 	}
 
 	public void in(Type type) {
-		out.println("IN" + type.suffix());
+		out.println("\tIN" + type.suffix());
 		out.flush();
 	}
 
 	public void b2i() {
-		out.println("B2I");
+		out.println("\tB2I");
 		out.flush();
 	}
 
 	public void i2f() {
-		out.println("I2F");
+		out.println("\tI2F");
 		out.flush();
 	}
 
 	public void f2i() {
-		out.println("F2I");
+		out.println("\tF2I");
 		out.flush();
 	}
 
 	public void i2b() {
-		out.println("I2B");
+		out.println("\tI2B");
 		out.flush();
 	}
 
@@ -240,11 +221,11 @@ public class CodeGenerator {
 	public void logic(String logicalOperator) {
 		String op = "";
 		if (logicalOperator.equals("&&")) {
-			op = "AND";
+			op = "\tAND";
 		}
 
 		if (logicalOperator.equals("||")) {
-			op = "OR";
+			op = "\tOR";
 		}
 
 		out.println(op);
@@ -255,27 +236,27 @@ public class CodeGenerator {
 	public void comparison(String comparator, Type type) {
 		String op = "";
 		if (comparator.equals(">")) {
-			op = "GT";
+			op = "\tGT";
 		}
 
 		if (comparator.equals("<")) {
-			op = "LT";
+			op = "\tLT";
 		}
 
 		if (comparator.equals(">=")) {
-			op = "GE";
+			op = "\tGE";
 		}
 
 		if (comparator.equals("<=")) {
-			op = "LE";
+			op = "\tLE";
 		}
 
 		if (comparator.equals("==")) {
-			op = "EQ";
+			op = "\tEQ";
 		}
 
 		if (comparator.equals("!=")) {
-			op = "NE";
+			op = "\tNE";
 		}
 
 		out.println(op + "" + type.suffix());
@@ -283,13 +264,13 @@ public class CodeGenerator {
 	}
 
 	public void not() {
-		out.println("NOT");
+		out.println("\tNOT");
 		out.flush();
 
 	}
 
-	public void etiqueta(int num) {
-		out.println(" Label" + num + ":");
+	public void label(int num) {
+		out.println("Label" + num + ":");
 		out.flush();
 	}
 
@@ -299,7 +280,55 @@ public class CodeGenerator {
 	}
 
 	public void pop(char suffix) {
-		out.println("POP" + suffix);
+		out.println("\tPOP" + suffix);
+		out.flush();
+	}
+
+	// ####################### COMMENTS ############################
+
+	public void varComment(Definition d) {
+		out.println(
+				"\t' * var " + d.getName() + " " + d.getType() + " (offset " + ((VarDefinition) d).getOffset() + ")");
+		out.flush();
+	}
+
+	public void paramComment() {
+		out.println("\t' * Parameters");
+		out.flush();
+	}
+
+	public void localComment() {
+		out.println("\t' * Local variables");
+		out.flush();
+	}
+
+	public void functionBodyComment() {
+		out.println("\t' * Function body");
+		out.flush();
+	}
+
+	public void voidRetComment() {
+		out.println("\t' Void Return");
+		out.flush();
+	}
+
+	public void retComment() {
+		out.println("\t' Return");
+		out.flush();
+	}
+
+	public void mainComment() {
+		out.println(" ' Invocation to the main function");
+		out.flush();
+	}
+
+	public void sourceComment(String constante) {
+		out.println("#source \"" + constante + "\"");
+		out.flush();
+	}
+
+	public void lineComment(int constante) {
+		out.println("#line\t" + constante);
 		out.flush();
 	}
 
