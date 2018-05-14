@@ -85,6 +85,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		for (Statement d : funDefinition.getStatements()) {
 			if (!(d instanceof VarDefinition)) {
+				cg.lineComment(d.getLine());
 				d.accept(this, funDefinition);
 			}
 		}
@@ -134,11 +135,13 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		ifStatement.getCondition().accept(valueCgVisitor, o);
 		cg.jz(label);
 		for (Statement s : ifStatement.getIfBody()) {
+			cg.lineComment(s.getLine());
 			s.accept(this, o);
 		}
 		cg.jmp(label + 1);
 		cg.label(label);
 		for (Statement s : ifStatement.getElseBody()) {
+			cg.lineComment(s.getLine());
 			s.accept(this, o);
 		}
 		cg.label(label + 1);
@@ -153,6 +156,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		whileStatement.getCondition().accept(valueCgVisitor, o);
 		cg.jz(label + 1);
 		for (Statement s : whileStatement.getBody()) {
+			cg.lineComment(s.getLine());
 			s.accept(this, o);
 		}
 		cg.jmp(label);

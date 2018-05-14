@@ -317,8 +317,10 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	public void lineComment(int constante) {
-		out.println("#line\t" + constante);
+	public void lineComment(int num) {
+		out.println();
+		out.println("#line\t" + num);
+		out.println();
 		out.flush();
 	}
 
