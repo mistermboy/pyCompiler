@@ -80,11 +80,6 @@ public class CodeGenerator {
 
 	}
 
-	public void convert(Type type, Type type2) {
-		out.println(type.suffix() + "2" + type2.suffix());
-		out.flush();
-	}
-
 	public void aritmetic(String operator, Type type) {
 		String op = "";
 		if (operator.equals("+")) {
@@ -282,6 +277,27 @@ public class CodeGenerator {
 	public void pop(char suffix) {
 		out.println("\tPOP" + suffix);
 		out.flush();
+	}
+
+	
+	public void convert(Type t1, Type t2) {
+		switch (t1.suffix()) {
+		case 'I':
+			if (t2.suffix() == 'B') {
+				i2b();
+			} else if (t2.suffix() == 'F') {
+				i2f();
+			}
+			break;
+		case 'B':
+			if (t2.suffix() == 'F') {
+				b2i();
+				i2f();
+			} else if (t2.suffix() == 'I') {
+				b2i();
+			}
+			break;
+		}
 	}
 
 	// ####################### COMMENTS ############################

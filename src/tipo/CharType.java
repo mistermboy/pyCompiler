@@ -120,4 +120,18 @@ public class CharType extends AbstractType {
 		return 'B';
 	}
 
+	@Override
+	public Type superType(Type type) {
+		if (type instanceof RealType) {
+			return RealType.getInstance();
+		}
+
+		if (type instanceof IntType) {
+			return IntType.getInstance();
+		}
+
+		return this;
+
+	}
+
 }

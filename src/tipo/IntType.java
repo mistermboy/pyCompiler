@@ -128,5 +128,15 @@ public class IntType extends AbstractType {
 	public char suffix() {
 		return 'I';
 	}
-	
+
+	@Override
+	public Type superType(Type type) {
+		if (type instanceof RealType) {
+			return RealType.getInstance();
+		}
+
+		return this;
+
+	}
+
 }

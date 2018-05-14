@@ -106,4 +106,9 @@ public class RealType extends AbstractType {
 		return 'F';
 	}
 
+	@Override
+	public Type superType(Type type) {
+		return this;
+	}
+
 }

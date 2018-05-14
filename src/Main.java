@@ -41,15 +41,17 @@ public class Main {
 
 		Visitor o = new OffSetVisitor();
 		parser.getAST().accept(o, null);
-		
-		Visitor e = new ExecuteCodeGeneratorVisitor(args[0],args[1]);
-		parser.getAST().accept(e, null);
+
+		Visitor e = new ExecuteCodeGeneratorVisitor(args[0], args[1]);
 
 		// * Check errors
 		if (EH.getEH().hasErrors()) {
 			// * Show errors
 			EH.getEH().showErrors(System.err);
 		} else {
+
+			parser.getAST().accept(e, null);
+
 			// * Show AST
 			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
 			new IntrospectorTree("Introspector", model);

@@ -13,6 +13,7 @@ import ast.Logical;
 import ast.RealLiteral;
 import ast.UnaryNot;
 import ast.Variable;
+import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
@@ -58,15 +59,9 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(Arithmetic arithmetic, Object object) {
 
 		arithmetic.getLeft().accept(this, object);
-		// cg.convert(arithmetic.getLeft().getType(), arithmetic.getRight().getType());
-		if (arithmetic.getLeft().getType().suffix() == 'B') {
-			cg.b2i();
-		}
+		cg.convert(arithmetic.getLeft().getType(), arithmetic.getType());
 		arithmetic.getRight().accept(this, object);
-		// cg.convert(arithmetic.getType(), arithmetic.getLeft().getType());
-		if (arithmetic.getRight().getType().suffix() == 'B') {
-			cg.b2i();
-		}
+		cg.convert(arithmetic.getRight().getType(), arithmetic.getType());
 		cg.aritmetic(arithmetic.getOperator(), arithmetic.getType());
 
 		return null;
@@ -76,19 +71,11 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(Comparison comparison, Object o) {
 
-		// Type superType =
-		// comparison.getLeft().getType().superType(comparison.getType());
+		Type superType = comparison.getLeft().getType().superType(comparison.getType());
 		comparison.getLeft().accept(this, o);
-		// cg.convert(comparison.getLeft().getType(), superType);
-		if (comparison.getLeft().getType().suffix() == 'B') {
-			cg.b2i();
-		}
+		cg.convert(comparison.getLeft().getType(), superType);
 		comparison.getRight().accept(this, o);
-		// cg.convert(comparison.getRight().getType(), superType);
-		if (comparison.getRight().getType().suffix() == 'B') {
-			cg.b2i();
-		}
-		// cg.aritmetic(comparison.getComparator(), superType);
+		cg.convert(comparison.getRight().getType(), superType);
 		cg.comparison(comparison.getComparator(), comparison.getType());
 
 		return null;
