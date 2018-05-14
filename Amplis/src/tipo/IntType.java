@@ -103,7 +103,7 @@ public class IntType extends AbstractType {
 
 	@Override
 	public Type promotesTo(Type type) {
-		if (type instanceof ErrorType) {
+		if (type instanceof ErrorType || type instanceof RealType) {
 			return type;
 		}
 

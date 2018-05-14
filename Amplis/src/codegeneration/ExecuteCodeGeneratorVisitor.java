@@ -123,7 +123,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		assignment.getLeft().accept(adressCgVisitor, o);
 		assignment.getRight().accept(valueCgVisitor, o);
-		// CONVERSIÓN IMPLÍCITA RELLENAR
+		cg.convert(assignment.getRight().getType(), assignment.getLeft().getType());
 		cg.store(assignment.getLeft().getType());
 
 		return null;
@@ -185,8 +185,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		return1.getExpression().accept(valueCgVisitor, o);
 
 		FunDefinition f = (FunDefinition) o;
-		// cg.convert(return1.getExpression().getType(), ((FunctionType)
-		// f.getType()).getReturnType().suffix());
+		cg.convert(return1.getExpression().getType(), ((FunctionType) f.getType()).getReturnType());
 		cg.ret(((FunctionType) f.getType()).getReturnType().numberOfBytes(), f.localBytes(), f.paramBytes());
 		return null;
 	}

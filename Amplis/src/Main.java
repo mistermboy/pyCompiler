@@ -56,7 +56,6 @@ public class Main {
 			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
 			new IntrospectorTree("Introspector", model);
 		}
-
 	}
 
 }

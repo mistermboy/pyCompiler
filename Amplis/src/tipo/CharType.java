@@ -94,7 +94,7 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type promotesTo(Type type) {
-		if (type instanceof ErrorType) {
+		if (type instanceof ErrorType || type instanceof IntType || type instanceof RealType) {
 			return type;
 		}
 

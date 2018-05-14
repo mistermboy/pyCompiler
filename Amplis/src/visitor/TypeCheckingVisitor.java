@@ -50,11 +50,16 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		if (a.getLeft().getType() != null && a.getRight().getType() != null) {
 			a.getLeft().setType(a.getRight().getType().promotesTo(a.getLeft().getType()));
 			if (a.getLeft().getType() == null) {
-				a.getLeft().setType(new ErrorType(a.getLeft(),
-						"ERROR: No es posible realizar la asignación entre dos tipos distintos en " + a.toString()));
+				a.getLeft().setType(
+						new ErrorType(a.getLeft(), "ERROR: No es posible realizar la asignación en " + a.toString())); // Error
+																														// por
+																														// mala
+																														// promoción
+																														// de
+																														// tipos
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -279,16 +284,14 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return1.getExpression().accept(this, o);
 
 		FunctionType fType = (FunctionType) o;
-		return1.getExpression().setType(return1.getExpression().getType().promotesTo(fType.getReturnType()));
-
-		if (return1.getExpression().getType() == null) {
+		if (return1.getExpression().getType().promotesTo(fType.getReturnType()) == null) {
 			return1.getExpression().setType(
 					new ErrorType(return1, "ERROR: El valor retornado no es el esperado en: " + return1.toString()));
 			;
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(FunDefinition funDefinition, Object o) {
 		funDefinition.getType().accept(this, o);
@@ -300,7 +303,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return null;
 
 	}
-	
+
 	@Override
 	public Object visit(FunctionType functionType, Object o) {
 		if (!functionType.getReturnType().isBuildingType()) {

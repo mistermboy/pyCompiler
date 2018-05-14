@@ -1,0 +1,25 @@
+i:int;
+j:double;
+c:char;
+
+
+def p():double {
+
+	i=1;
+	c='a';
+	return c;
+#	return i;
+#	return j;
+}
+
+
+
+def main():void {
+
+
+	
+	p();
+
+	
+	
+}
