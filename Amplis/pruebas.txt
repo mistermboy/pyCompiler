@@ -1,17 +1,11 @@
 j:double;
 
-def f():double{
-	return 33;
-}
 
 def main():void {
 
 	j='a';
 	print j;
 	print '\n';
-
-	j-=f()+'Z'/2;
+	j++;
 	print j;
-
-	
 }

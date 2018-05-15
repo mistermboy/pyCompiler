@@ -3,6 +3,8 @@ package visitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import ast.AlterAssigVal;
+import ast.AlterVal;
 import ast.Arithmetic;
 import ast.Assignment;
 import ast.Cast;
@@ -12,8 +14,6 @@ import ast.Expression;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.AlterAssigVal;
-import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -28,7 +28,6 @@ import ast.Variable;
 import ast.WhileStatement;
 import tipo.ErrorType;
 import tipo.FunctionType;
-import tipo.IntType;
 import tipo.Type;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
@@ -61,6 +60,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 																														// de
 																														// tipos
 			}
+
 		}
 
 		return null;
@@ -324,7 +324,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(AlterVal i, Object o) {
 		i.getExpr().accept(this, o);
-		if (!i.getExpr().getLValue() || IntType.getInstance().promotesTo(i.getExpr().getType()) == null) {
+		if (!i.getExpr().getLValue()) {
 			i.getExpr().setType(
 					new ErrorType(i, "ERROR: No se puede realizar el incremento o decremento en: " + i.toString()));
 		}
@@ -339,20 +339,20 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		if (!a.getLeft().getLValue()) {
 			new ErrorType(a.getLeft(), "ERROR: Se esperaba un Lvalue en: " + a.getLeft());
 		}
-		
+
 		if (a.getLeft().getType() != null && a.getRight().getType() != null) {
 			a.getLeft().setType(a.getRight().getType().promotesTo(a.getLeft().getType()));
 			if (a.getLeft().getType() == null) {
-				a.getLeft().setType(
-						new ErrorType(a.getLeft(), "ERROR: No es posible realizar la asignación más incremento o decremento en " + a.toString())); // Error
-																														// por
-																														// mala
-																														// promoción
-																														// de
-																														// tipos
+				a.getLeft().setType(new ErrorType(a.getLeft(),
+						"ERROR: No es posible realizar la asignación más incremento o decremento en " + a.toString())); // Error
+				// por
+				// mala
+				// promoción
+				// de
+				// tipos
 			}
 		}
-		
+
 		return null;
 	}
 

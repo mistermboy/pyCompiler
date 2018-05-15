@@ -207,10 +207,20 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		i.getExpr().accept(adressCgVisitor, o);
 		i.getExpr().accept(valueCgVisitor, o);
-		cg.push(1);
-		cg.convert(IntType.getInstance(), i.getExpr().getType());
-		cg.alter(i.getOperator(), i.getExpr().getType());
-		cg.store(i.getExpr().getType());
+
+		//char++
+		if (i.getExpr().getType().suffix() == 'B') {
+			cg.b2i();
+			cg.push(1);
+			cg.add(IntType.getInstance());
+			cg.i2b();
+			cg.store(CharType.getInstance());
+		} else {
+			cg.push(1);
+			cg.convert(IntType.getInstance(), i.getExpr().getType());
+			cg.alter(i.getOperator(), i.getExpr().getType());
+			cg.store(i.getExpr().getType());
+		}
 
 		return null;
 	}
@@ -227,7 +237,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		cg.convert(a.getRight().getType(), superType);
 
 		cg.alterAssig(a.getOperator(), superType);
-		
+
 		if (a.getLeft().getType().suffix() == 'B' && a.getRight().getType().suffix() == 'B') {
 			cg.convert(superType, a.getRight().getType());
 			cg.store(CharType.getInstance());

@@ -17,16 +17,52 @@ package parser;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ast.ASTNode;
+import ast.AlterAssigVal;
+import ast.AlterVal;
+import ast.Arithmetic;
+import ast.Assignment;
+import ast.Cast;
+import ast.CharLiteral;
+import ast.Comparison;
+import ast.Definition;
+import ast.Expression;
+import ast.FieldAccess;
+import ast.FunDefinition;
+import ast.IfStatement;
+import ast.Indexing;
+import ast.IntLiteral;
+import ast.Invocation;
+import ast.Logical;
+import ast.Program;
+import ast.Read;
+import ast.RealLiteral;
+import ast.RecordField;
+import ast.Return;
+import ast.Statement;
+import ast.UnaryMinus;
+import ast.UnaryNot;
+import ast.VarDefinition;
+import ast.Variable;
+import ast.WhileStatement;
+import ast.Write;
 //#line 2 "../../src/parser/parser.y"
 /* * Declaraciones de código Java*/
 /* * Se sitúan al comienzo del archivo generado*/
 /* * El package lo añade yacc si utilizamos la opción -Jpackage*/
 import scanner.Scanner;
-import java.io.Reader;
-
-import ast.*;
-import tipo.*;
-import java.util.*;
+import tipo.ArrayType;
+import tipo.CharType;
+import tipo.ErrorType;
+import tipo.FunctionType;
+import tipo.IntType;
+import tipo.RealType;
+import tipo.RecordType;
+import tipo.Type;
+import tipo.VoidType;
 
 //#line 28 "Parser.java"
 

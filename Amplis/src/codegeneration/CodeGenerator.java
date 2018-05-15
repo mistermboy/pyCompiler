@@ -302,11 +302,11 @@ public class CodeGenerator {
 	public void alter(String operator, Type type) {
 		String op = "";
 		if (operator.equals("++")) {
-			op = "ADD";
+			op = "\tADD";
 		}
 
 		if (operator.equals("--")) {
-			op = "SUB";
+			op = "\tSUB";
 		}
 
 		out.println(op + type.suffix());

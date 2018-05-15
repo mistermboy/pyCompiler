@@ -5,18 +5,6 @@
  ' Invocation to the main function
 	CALL main
 	HALT
- f:
-	' * Parameters
-
-	' * Local variables
-
-	enter 0
-
-#line	4
-
-	PUSHI 33
-	I2F
-	ret 4,0,0
  main:
 	' * Parameters
 
@@ -24,7 +12,7 @@
 
 	enter 0
 
-#line	9
+#line	6
 
 	PUSHA 0
 	PUSHB 97
@@ -32,33 +20,28 @@
 	I2F
 	STOREF
 
-#line	10
+#line	7
 
 	PUSHA 0
 	LOADF
 	OUTF
 
-#line	11
+#line	8
 
 	PUSHB 10
 	OUTB
 
-#line	13
+#line	9
 
 	PUSHA 0
 	PUSHA 0
 	LOADF
-	CALL f
-	PUSHB 90
-	B2I
-	PUSHI 2
-	DIVI
+	PUSHI 1
 	I2F
 	ADDF
-	SUBF
 	STOREF
 
-#line	14
+#line	10
 
 	PUSHA 0
 	LOADF
