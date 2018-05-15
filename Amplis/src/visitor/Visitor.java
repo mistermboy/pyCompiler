@@ -8,7 +8,7 @@ import ast.Comparison;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.Increment;
+import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -97,6 +97,6 @@ public interface Visitor {
 
 	Object visit(VoidType voidType, Object o);
 	
-	Object visit(Increment i, Object o);
+	Object visit(AlterVal i, Object o);
 
 }

@@ -24,18 +24,5 @@ def main():void {
 	
 	c='a';
 #	c++;	#Error
-
-	print '\n';
-
-	i=10;
-	while i>0:{
-		print v[0];
-		print s.j;
-		print '\n';
-		i--;
-		v[0]--;
-		s.j--;	
-	}
-	
 	
 }

@@ -1,0 +1,250 @@
+#source "pruebas.txt"
+
+
+ ' Invocation to the main function
+	CALL main
+	HALT
+ main:
+	' * Parameters
+
+	' * Local variables
+	' * ArrayType [of:IntType,size:3] v (offset -6)
+	' * IntType i (offset -8)
+	' * CharType c (offset -9)
+	' * RecordType [fields=[Field[name:j,type:IntType offset:0]] s (offset -11)
+
+	enter 11
+
+#line	11
+
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	PUSHI 69
+	STOREI
+
+#line	13
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	PUSHI 33
+	STOREI
+
+#line	14
+
+	PUSH BP
+	PUSHI -8
+	ADDI
+	PUSHI 0
+	STOREI
+
+#line	23
+
+Label0:
+	PUSH BP
+	PUSHI -8
+	ADDI
+	LOADI
+	PUSHI 10
+	LTI
+	JZ Label1
+
+#line	17
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	LOADI
+	OUTI
+
+#line	18
+
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	LOADI
+	OUTI
+
+#line	19
+
+	PUSHB 10
+	OUTB
+
+#line	20
+
+	PUSH BP
+	PUSHI -8
+	ADDI
+	PUSH BP
+	PUSHI -8
+	ADDI
+	LOADI
+	PUSHI 1
+ADDI
+	STOREI
+
+#line	21
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	LOADI
+	PUSHI 1
+ADDI
+	STOREI
+
+#line	22
+
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	LOADI
+	PUSHI 1
+ADDI
+	STOREI
+	JMP Label0
+Label1:
+
+#line	25
+
+	PUSH BP
+	PUSHI -9
+	ADDI
+	PUSHB 97
+	STOREB
+
+#line	28
+
+	PUSHB 10
+	OUTB
+
+#line	30
+
+	PUSH BP
+	PUSHI -8
+	ADDI
+	PUSHI 10
+	STOREI
+
+#line	38
+
+Label2:
+	PUSH BP
+	PUSHI -8
+	ADDI
+	LOADI
+	PUSHI 0
+	GTI
+	JZ Label3
+
+#line	32
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	LOADI
+	OUTI
+
+#line	33
+
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	LOADI
+	OUTI
+
+#line	34
+
+	PUSHB 10
+	OUTB
+
+#line	35
+
+	PUSH BP
+	PUSHI -8
+	ADDI
+	PUSH BP
+	PUSHI -8
+	ADDI
+	LOADI
+	PUSHI 1
+SUBI
+	STOREI
+
+#line	36
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSHI 0
+	PUSHI 2
+	MULI
+	ADDI
+	LOADI
+	PUSHI 1
+SUBI
+	STOREI
+
+#line	37
+
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	PUSH BP
+	PUSHI -11
+	ADDI
+	PUSHI 0
+	ADDI
+	LOADI
+	PUSHI 1
+SUBI
+	STOREI
+	JMP Label2
+Label3:
+	ret 0,11,0

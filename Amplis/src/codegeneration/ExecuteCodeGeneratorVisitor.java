@@ -7,7 +7,7 @@ import ast.Definition;
 import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.Increment;
+import ast.AlterVal;
 import ast.Invocation;
 import ast.Program;
 import ast.Read;
@@ -201,12 +201,12 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	
 	
 	@Override
-	public Object visit(Increment i, Object o) {
+	public Object visit(AlterVal i, Object o) {
 		i.getExpr().accept(adressCgVisitor, o);
 		i.getExpr().accept(valueCgVisitor, o);
 		cg.push(1);
 		cg.convert(IntType.getInstance(), i.getExpr().getType());
-		cg.add(i.getExpr().getType());
+		cg.alter(i.getOperator(),i.getExpr().getType());
 		cg.store(i.getExpr().getType());
 		return null;
 	}

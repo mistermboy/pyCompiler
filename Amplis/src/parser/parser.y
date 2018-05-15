@@ -36,6 +36,7 @@ import java.util.*;
 %token OR
 %token AND
 %token INCREMENT
+%token DECREMENT
 
 
 %right '='
@@ -142,7 +143,8 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		| while													{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) $1; states.add(wS);$$=states;}
 		| asignacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) $1; states.add(aS);$$=states;}
 		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Invocation iS = (Invocation) $1; states.add(iS);$$=states;}
-		| expresion INCREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); Increment iN = new Increment(scanner.getLine(),scanner.getColumn(),(Expression) $1) ; states.add(iN);$$=states;}
+		| expresion INCREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); AlterVal iN = new AlterVal(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2) ; states.add(iN);$$=states;}
+		| expresion DECREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); AlterVal dN = new AlterVal(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2) ; states.add(dN);$$=states;}
 		;
 	
 

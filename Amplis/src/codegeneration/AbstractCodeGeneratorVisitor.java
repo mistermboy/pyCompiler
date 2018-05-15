@@ -8,7 +8,7 @@ import ast.Comparison;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.Increment;
+import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -230,7 +230,7 @@ public class AbstractCodeGeneratorVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Increment i, Object o) {
+	public Object visit(AlterVal i, Object o) {
 		
 		throw new IllegalStateException("Plantilla no definida en Increment");
 	}

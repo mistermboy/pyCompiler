@@ -10,7 +10,7 @@ import ast.Expression;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.Increment;
+import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -254,7 +254,7 @@ public class AbstractVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Increment i, Object o) {
+	public Object visit(AlterVal i, Object o) {
 		i.getExpr().accept(this, o);
 		return null;
 	}

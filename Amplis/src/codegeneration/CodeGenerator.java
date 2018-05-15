@@ -279,7 +279,6 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	
 	public void convert(Type t1, Type t2) {
 		switch (t1.suffix()) {
 		case 'I':
@@ -343,6 +342,21 @@ public class CodeGenerator {
 	public void white() {
 		out.println();
 		out.flush();
+	}
+
+	public void alter(String operator, Type type) {
+		String op = "";
+		if (operator.equals("++")) {
+			op = "ADD";
+		}
+
+		if (operator.equals("--")) {
+			op = "SUB";
+		}
+
+		out.println(op + type.suffix());
+		out.flush();
+
 	}
 
 }
