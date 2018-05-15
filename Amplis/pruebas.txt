@@ -1,11 +1,8 @@
-j:double;
+c:double;
 
 
 def main():void {
 
-	j='a';
-	print j;
-	print '\n';
-	j++;
-	print j;
+	c='a' + 1.2;
+	print c;
 }

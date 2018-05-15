@@ -1,6 +1,6 @@
 #source "pruebas.txt"
 
-	' * RealType j (offset 0)
+	' * RealType c (offset 0)
 
  ' Invocation to the main function
 	CALL main
@@ -18,30 +18,11 @@
 	PUSHB 97
 	B2I
 	I2F
-	STOREF
-
-#line	7
-
-	PUSHA 0
-	LOADF
-	OUTF
-
-#line	8
-
-	PUSHB 10
-	OUTB
-
-#line	9
-
-	PUSHA 0
-	PUSHA 0
-	LOADF
-	PUSHI 1
-	I2F
+	PUSHF 1.2
 	ADDF
 	STOREF
 
-#line	10
+#line	7
 
 	PUSHA 0
 	LOADF

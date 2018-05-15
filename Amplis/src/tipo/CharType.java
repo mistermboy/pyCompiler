@@ -33,7 +33,7 @@ public class CharType extends AbstractType {
 		}
 
 		if (type instanceof CharType) {
-			return IntType.getInstance();
+			return this;
 		}
 
 		return null;

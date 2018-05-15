@@ -14,6 +14,7 @@ import ast.RealLiteral;
 import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
+import tipo.CharType;
 import tipo.FunctionType;
 import tipo.IntType;
 import tipo.Type;
@@ -60,12 +61,21 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(Arithmetic arithmetic, Object object) {
-
-		arithmetic.getLeft().accept(this, object);
-		cg.convert(arithmetic.getLeft().getType(), arithmetic.getType());
-		arithmetic.getRight().accept(this, object);
-		cg.convert(arithmetic.getRight().getType(), arithmetic.getType());
-		cg.aritmetic(arithmetic.getOperator(), arithmetic.getType());
+		
+		if (arithmetic.getLeft().getType().suffix() == 'B' && arithmetic.getRight().getType().suffix() == 'B') {
+			arithmetic.getLeft().accept(this, object);
+			cg.b2i();
+			arithmetic.getRight().accept(this, object);
+			cg.b2i();
+			cg.aritmetic(arithmetic.getOperator(), IntType.getInstance());
+			cg.i2b();
+		} else {
+			arithmetic.getLeft().accept(this, object);
+			cg.convert(arithmetic.getLeft().getType(), arithmetic.getType());
+			arithmetic.getRight().accept(this, object);
+			cg.convert(arithmetic.getRight().getType(), arithmetic.getType());
+			cg.aritmetic(arithmetic.getOperator(), arithmetic.getType());
+		}
 
 		return null;
 
