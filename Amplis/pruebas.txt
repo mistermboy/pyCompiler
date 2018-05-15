@@ -1,0 +1,7 @@
+
+def main():void {
+
+	i:int;
+	i++;
+
+}
