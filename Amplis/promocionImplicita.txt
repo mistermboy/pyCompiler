@@ -3,13 +3,10 @@ j:double;
 c:char;
 v:[2]double;
 
-def f(p:double,r:char):double{
-return 3.3;
 
-}
 
 def main():void {
 	
-	print f('a',4.4);
+	print 8==9;
 
 }

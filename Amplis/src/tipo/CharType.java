@@ -128,7 +128,7 @@ public class CharType extends AbstractType {
 		}
 
 		if (type instanceof CharType) {
-			return this;
+			return IntType.getInstance();
 		}
 
 		return null;
