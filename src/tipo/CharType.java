@@ -122,16 +122,12 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type superType(Type type) {
-		
-		if (type instanceof ErrorType) {
+
+		if (type instanceof ErrorType || type instanceof RealType || type instanceof IntType) {
 			return type;
 		}
-		
-		if (type instanceof RealType) {
-			return RealType.getInstance();
-		}
 
-		if (type instanceof IntType || type instanceof CharType) {
+		if (type instanceof CharType) {
 			return this;
 		}
 

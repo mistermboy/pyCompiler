@@ -19,7 +19,8 @@
 
 	PUSHB 97
 	B2I
-	PUSHI 93
-	ADDI
+	I2F
+	PUSHF 22.3
+	GTF
 	OUTI
 	ret 0,0,0

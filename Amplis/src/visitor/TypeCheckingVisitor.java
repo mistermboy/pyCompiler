@@ -70,7 +70,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 		a.setType(a.getLeft().getType().arithmetic(a.getRight().getType()));
 		if (a.getType() == null) {
-			a.setType(new ErrorType(a, "ERROR: Se esperaban tipos iguales (Reales o Enteros) en " + a.toString()));
+			a.setType(new ErrorType(a, "ERROR: No ha sido posible realizar la operación aritmética en " + a.toString()));
 		}
 		a.setLValue(false);
 		return null;
@@ -98,7 +98,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		comparison.setType(comparison.getLeft().getType().comparison(comparison.getRight().getType()));
 		if (comparison.getType() == null) {
 			comparison.setType(
-					new ErrorType(comparison, "ERROR: Se esperaban tipos iguales en " + comparison.toString()));
+					new ErrorType(comparison, "ERROR:  No ha sido posible realizar la operación de comparación en " + comparison.toString()));
 		}
 
 		comparison.setLValue(false);

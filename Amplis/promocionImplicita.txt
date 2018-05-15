@@ -5,6 +5,6 @@ v:[2]double;
 
 def main():void {
 	
-	print 'a'+93;
+	print 'a'>22.3;
 
 }
