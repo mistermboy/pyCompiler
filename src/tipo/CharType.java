@@ -45,7 +45,12 @@ public class CharType extends AbstractType {
 		if (type instanceof ErrorType) {
 			return type;
 		}
-		return IntType.getInstance();
+
+		if (type instanceof CharType) {
+			return IntType.getInstance();
+		}
+
+		return null;
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type promotesTo(Type type) {
-		if (type instanceof ErrorType) {
+		if (type instanceof ErrorType || type instanceof IntType || type instanceof RealType) {
 			return type;
 		}
 
@@ -117,16 +122,20 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type superType(Type type) {
+		
+		if (type instanceof ErrorType) {
+			return type;
+		}
+		
 		if (type instanceof RealType) {
 			return RealType.getInstance();
 		}
 
-		if (type instanceof IntType) {
-			return IntType.getInstance();
+		if (type instanceof IntType || type instanceof CharType) {
+			return this;
 		}
 
-		return this;
-
+		return null;
 	}
 
 }

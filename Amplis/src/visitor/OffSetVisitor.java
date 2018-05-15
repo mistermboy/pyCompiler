@@ -31,7 +31,6 @@ public class OffSetVisitor extends AbstractVisitor {
 				varDefinition.setOffset(localOffSet);
 			}
 		}
-		System.out.println("Nombre: " + varDefinition.getName() + " OffSet: " + varDefinition.getOffset());
 		return null;
 	}
 

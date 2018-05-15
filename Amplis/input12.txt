@@ -1,0 +1,66 @@
+
+# Global variables
+i,n,j:int;
+c:char;
+
+pair:struct { 
+	integer:int;
+	character:char;
+};
+
+# Functions
+def p():void {}
+
+def f(r:double, e:int):int {
+	real:double;
+	c:char;
+	real = (double)(pair.character)+(double)(pair.integer)+r+(double)e;
+	c='0';
+	return (int)c;
+}
+
+matrix:[10][10]int;
+
+def fill(row:int, value:int, increment:int):void {
+	i,inc:int;
+	i=0;
+	inc=increment;
+	while i<10: {
+		matrix[row][i]=value+inc; 
+		i=i+1;
+		inc=inc+increment;
+	}
+}
+
+def show(row:int):void {
+	i:int;
+	i=0;
+	while i<10: {
+		print '(', row, ',', i, ')', ':', matrix[row][i], ' ';
+		i=i+1;
+	}
+	print '\n';
+}
+
+# Main program
+def main():void {
+	i:int;
+
+	p(); # Invocation (procedure) as statement
+	i=0;
+	pair.character='0';
+	pair.integer=(int)'0';
+	print f((double)i,(int)(pair.character)), '\n'; # Invocation as expression
+
+	f(1.3, 2); # Invocation (function) as statement
+
+	i=0;
+	j=0;
+	while i<10: {
+		fill(i, j, 1); 
+		show(i);
+		i=i+1;
+		j=i*10;
+	}
+}
+

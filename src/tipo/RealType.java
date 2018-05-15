@@ -108,7 +108,16 @@ public class RealType extends AbstractType {
 
 	@Override
 	public Type superType(Type type) {
-		return this;
+
+		if (type instanceof ErrorType) {
+			return type;
+		}
+
+		if (type instanceof RealType || type instanceof IntType || type instanceof CharType) {
+			return this;
+		}
+
+		return null;
 	}
 
 }
