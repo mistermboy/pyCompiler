@@ -45,12 +45,7 @@ public class CharType extends AbstractType {
 		if (type instanceof ErrorType) {
 			return type;
 		}
-
-		if (type instanceof CharType) {
-			return IntType.getInstance();
-		}
-
-		return null;
+		return IntType.getInstance();
 	}
 
 	@Override

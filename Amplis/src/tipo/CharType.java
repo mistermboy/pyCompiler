@@ -126,11 +126,7 @@ public class CharType extends AbstractType {
 			return RealType.getInstance();
 		}
 
-		if (type instanceof IntType) {
-			return IntType.getInstance();
-		}
-
-		return this;
+		return IntType.getInstance();
 
 	}
 
