@@ -7,6 +7,33 @@
  ' Invocation to the main function
 	CALL main
 	HALT
+ p:
+	' * Parameters
+	' * RealType f (offset 4)
+
+	' * Local variables
+
+	enter 0
+
+#line	8
+
+	PUSHA 0
+	PUSHI 1
+	STOREI
+
+#line	9
+
+	PUSHA 6
+	PUSHB 97
+	STOREB
+
+#line	10
+
+	PUSHA 6
+	LOADB
+	B2I
+	I2F
+	ret 4,0,4
  main:
 	' * Parameters
 
@@ -14,15 +41,10 @@
 
 	enter 0
 
-#line	10
+#line	20
 
-	PUSHF 1.2
-	PUSHF 2.2
-	PUSHF 3.2
-	PUSHI -1
+	PUSHI 2
 	I2F
-	MULF
-	MULF
-	ADDF
+	CALL p
 	OUTF
 	ret 0,0,0

@@ -3,10 +3,20 @@ j:double;
 c:char;
 
 
+def p(f:double):double {
+
+	i=1;
+	c='a';
+	return c;
+#	return i;
+#	return j;
+}
+
+
 
 def main():void {
 
 
-	print 1.2+2.2*(-3.2);
+	print p(2);
 	
 }

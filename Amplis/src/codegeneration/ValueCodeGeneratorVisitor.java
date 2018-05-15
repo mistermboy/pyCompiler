@@ -128,8 +128,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		int i = 0;
 		for (Expression s : invocation.getArguments()) {
 			s.accept(this, o);
-
-			cg.convert(invocation.getType(),
+			cg.convert(s.getType(),
 					((FunctionType) invocation.getFuncion().getType()).getParameters().get(i++).getType());
 		}
 		cg.call(invocation.getFuncion().getNameString());
