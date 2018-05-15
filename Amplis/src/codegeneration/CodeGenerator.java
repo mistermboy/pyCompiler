@@ -299,6 +299,35 @@ public class CodeGenerator {
 		}
 	}
 
+	public void alter(String operator, Type type) {
+		String op = "";
+		if (operator.equals("++")) {
+			op = "ADD";
+		}
+
+		if (operator.equals("--")) {
+			op = "SUB";
+		}
+
+		out.println(op + type.suffix());
+		out.flush();
+
+	}
+
+	public void alterAssig(String operator, Type superType) {
+		String op = "";
+		if (operator.equals("+=")) {
+			op = "\tADD";
+		}
+
+		if (operator.equals("-=")) {
+			op = "\tSUB";
+		}
+
+		out.println(op + superType.suffix());
+		out.flush();
+	}
+
 	// ####################### COMMENTS ############################
 
 	public void varComment(Definition d) {
@@ -342,21 +371,6 @@ public class CodeGenerator {
 	public void white() {
 		out.println();
 		out.flush();
-	}
-
-	public void alter(String operator, Type type) {
-		String op = "";
-		if (operator.equals("++")) {
-			op = "ADD";
-		}
-
-		if (operator.equals("--")) {
-			op = "SUB";
-		}
-
-		out.println(op + type.suffix());
-		out.flush();
-
 	}
 
 }

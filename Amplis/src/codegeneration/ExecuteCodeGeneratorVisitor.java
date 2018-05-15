@@ -7,6 +7,7 @@ import ast.Definition;
 import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.AlterAssigVal;
 import ast.AlterVal;
 import ast.Invocation;
 import ast.Program;
@@ -16,6 +17,7 @@ import ast.Statement;
 import ast.VarDefinition;
 import ast.WhileStatement;
 import ast.Write;
+import tipo.CharType;
 import tipo.FunctionType;
 import tipo.IntType;
 import tipo.Type;
@@ -196,18 +198,43 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		FunDefinition f = (FunDefinition) o;
 		cg.convert(return1.getExpression().getType(), ((FunctionType) f.getType()).getReturnType());
 		cg.ret(((FunctionType) f.getType()).getReturnType().numberOfBytes(), f.localBytes(), f.paramBytes());
+
 		return null;
 	}
-	
-	
+
 	@Override
 	public Object visit(AlterVal i, Object o) {
+
 		i.getExpr().accept(adressCgVisitor, o);
 		i.getExpr().accept(valueCgVisitor, o);
 		cg.push(1);
 		cg.convert(IntType.getInstance(), i.getExpr().getType());
-		cg.alter(i.getOperator(),i.getExpr().getType());
+		cg.alter(i.getOperator(), i.getExpr().getType());
 		cg.store(i.getExpr().getType());
+
+		return null;
+	}
+
+	@Override
+	public Object visit(AlterAssigVal a, Object o) {
+
+		Type superType = a.getLeft().getType().superType(a.getRight().getType());
+
+		a.getLeft().accept(adressCgVisitor, o);
+		a.getLeft().accept(valueCgVisitor, o);
+		cg.convert(a.getLeft().getType(), superType);
+		a.getRight().accept(valueCgVisitor, o);
+		cg.convert(a.getRight().getType(), superType);
+
+		cg.alterAssig(a.getOperator(), superType);
+		
+		if (a.getLeft().getType().suffix() == 'B' && a.getRight().getType().suffix() == 'B') {
+			cg.convert(superType, a.getRight().getType());
+			cg.store(CharType.getInstance());
+		} else {
+			cg.store(superType);
+		}
+
 		return null;
 	}
 

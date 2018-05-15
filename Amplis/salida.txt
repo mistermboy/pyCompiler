@@ -1,28 +1,66 @@
 #source "pruebas.txt"
 
+	' * RealType j (offset 0)
 
  ' Invocation to the main function
 	CALL main
 	HALT
+ f:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	4
+
+	PUSHI 33
+	I2F
+	ret 4,0,0
  main:
 	' * Parameters
 
 	' * Local variables
-	' * IntType i (offset -2)
 
-	enter 2
+	enter 0
 
-#line	6
+#line	9
 
-	PUSH BP
-	PUSHI -2
-	ADDI
-	PUSHI 0
-	STOREI
+	PUSHA 0
+	PUSHB 97
+	B2I
+	I2F
+	STOREF
 
-#line	7
+#line	10
 
+	PUSHA 0
+	LOADF
+	OUTF
 
-#line	8
+#line	11
 
-	ret 0,2,0
+	PUSHB 10
+	OUTB
+
+#line	13
+
+	PUSHA 0
+	PUSHA 0
+	LOADF
+	CALL f
+	PUSHB 90
+	B2I
+	PUSHI 2
+	DIVI
+	I2F
+	ADDF
+	SUBF
+	STOREF
+
+#line	14
+
+	PUSHA 0
+	LOADF
+	OUTF
+	ret 0,0,0

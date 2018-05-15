@@ -8,6 +8,7 @@ import ast.Comparison;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.AlterAssigVal;
 import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
@@ -99,4 +100,5 @@ public interface Visitor {
 	
 	Object visit(AlterVal i, Object o);
 
+	Object visit(AlterAssigVal a, Object o);
 }

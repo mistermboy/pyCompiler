@@ -1,10 +1,17 @@
+j:double;
+
+def f():double{
+	return 33;
+}
 
 def main():void {
 
-	i:int;
-	
-	i=0;
-	i+=3;
-	i-=22;	
+	j='a';
+	print j;
+	print '\n';
+
+	j-=f()+'Z'/2;
+	print j;
+
 	
 }

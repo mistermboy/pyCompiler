@@ -8,7 +8,7 @@ public class AlterAssigVal implements Statement {
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
 	private Expression left;
-	private Expression rigth;
+	private Expression right;
 	private String operator;
 
 	public AlterAssigVal(int row, int column, Expression left, Expression right, String operator) {
@@ -16,7 +16,7 @@ public class AlterAssigVal implements Statement {
 		this.row = row;
 		this.column = column;
 		this.left = left;
-		this.rigth = right;
+		this.right = right;
 		this.operator = operator;
 	}
 
@@ -40,13 +40,12 @@ public class AlterAssigVal implements Statement {
 
 	@Override
 	public Object accept(Visitor v, Object o) {
-		//return v.visit(this, o);
-		return null;
+		return v.visit(this, o);
 	}
 
 	@Override
 	public String toString() {
-		return left.toString() + operator + rigth.toString();
+		return left.toString() + operator + right.toString();
 	}
 
 	public Expression getLeft() {
@@ -57,12 +56,12 @@ public class AlterAssigVal implements Statement {
 		this.left = left;
 	}
 
-	public Expression getRigth() {
-		return rigth;
+	public Expression getRight() {
+		return right;
 	}
 
-	public void setRigth(Expression rigth) {
-		this.rigth = rigth;
+	public void setRight(Expression right) {
+		this.right = right;
 	}
 
 }
