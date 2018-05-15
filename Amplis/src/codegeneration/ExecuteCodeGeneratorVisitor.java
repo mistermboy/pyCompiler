@@ -7,6 +7,7 @@ import ast.Definition;
 import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.Increment;
 import ast.Invocation;
 import ast.Program;
 import ast.Read;
@@ -16,6 +17,7 @@ import ast.VarDefinition;
 import ast.WhileStatement;
 import ast.Write;
 import tipo.FunctionType;
+import tipo.IntType;
 import tipo.Type;
 import tipo.VoidType;
 
@@ -194,6 +196,18 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		FunDefinition f = (FunDefinition) o;
 		cg.convert(return1.getExpression().getType(), ((FunctionType) f.getType()).getReturnType());
 		cg.ret(((FunctionType) f.getType()).getReturnType().numberOfBytes(), f.localBytes(), f.paramBytes());
+		return null;
+	}
+	
+	
+	@Override
+	public Object visit(Increment i, Object o) {
+		i.getExpr().accept(adressCgVisitor, o);
+		i.getExpr().accept(valueCgVisitor, o);
+		cg.push(1);
+		cg.convert(IntType.getInstance(), i.getExpr().getType());
+		cg.add(i.getExpr().getType());
+		cg.store(i.getExpr().getType());
 		return null;
 	}
 

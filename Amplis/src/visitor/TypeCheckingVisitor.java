@@ -12,6 +12,7 @@ import ast.Expression;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.Increment;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -26,6 +27,7 @@ import ast.Variable;
 import ast.WhileStatement;
 import tipo.ErrorType;
 import tipo.FunctionType;
+import tipo.IntType;
 import tipo.Type;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
@@ -70,7 +72,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 		a.setType(a.getLeft().getType().arithmetic(a.getRight().getType()));
 		if (a.getType() == null) {
-			a.setType(new ErrorType(a, "ERROR: No ha sido posible realizar la operación aritmética en " + a.toString()));
+			a.setType(
+					new ErrorType(a, "ERROR: No ha sido posible realizar la operación aritmética en " + a.toString()));
 		}
 		a.setLValue(false);
 		return null;
@@ -97,8 +100,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 		comparison.setType(comparison.getLeft().getType().comparison(comparison.getRight().getType()));
 		if (comparison.getType() == null) {
-			comparison.setType(
-					new ErrorType(comparison, "ERROR:  No ha sido posible realizar la operación de comparación en " + comparison.toString()));
+			comparison.setType(new ErrorType(comparison,
+					"ERROR:  No ha sido posible realizar la operación de comparación en " + comparison.toString()));
 		}
 
 		comparison.setLValue(false);
@@ -313,6 +316,15 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		functionType.getReturnType().accept(this, o);
 		for (Statement s : functionType.getParameters()) {
 			s.accept(this, o);
+		}
+		return null;
+	}
+
+	@Override
+	public Object visit(Increment i, Object o) {
+		i.getExpr().accept(this, o);
+		if (!i.getExpr().getLValue() || IntType.getInstance().promotesTo(i.getExpr().getType())==null) {
+			i.getExpr().setType(new ErrorType(i, "ERROR: No se puede realizar el incremento en: " + i.toString()));
 		}
 		return null;
 	}

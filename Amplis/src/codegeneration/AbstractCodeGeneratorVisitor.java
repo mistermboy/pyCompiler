@@ -8,6 +8,7 @@ import ast.Comparison;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
+import ast.Increment;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -226,6 +227,12 @@ public class AbstractCodeGeneratorVisitor implements Visitor {
 	public Object visit(VoidType voidType, Object o) {
 
 		throw new IllegalStateException("Plantilla no definida en VoidType");
+	}
+
+	@Override
+	public Object visit(Increment i, Object o) {
+		
+		throw new IllegalStateException("Plantilla no definida en Increment");
 	}
 
 }

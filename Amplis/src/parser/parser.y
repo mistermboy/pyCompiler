@@ -142,7 +142,7 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		| while													{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) $1; states.add(wS);$$=states;}
 		| asignacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) $1; states.add(aS);$$=states;}
 		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Invocation iS = (Invocation) $1; states.add(iS);$$=states;}
-		| ID INCREMENT ';'										{ List<Statement> states = new ArrayList<Statement>(); Increment iN = new Increment(scanner.getLine(),scanner.getColumn(),new Variable(scanner.getLine(),scanner.getColumn(),(String) $1)) ; states.add(iN);$$=states;}
+		| expresion INCREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); Increment iN = new Increment(scanner.getLine(),scanner.getColumn(),(Expression) $1) ; states.add(iN);$$=states;}
 		;
 	
 

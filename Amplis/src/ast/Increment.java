@@ -7,21 +7,21 @@ public class Increment implements Statement {
 	private int row = ASTNode.DEFAULT_ROW_COLUMN;
 	private int column = ASTNode.DEFAULT_ROW_COLUMN;
 
-	private Variable variable;
+	private Expression exp;
 
-	public Increment(int row, int column, Variable variable) {
+	public Increment(int row, int column, Expression expr) {
 		super();
 		this.row = row;
 		this.column = column;
-		this.variable = variable;
+		this.exp = expr;
 	}
 
-	public Variable getVariable() {
-		return variable;
+	public Expression getExpr() {
+		return exp;
 	}
 
-	public void setVariable(Variable variable) {
-		this.variable = variable;
+	public void setExpr(Expression expr) {
+		this.exp = expr;
 	}
 
 	@Override
@@ -36,8 +36,12 @@ public class Increment implements Statement {
 
 	@Override
 	public Object accept(Visitor v, Object o) {
-		// TODO Auto-generated method stub
-		return null;
+		return v.visit(this, o);
+	}
+
+	@Override
+	public String toString() {
+		return exp.toString() + "++";
 	}
 
 }
