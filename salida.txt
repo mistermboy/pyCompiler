@@ -1,8 +1,5 @@
-#source "promocionImplicita.txt"
+#source "pruebas.txt"
 
-	' * IntType i (offset 0)
-	' * RealType j (offset 2)
-	' * CharType c (offset 6)
 
  ' Invocation to the main function
 	CALL main
@@ -14,10 +11,12 @@
 
 	enter 0
 
-#line	8
+#line	4
 
-	PUSHF 2.5
-	PUSHF 3.6
-	LTF
+	PUSHB 97
+	B2I
+	PUSHB 97
+	B2I
+	DIVI
 	OUTI
 	ret 0,0,0
