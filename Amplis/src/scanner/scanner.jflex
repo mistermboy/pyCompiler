@@ -134,7 +134,12 @@ main				{this.yylval = yytext();
 						return Parser.INCREMENT;}
 																								
 "--"					{this.yylval = yytext();
-						return Parser.DECREMENT;}																																																								
+						return Parser.DECREMENT;}
+						
+"+="					{this.yylval = yytext();
+						return Parser.INCREMENT_ASSIGMENT;}
+"-="					{this.yylval = yytext();
+						return Parser.DECREMENT_ASSIGMENT;}																																																										
  
 // * CONSTANTS
 

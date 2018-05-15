@@ -1,41 +1,10 @@
 
 def main():void {
 
-	v:[3]int;
 	i:int;
-	c:char;
-	s:struct{
-		j:int;
-	};
 	
-	s.j=69;
-	
-	v[0]=33;
 	i=0;
-	
-	while i<10:{
-		print v[0];
-		print s.j;
-		print '\n';
-		i++;
-		v[0]++;
-		s.j++;	
-	}
-	
-	c='a';
-#	c++;	#Error
-
-	print '\n';
-
-	i=10;
-	while i>0:{
-		print v[0];
-		print s.j;
-		print '\n';
-		i--;
-		v[0]--;
-		s.j--;	
-	}
-	
+	i+=3;
+	i-=22;	
 	
 }
