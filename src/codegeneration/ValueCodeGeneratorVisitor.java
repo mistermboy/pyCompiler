@@ -78,7 +78,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		cg.convert(comparison.getLeft().getType(), superType);
 		comparison.getRight().accept(this, o);
 		cg.convert(comparison.getRight().getType(), superType);
-		cg.comparison(comparison.getComparator(), comparison.getType());
+		cg.comparison(comparison.getComparator(), superType);
 
 		return null;
 	}
@@ -130,7 +130,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 			// CONVERSION INPLÍCITAAA
 
-			// cg.convert(invocation.getType(),
+			// cg.convert(s.getType(),
 			// ((FunctionType)
 			// invocation.getFuncion().getType()).getParameters().get(i++).getType());
 		}

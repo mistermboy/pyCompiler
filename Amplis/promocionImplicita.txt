@@ -3,20 +3,10 @@ j:double;
 c:char;
 
 
-def p(f:double):double {
-
-	i=1;
-	c='a';
-	return c;
-#	return i;
-#	return j;
-}
-
-
-
 def main():void {
 
+	if 'a'=='b':{
+		print 'a';
+	}
 
-	print p(2);
-	
 }

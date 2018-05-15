@@ -51,7 +51,7 @@ public class RealType extends AbstractType {
 		}
 
 		if (type instanceof RealType) {
-			return this;
+			return IntType.getInstance();
 		}
 
 		return null;

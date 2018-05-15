@@ -142,9 +142,11 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		}
 		cg.jmp(label + 1);
 		cg.label(label);
-		for (Statement s : ifStatement.getElseBody()) {
-			cg.lineComment(s.getLine());
-			s.accept(this, o);
+		if (ifStatement.getElseBody() != null) {
+			for (Statement s : ifStatement.getElseBody()) {
+				cg.lineComment(s.getLine());
+				s.accept(this, o);
+			}
 		}
 		cg.label(label + 1);
 
