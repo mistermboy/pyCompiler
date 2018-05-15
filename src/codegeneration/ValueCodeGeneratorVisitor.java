@@ -14,6 +14,7 @@ import ast.RealLiteral;
 import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
+import tipo.IntType;
 import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
@@ -142,14 +143,8 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(UnaryMinus unaryMinus, Object o) {
 
 		unaryMinus.getOperand().accept(this, o);
-		char s = unaryMinus.getOperand().getType().suffix();
-
-		if (s == 'F') {
-			cg.push(-1.0);
-		} else {
-			cg.push(-1);
-		}
-
+		cg.push(-1);
+		cg.convert(IntType.getInstance(), unaryMinus.getType());
 		cg.mul(unaryMinus.getOperand().getType());
 		return null;
 	}

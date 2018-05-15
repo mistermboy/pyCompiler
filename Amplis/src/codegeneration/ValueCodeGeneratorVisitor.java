@@ -14,6 +14,8 @@ import ast.RealLiteral;
 import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
+import tipo.FunctionType;
+import tipo.IntType;
 import tipo.Type;
 
 public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
@@ -123,15 +125,12 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(Invocation invocation, Object o) {
-		// int i = 0;
+		int i = 0;
 		for (Expression s : invocation.getArguments()) {
 			s.accept(this, o);
 
-			// CONVERSION INPLÍCITAAA
-
-			// cg.convert(invocation.getType(),
-			// ((FunctionType)
-			// invocation.getFuncion().getType()).getParameters().get(i++).getType());
+			cg.convert(invocation.getType(),
+					((FunctionType) invocation.getFuncion().getType()).getParameters().get(i++).getType());
 		}
 		cg.call(invocation.getFuncion().getNameString());
 		return null;
@@ -142,14 +141,8 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	public Object visit(UnaryMinus unaryMinus, Object o) {
 
 		unaryMinus.getOperand().accept(this, o);
-		char s = unaryMinus.getOperand().getType().suffix();
-
-		if (s == 'F') {
-			cg.push(-1.0);
-		} else {
-			cg.push(-1);
-		}
-
+		cg.push(-1);
+		cg.convert(IntType.getInstance(), unaryMinus.getType());
 		cg.mul(unaryMinus.getOperand().getType());
 		return null;
 	}

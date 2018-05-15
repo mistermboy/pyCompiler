@@ -1,5 +1,7 @@
 package codegeneration;
 
+import java.util.List;
+
 import ast.Assignment;
 import ast.Definition;
 import ast.Expression;
@@ -167,9 +169,12 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(Invocation invocation, Object o) {
-
+		int i = 0;
+		List<VarDefinition> list = ((FunctionType) invocation.getFuncion().getVarDefinition().getType())
+				.getParameters();
 		for (Expression s : invocation.getArguments()) {
 			s.accept(valueCgVisitor, o);
+			cg.convert(s.getType(), list.get(i++).getType());
 		}
 		cg.call(invocation.getFuncion().getNameString());
 		if (((FunctionType) invocation.getFuncion().getType()).getReturnType() != VoidType.getInstance()) {
