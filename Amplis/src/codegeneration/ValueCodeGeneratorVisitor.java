@@ -11,6 +11,7 @@ import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
 import ast.RealLiteral;
+import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
 import tipo.Type;
@@ -80,7 +81,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		return null;
 	}
-                                                                                                                                                                                                                                                                 
+
 	@Override
 	public Object visit(Cast cast, Object o) {
 		cast.getExp().accept(this, o);
@@ -135,6 +136,22 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		cg.call(invocation.getFuncion().getNameString());
 		return null;
 
+	}
+
+	@Override
+	public Object visit(UnaryMinus unaryMinus, Object o) {
+
+		unaryMinus.getOperand().accept(this, o);
+		char s = unaryMinus.getOperand().getType().suffix();
+
+		if (s == 'F') {
+			cg.push(-1.0);
+		} else {
+			cg.push(-1);
+		}
+
+		cg.mul(unaryMinus.getOperand().getType());
+		return null;
 	}
 
 }

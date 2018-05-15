@@ -18,3 +18,10 @@
 
 	PUSHI 1
 	PUSHI 2
+	PUSHI 3
+	PUSHI -1
+	MULI
+	MULI
+	ADDI
+	OUTI
+	ret 0,0,0
