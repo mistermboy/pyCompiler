@@ -32,7 +32,7 @@ public class RealType extends AbstractType {
 			return type;
 		}
 
-		if (type instanceof RealType) {
+		if (type instanceof RealType || type instanceof IntType || type instanceof CharType) {
 			return this;
 		}
 

@@ -28,7 +28,7 @@ public class CharType extends AbstractType {
 	@Override
 	public Type arithmetic(Type type) {
 
-		if (type instanceof ErrorType) {
+		if (type instanceof ErrorType  || type instanceof RealType || type instanceof IntType) {
 			return type;
 		}
 
@@ -122,11 +122,11 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type superType(Type type) {
-		
+
 		if (type instanceof ErrorType) {
 			return type;
 		}
-		
+
 		if (type instanceof RealType) {
 			return RealType.getInstance();
 		}

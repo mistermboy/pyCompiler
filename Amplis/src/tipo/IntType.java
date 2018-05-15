@@ -33,11 +33,11 @@ public class IntType extends AbstractType {
 	@Override
 	public Type arithmetic(Type type) {
 
-		if (type instanceof ErrorType) {
+		if (type instanceof ErrorType || type instanceof RealType ) {
 			return type;
 		}
 
-		if (type instanceof IntType) {
+		if (type instanceof IntType || type instanceof CharType) {
 			return this;
 		}
 
