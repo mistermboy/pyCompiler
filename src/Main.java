@@ -34,27 +34,38 @@ public class Main {
 		parser.run();
 
 		Visitor i = new IdentificationVisitor();
-		parser.getAST().accept(i, null);
-
 		Visitor v = new TypeCheckingVisitor();
-		parser.getAST().accept(v, null);
-
 		Visitor o = new OffSetVisitor();
-		parser.getAST().accept(o, null);
-
 		Visitor e = new ExecuteCodeGeneratorVisitor(args[0], args[1]);
 
-		// * Check errors
+		parser.getAST().accept(i, null);
+
 		if (EH.getEH().hasErrors()) {
 			// * Show errors
 			EH.getEH().showErrors(System.err);
 		} else {
+			parser.getAST().accept(v, null);
 
-			parser.getAST().accept(e, null);
+			if (EH.getEH().hasErrors()) {
+				// * Show errors
+				EH.getEH().showErrors(System.err);
+			} else {
+				parser.getAST().accept(o, null);
 
-			// * Show AST
-			IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
-			new IntrospectorTree("Introspector", model);
+				if (EH.getEH().hasErrors()) {
+					// * Show errors
+					EH.getEH().showErrors(System.err);
+				} else {
+					parser.getAST().accept(e, null);
+
+					// * Show AST
+					IntrospectorModel model = new IntrospectorModel("Program", parser.getAST());
+					new IntrospectorTree("Introspector", model);
+
+				}
+
+			}
+
 		}
 
 	}

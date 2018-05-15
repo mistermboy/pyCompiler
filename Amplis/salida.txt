@@ -7,32 +7,6 @@
  ' Invocation to the main function
 	CALL main
 	HALT
- p:
-	' * Parameters
-
-	' * Local variables
-
-	enter 0
-
-#line	8
-
-	PUSHA 0
-	PUSHI 1
-	STOREI
-
-#line	9
-
-	PUSHA 6
-	PUSHB 97
-	STOREB
-
-#line	10
-
-	PUSHA 6
-	LOADB
-	B2I
-	I2F
-	ret 4,0,0
  main:
 	' * Parameters
 
@@ -40,8 +14,7 @@
 
 	enter 0
 
-#line	21
+#line	10
 
-	CALL p
-	POPF
-	ret 0,0,0
+	PUSHI 1
+	PUSHI 2
