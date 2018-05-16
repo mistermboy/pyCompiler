@@ -104,8 +104,9 @@ public class ValueCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 	@Override
 	public Object visit(Logical logical, Object o) {
 		logical.getLeft().accept(this, o);
+		cg.convert(logical.getLeft().getType(), logical.getType());
 		logical.getRight().accept(this, o);
-
+		cg.convert(logical.getRight().getType(), logical.getType());
 		cg.logic(logical.getLogicalOperator());
 
 		return null;
