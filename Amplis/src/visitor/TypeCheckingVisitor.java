@@ -3,8 +3,6 @@ package visitor;
 import java.util.ArrayList;
 import java.util.List;
 
-import ast.AlterAssigVal;
-import ast.AlterVal;
 import ast.Arithmetic;
 import ast.Assignment;
 import ast.Cast;
@@ -26,7 +24,6 @@ import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
 import ast.WhileStatement;
-import tipo.CharType;
 import tipo.ErrorType;
 import tipo.FunctionType;
 import tipo.Type;
@@ -319,41 +316,6 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		for (Statement s : functionType.getParameters()) {
 			s.accept(this, o);
 		}
-		return null;
-	}
-
-	@Override
-	public Object visit(AlterVal i, Object o) {
-		i.getExpr().accept(this, o);
-		if (!i.getExpr().getLValue() || CharType.getInstance().promotesTo(i.getExpr().getType())==null) {
-			i.getExpr().setType(
-					new ErrorType(i, "ERROR: No se puede realizar el incremento o decremento en: " + i.toString()));
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(AlterAssigVal a, Object o) {
-		a.getLeft().accept(this, o);
-		a.getRight().accept(this, o);
-
-		if (!a.getLeft().getLValue()) {
-			new ErrorType(a.getLeft(), "ERROR: Se esperaba un Lvalue en: " + a.getLeft());
-		}
-
-		if (a.getLeft().getType() != null && a.getRight().getType() != null) {
-			a.getLeft().setType(a.getRight().getType().promotesTo(a.getLeft().getType()));
-			if (a.getLeft().getType() == null) {
-				a.getLeft().setType(new ErrorType(a.getLeft(),
-						"ERROR: No es posible realizar la asignación más incremento o decremento en " + a.toString())); // Error
-				// por
-				// mala
-				// promoción
-				// de
-				// tipos
-			}
-		}
-
 		return null;
 	}
 

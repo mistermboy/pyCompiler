@@ -82,19 +82,19 @@ public class CodeGenerator {
 
 	public void aritmetic(String operator, Type type) {
 		String op = "";
-		if (operator.equals("+")) {
+		if (operator.equals("+") || operator.equals("++") || operator.equals("+=") ) {
 			op = "\tADD";
 		}
 
-		if (operator.equals("-")) {
+		if (operator.equals("-") || operator.equals("--") || operator.equals("-=") ) {
 			op = "\tSUB";
 		}
 
-		if (operator.equals("*")) {
+		if (operator.equals("*") || operator.equals("*=")) {
 			op = "\tMUL";
 		}
 
-		if (operator.equals("/")) {
+		if (operator.equals("/") || operator.equals("/=")) {
 			op = "\tDIV";
 		}
 

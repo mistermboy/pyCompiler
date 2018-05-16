@@ -4,12 +4,10 @@ c:char;
 
 v:[10]int;
 w:[10]double;
-z:[10]char;
 
 s:struct{
 	n:int;
 	m:double;
-	l:char;
 };
 
 def  p():int{
@@ -21,21 +19,17 @@ def main():void {
 
 	i=0;
 	j=1.1;
-	c='a';
 	
 	s.n=10;
 	s.m=10.7;
-	s.l='Z';
 	
 		
 	while i<10:{
 		v[i]=i;
 		w[i]=j;
-		z[i]=c;
 		
 		i++;
 		j++;
-		c++;
 	}
 	i--;
 
@@ -49,13 +43,7 @@ def main():void {
 		
 	}
 	print '\n';
-	while s.l!='A':{
-		
-		print s.l, '\n';
-		s.l--;		
-	}
-	print s.l;
-	print '\n';
+
 	
 	while s.m > 0:{
 	
@@ -70,6 +58,26 @@ def main():void {
 	
 	p();
 	
+	c='a';
+	c='a'+'b';
+
+	i=2;
+	while i < 10:{
+		print i;
+		print '\n';
+		i*=2;
+	}
+	
+
+	
+	j=10000;
+	while j > 10:{
+		print j;
+		print '\n';
+		j/=10;
+	}
+	
+	
 	##############	ERRORES DESCOMENTAR ##########
 	
 	
@@ -83,6 +91,8 @@ def main():void {
 			w+=33; #Error
 			z+=2; #Error
 			s+=8; #Error
+			v*=33;	#Error
+			v/=33.9;	#Error
 			
 			6+6++; #Error
 			8/9--; #Error
@@ -94,10 +104,6 @@ def main():void {
 			(double) c-=44; #Error
 			p()+=9; #Error
 			-69-=22; #Error		"""
-			
-							
-	
-	
-	
+		
 	
 }

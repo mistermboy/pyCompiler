@@ -117,5 +117,17 @@ def main():void {
 	print 'a'+2*3.5/'v';
 	
 	
+	j*='a';		#CharToDouble
+	j/=3;		#IntToDouble
+	j+=33.2;	#DoubleToDouble
+
+	i*='a';		#CharToInt
+	i/=1;		#IntToInt
+#	i+=2.2;		# ERROR DoubleToInt
+	
+	c*='a';		#CharToChar
+#	c-=1;		# ERROR	IntToChar
+#	c/=2.2;		# ERROR DoubleToChar	
+	
 		
 }

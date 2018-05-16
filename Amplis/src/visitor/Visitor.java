@@ -8,19 +8,17 @@ import ast.Comparison;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.AlterAssigVal;
-import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
 import ast.Logical;
-import ast.UnaryNot;
 import ast.Program;
 import ast.Read;
 import ast.RealLiteral;
 import ast.RecordField;
 import ast.Return;
 import ast.UnaryMinus;
+import ast.UnaryNot;
 import ast.VarDefinition;
 import ast.Variable;
 import ast.WhileStatement;
@@ -97,8 +95,5 @@ public interface Visitor {
 	Object visit(RealType realType, Object o);
 
 	Object visit(VoidType voidType, Object o);
-	
-	Object visit(AlterVal i, Object o);
 
-	Object visit(AlterAssigVal a, Object o);
 }

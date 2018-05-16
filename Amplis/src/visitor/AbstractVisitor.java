@@ -10,8 +10,6 @@ import ast.Expression;
 import ast.FieldAccess;
 import ast.FunDefinition;
 import ast.IfStatement;
-import ast.AlterAssigVal;
-import ast.AlterVal;
 import ast.Indexing;
 import ast.IntLiteral;
 import ast.Invocation;
@@ -251,19 +249,6 @@ public class AbstractVisitor implements Visitor {
 
 	@Override
 	public Object visit(VoidType voidType, Object o) {
-		return null;
-	}
-
-	@Override
-	public Object visit(AlterVal i, Object o) {
-		i.getExpr().accept(this, o);
-		return null;
-	}
-
-	@Override
-	public Object visit(AlterAssigVal a, Object o) {
-		a.getLeft().accept(this, o);
-		a.getRight().accept(this, o);
 		return null;
 	}
 

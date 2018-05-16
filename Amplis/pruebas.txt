@@ -1,29 +1,133 @@
+i:int;
+j:double;
+c:char;
 
-# Global variables
-i: int;
-r: double;
-c: char;
 
-# Functions
-def f(pi:int, pr:double ): int {
-  lr:double;
-  li:int;
-  li = pi;
-  lr = pr;
-  return pi;
+def promocionParams(c:char,i:int,j:double):int{
+	
+	print c;
+	print '\n';
+	print i;
+	print '\n';
+	print j;
+	print '\n';
+	
+	return 0;
 }
 
-# Main program
-def main():void {
-  pair: struct { 
-    integer:int;
-    character:char;
-  };
+def DoubleRetDouble():double{
+	return 2.2;		
+}
 
-  i = 3;
-  c = 'a';
-  r = 3.8;
-  pair.integer = i;
-  pair.character = c;
-  f(i, r);
+def DoubleRetInt():double{
+	return 2;		
+}
+
+def DoubleRetChar():double{
+	return 'a';		
+}
+
+
+def IntRetInt():int{
+	return 2;		
+}
+
+def IntRetChar():int{
+	return 'a';		
+}
+
+def CharRetChar():char{
+	return 'a';		
+}
+
+
+	########## ERRORS	##########
+
+	"""
+		def IntRetDouble():int{
+			return 2.2;		
+		}
+		
+		def CharRetInt():char{
+			return 1;		
+		}
+		
+		def CharRetDouble():char{
+			return 1.2;		
+		}
+		
+	"""
+
+	##############################	
+
+
+def main():void {
+
+
+	
+	promocionParams('a',2,4.4); 		#Char,Int,Double
+	promocionParams('a','b','c');		#Char,Char,Char
+	promocionParams('a','b',1);			#Char,Char,Int
+	promocionParams('a','b',3.3);		#Char,Char,Double
+	promocionParams('a',1,'b');			#Char,Int,Char
+	
+	DoubleRetDouble();				
+	DoubleRetInt();					
+	DoubleRetChar();			
+
+	IntRetInt();
+	IntRetChar();
+	
+	CharRetChar();
+	
+	
+	#####	ERRORES	####
+	
+#	promocionParams(1,4,2.3);			# ERROR 	Int,Int,Double
+#	promocionParams(1.1,4,2.3);			# ERROR 	Double,Int,Double
+#	promocionParams('a',1.9,2.3);		# ERROR 	Char,Double,Double
+	
+	####################
+	
+	
+	i=0;
+	j=1.0;
+	c='a';
+	
+	j='a'; 		#CharToDouble
+	j=1;		#IntToDouble
+	j=2.2;		#DoubleToDouble
+	
+	i='a';		#CharToInt
+	i=1;		#IntToInt
+#	i=2.2;		# ERROR DoubleToInt
+	
+	c='a';		#CharToChar
+#	c=1;		# ERROR	IntToChar
+#	c=2.2;		# ERROR DoubleToChar
+
+
+	print 'a'+'b'-'c';
+	print '\n';
+	print 1+2/3;
+	print '\n';
+	print 1.2+2.3*3.4;
+	print '\n';
+	
+	print 'a'+2*3.5/'v';
+	
+	
+	j*='a';		#CharToDouble
+	j/=3;		#IntToDouble
+	j+=33.2;	#DoubleToDouble
+
+	i*='a';		#CharToInt
+	i/=1;		#IntToInt
+#	i+=2.2;		# ERROR DoubleToInt
+	
+	c*='a';		#CharToChar
+#	c-=1;		# ERROR	IntToChar
+#	c/=2.2;		# ERROR DoubleToChar	
+	
+		
 }
