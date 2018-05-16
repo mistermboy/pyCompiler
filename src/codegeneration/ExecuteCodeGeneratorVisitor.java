@@ -2,7 +2,6 @@ package codegeneration;
 
 import ast.Assignment;
 import ast.Definition;
-import ast.Expression;
 import ast.FunDefinition;
 import ast.IfStatement;
 import ast.Invocation;
@@ -123,7 +122,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 		assignment.getLeft().accept(adressCgVisitor, o);
 		assignment.getRight().accept(valueCgVisitor, o);
-		// CONVERSIÓN IMPLÍCITA RELLENAR
+		cg.convert(assignment.getRight().getType(), assignment.getLeft().getType());
 		cg.store(assignment.getLeft().getType());
 
 		return null;
@@ -169,11 +168,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 
 	@Override
 	public Object visit(Invocation invocation, Object o) {
-
-		for (Expression s : invocation.getArguments()) {
-			s.accept(valueCgVisitor, o);
-		}
-		cg.call(invocation.getFuncion().getNameString());
+		invocation.accept(valueCgVisitor, o);
 		if (((FunctionType) invocation.getFuncion().getType()).getReturnType() != VoidType.getInstance()) {
 			cg.pop(((FunctionType) invocation.getFuncion().getType()).getReturnType().suffix());
 		}
@@ -187,10 +182,56 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		return1.getExpression().accept(valueCgVisitor, o);
 
 		FunDefinition f = (FunDefinition) o;
-		// cg.convert(return1.getExpression().getType(), ((FunctionType)
-		// f.getType()).getReturnType().suffix());
+		cg.convert(return1.getExpression().getType(), ((FunctionType) f.getType()).getReturnType());
 		cg.ret(((FunctionType) f.getType()).getReturnType().numberOfBytes(), f.localBytes(), f.paramBytes());
+
 		return null;
 	}
+
+//	@Override
+//	public Object visit(AlterVal i, Object o) {
+//
+//		i.getExpr().accept(adressCgVisitor, o);
+//		i.getExpr().accept(valueCgVisitor, o);
+//
+//		//char++ || char--
+//		if (i.getExpr().getType().suffix() == 'B') {
+//			cg.b2i();
+//			cg.push(1);
+//			cg.alter(i.getOperator(),IntType.getInstance());
+//			cg.i2b();
+//			cg.store(CharType.getInstance());
+//		} else {
+//			cg.push(1);
+//			cg.convert(IntType.getInstance(), i.getExpr().getType());
+//			cg.alter(i.getOperator(), i.getExpr().getType());
+//			cg.store(i.getExpr().getType());
+//		}
+//
+//		return null;
+//	}
+//
+//	@Override
+//	public Object visit(AlterAssigVal a, Object o) {
+//
+//		Type superType = a.getLeft().getType().superType(a.getRight().getType());
+//
+//		a.getLeft().accept(adressCgVisitor, o);
+//		a.getLeft().accept(valueCgVisitor, o);
+//		cg.convert(a.getLeft().getType(), superType);
+//		a.getRight().accept(valueCgVisitor, o);
+//		cg.convert(a.getRight().getType(), superType);
+//
+//		cg.alterAssig(a.getOperator(), superType);
+//
+//		if (a.getLeft().getType().suffix() == 'B' && a.getRight().getType().suffix() == 'B') {
+//			cg.convert(superType, a.getRight().getType());
+//			cg.store(CharType.getInstance());
+//		} else {
+//			cg.store(superType);
+//		}
+//
+//		return null;
+//	}
 
 }

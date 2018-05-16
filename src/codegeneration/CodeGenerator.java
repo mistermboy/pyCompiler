@@ -82,19 +82,19 @@ public class CodeGenerator {
 
 	public void aritmetic(String operator, Type type) {
 		String op = "";
-		if (operator.equals("+")) {
+		if (operator.equals("+") || operator.equals("++") || operator.equals("+=") ) {
 			op = "\tADD";
 		}
 
-		if (operator.equals("-")) {
+		if (operator.equals("-") || operator.equals("--") || operator.equals("-=") ) {
 			op = "\tSUB";
 		}
 
-		if (operator.equals("*")) {
+		if (operator.equals("*") || operator.equals("*=")) {
 			op = "\tMUL";
 		}
 
-		if (operator.equals("/")) {
+		if (operator.equals("/") || operator.equals("/=")) {
 			op = "\tDIV";
 		}
 
@@ -279,7 +279,6 @@ public class CodeGenerator {
 		out.flush();
 	}
 
-	
 	public void convert(Type t1, Type t2) {
 		switch (t1.suffix()) {
 		case 'I':
@@ -298,6 +297,35 @@ public class CodeGenerator {
 			}
 			break;
 		}
+	}
+
+	public void alter(String operator, Type type) {
+		String op = "";
+		if (operator.equals("++")) {
+			op = "\tADD";
+		}
+
+		if (operator.equals("--")) {
+			op = "\tSUB";
+		}
+
+		out.println(op + type.suffix());
+		out.flush();
+
+	}
+
+	public void alterAssig(String operator, Type superType) {
+		String op = "";
+		if (operator.equals("+=")) {
+			op = "\tADD";
+		}
+
+		if (operator.equals("-=")) {
+			op = "\tSUB";
+		}
+
+		out.println(op + superType.suffix());
+		out.flush();
 	}
 
 	// ####################### COMMENTS ############################

@@ -50,11 +50,17 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		if (a.getLeft().getType() != null && a.getRight().getType() != null) {
 			a.getLeft().setType(a.getRight().getType().promotesTo(a.getLeft().getType()));
 			if (a.getLeft().getType() == null) {
-				a.getLeft().setType(new ErrorType(a.getLeft(),
-						"ERROR: No es posible realizar la asignación entre dos tipos distintos en " + a.toString()));
+				a.getLeft().setType(
+						new ErrorType(a.getLeft(), "ERROR: No es posible realizar la asignación en " + a.toString())); // Error
+																														// por
+																														// mala
+																														// promoción
+																														// de
+																														// tipos
 			}
+
 		}
-		
+
 		return null;
 	}
 
@@ -65,7 +71,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 		a.setType(a.getLeft().getType().arithmetic(a.getRight().getType()));
 		if (a.getType() == null) {
-			a.setType(new ErrorType(a, "ERROR: Se esperaban tipos iguales (Reales o Enteros) en " + a.toString()));
+			a.setType(
+					new ErrorType(a, "ERROR: No ha sido posible realizar la operación aritmética en " + a.toString()));
 		}
 		a.setLValue(false);
 		return null;
@@ -92,8 +99,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 
 		comparison.setType(comparison.getLeft().getType().comparison(comparison.getRight().getType()));
 		if (comparison.getType() == null) {
-			comparison.setType(
-					new ErrorType(comparison, "ERROR: Se esperaban tipos iguales en " + comparison.toString()));
+			comparison.setType(new ErrorType(comparison,
+					"ERROR:  No ha sido posible realizar la operación de comparación en " + comparison.toString()));
 		}
 
 		comparison.setLValue(false);
@@ -279,16 +286,14 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return1.getExpression().accept(this, o);
 
 		FunctionType fType = (FunctionType) o;
-		return1.getExpression().setType(return1.getExpression().getType().promotesTo(fType.getReturnType()));
-
-		if (return1.getExpression().getType() == null) {
+		if (return1.getExpression().getType().promotesTo(fType.getReturnType()) == null) {
 			return1.getExpression().setType(
 					new ErrorType(return1, "ERROR: El valor retornado no es el esperado en: " + return1.toString()));
 			;
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(FunDefinition funDefinition, Object o) {
 		funDefinition.getType().accept(this, o);
@@ -300,7 +305,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return null;
 
 	}
-	
+
 	@Override
 	public Object visit(FunctionType functionType, Object o) {
 		if (!functionType.getReturnType().isBuildingType()) {

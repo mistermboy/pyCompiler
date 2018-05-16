@@ -95,8 +95,8 @@ return				{this.yylval = yytext();
 void				{this.yylval = yytext();
 						return Parser.VOID;}
 main				{this.yylval = yytext();
-						return Parser.MAIN;}							
-					
+						return Parser.MAIN;}	
+																
 // * OPERATORS		
 
 "+" 					{this.yylval = yytext();
@@ -129,8 +129,21 @@ main				{this.yylval = yytext();
 							return Parser.OR;}
 "&&" 					{this.yylval = yytext();
 							return Parser.AND;}							
-																				
-																																																														
+
+"++"					{this.yylval = yytext();
+						return Parser.INCREMENT;}
+																								
+"--"					{this.yylval = yytext();
+						return Parser.DECREMENT;}
+						
+"+="					{this.yylval = yytext();
+						return Parser.INCREMENT_ASSIGMENT;}
+"-="					{this.yylval = yytext();
+						return Parser.DECREMENT_ASSIGMENT;}
+"*="					{this.yylval = yytext();
+						return Parser.MUL_ASSIGMENT;}
+"/="					{this.yylval = yytext();
+						return Parser.DIV_ASSIGMENT;}																																																												
  
 // * CONSTANTS
 

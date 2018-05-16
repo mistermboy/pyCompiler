@@ -5,7 +5,7 @@ import visitor.Visitor;
 public class CharLiteral extends AbstractExpression {
 
 	private char value;
-
+	
 	public CharLiteral(int i, int j, char value) {
 		this.row = i;
 		this.column = j;

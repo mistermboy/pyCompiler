@@ -30,4 +30,20 @@ public abstract class AbstractExpression implements Expression {
 		this.type = type;
 	}
 
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
 }

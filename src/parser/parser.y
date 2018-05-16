@@ -35,7 +35,12 @@ import java.util.*;
 %token MAIN
 %token OR
 %token AND
-
+%token INCREMENT
+%token DECREMENT
+%token INCREMENT_ASSIGMENT
+%token DECREMENT_ASSIGMENT	
+%token MUL_ASSIGMENT
+%token DIV_ASSIGMENT
 
 %right '='
 %left OR AND
@@ -141,6 +146,12 @@ sentencia: PRINT list ';'										{ List<Statement> states = new ArrayList<Stat
 		| while													{ List<Statement> states = new ArrayList<Statement>(); WhileStatement wS = (WhileStatement) $1; states.add(wS);$$=states;}
 		| asignacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Assignment aS = (Assignment) $1; states.add(aS);$$=states;}
 		| invocacion ';'										{ List<Statement> states = new ArrayList<Statement>(); Invocation iS = (Invocation) $1; states.add(iS);$$=states;}
+		| expresion INCREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,new IntLiteral(scanner.getLine(),scanner.getColumn(),1)));states.add(Ai);$$=states;}
+		| expresion DECREMENT ';'								{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,new IntLiteral(scanner.getLine(),scanner.getColumn(),1)));states.add(Ai);$$=states;}
+		| expresion INCREMENT_ASSIGMENT expresion ';'			{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression) $3));states.add(Ai);$$=states;}
+		| expresion DECREMENT_ASSIGMENT expresion ';'			{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression) $3));states.add(Ai);$$=states;}
+		| expresion MUL_ASSIGMENT expresion ';'					{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression) $3));states.add(Ai);$$=states;}
+		| expresion DIV_ASSIGMENT expresion ';'					{ List<Statement> states = new ArrayList<Statement>(); Assignment Ai = new Assignment(scanner.getLine(),scanner.getColumn(),(Expression) $1,new Arithmetic(scanner.getLine(),scanner.getColumn(),(Expression) $1,(String) $2,(Expression) $3));states.add(Ai);$$=states;}
 		;
 	
 
