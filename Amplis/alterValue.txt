@@ -84,7 +84,6 @@ def main():void {
 	
 """			v++; #Error
 			w++; #Error
-			z++; #Error
 			s++; #Error
 			
 			v+=1; #Error
