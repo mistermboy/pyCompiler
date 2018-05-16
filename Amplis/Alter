@@ -1,0 +1,103 @@
+i:int;
+j:double;
+c:char;
+
+v:[10]int;
+w:[10]double;
+z:[10]char;
+
+s:struct{
+	n:int;
+	m:double;
+	l:char;
+};
+
+def  p():int{
+	return 2;
+}
+
+
+def main():void {
+
+	i=0;
+	j=1.1;
+	c='a';
+	
+	s.n=10;
+	s.m=10.7;
+	s.l='Z';
+	
+		
+	while i<10:{
+		v[i]=i;
+		w[i]=j;
+		z[i]=c;
+		
+		i++;
+		j++;
+		c++;
+	}
+	i--;
+
+	while v[i]!=0:{
+		v[i]--;
+		
+		if s.n > v[i]:{
+			print s.n,' ','>',' ', v[i], '\n';
+			s.n--;
+		}
+		
+	}
+	print '\n';
+	while s.l!='A':{
+		
+		print s.l, '\n';
+		s.l--;		
+	}
+	print s.l;
+	print '\n';
+	
+	while s.m > 0:{
+	
+		if v[i] % 2 == 0:{
+			print v[i],'\n';
+		}else
+			s.m-=1;
+		
+		v[i]+=1;
+		
+	}
+	
+	p();
+	
+	##############	ERRORES DESCOMENTAR ##########
+	
+	
+	
+"""			v++; #Error
+			w++; #Error
+			z++; #Error
+			s++; #Error
+			
+			v+=1; #Error
+			w+=33; #Error
+			z+=2; #Error
+			s+=8; #Error
+			
+			6+6++; #Error
+			8/9--; #Error
+			(double) i++; #Error
+			p()--; #Error
+			-8++; #Error
+			
+			9*9+=33; #Error
+			(double) c-=44; #Error
+			p()+=9; #Error
+			-69-=22; #Error		"""
+			
+							
+	
+	
+	
+	
+}

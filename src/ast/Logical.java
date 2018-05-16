@@ -7,9 +7,6 @@ public class Logical extends AbstractExpression {
 	private Expression left;
 	private Expression right;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	private String logicalOperator;
 
 	public Logical(int i, int j, Expression left, String logicalOperator, Expression right) {

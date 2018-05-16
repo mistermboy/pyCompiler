@@ -6,9 +6,6 @@ public class IntLiteral extends AbstractExpression {
 
 	private int value;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	public IntLiteral(int i, int j, int value) {
 		this.row = i;
 		this.column = j;

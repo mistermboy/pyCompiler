@@ -1,8 +1,0 @@
-c:double;
-
-
-def main():void {
-
-	c='a' + 1.2;
-	print c;
-}

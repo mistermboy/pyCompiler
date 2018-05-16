@@ -26,6 +26,7 @@ import ast.UnaryMinus;
 import ast.UnaryNot;
 import ast.Variable;
 import ast.WhileStatement;
+import tipo.CharType;
 import tipo.ErrorType;
 import tipo.FunctionType;
 import tipo.Type;
@@ -324,7 +325,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	@Override
 	public Object visit(AlterVal i, Object o) {
 		i.getExpr().accept(this, o);
-		if (!i.getExpr().getLValue()) {
+		if (!i.getExpr().getLValue() || CharType.getInstance().promotesTo(i.getExpr().getType())==null) {
 			i.getExpr().setType(
 					new ErrorType(i, "ERROR: No se puede realizar el incremento o decremento en: " + i.toString()));
 		}

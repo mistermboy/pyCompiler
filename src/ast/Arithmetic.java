@@ -9,9 +9,6 @@ public class Arithmetic extends AbstractExpression {
 	private Expression left;
 	private Expression right;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	public Arithmetic(int i, int j, Expression left, String string, Expression right) {
 		super();
 		this.row = i;

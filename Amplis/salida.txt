@@ -1,10 +1,135 @@
 #source "pruebas.txt"
 
-	' * RealType c (offset 0)
+	' * IntType i (offset 0)
+	' * RealType j (offset 2)
+	' * CharType c (offset 6)
 
  ' Invocation to the main function
 	CALL main
 	HALT
+ promocionParams:
+	' * Parameters
+	' * CharType c (offset 10)
+	' * IntType i (offset 8)
+	' * RealType j (offset 4)
+
+	' * Local variables
+
+	enter 0
+
+#line	8
+
+	PUSH BP
+	PUSHI 10
+	ADDI
+	LOADB
+	OUTB
+
+#line	9
+
+	PUSHB 10
+	OUTB
+
+#line	10
+
+	PUSH BP
+	PUSHI 8
+	ADDI
+	LOADI
+	OUTI
+
+#line	11
+
+	PUSHB 10
+	OUTB
+
+#line	12
+
+	PUSH BP
+	PUSHI 4
+	ADDI
+	LOADF
+	OUTF
+
+#line	13
+
+	PUSHB 10
+	OUTB
+
+#line	15
+
+	PUSHI 0
+	ret 2,0,7
+ DoubleRetDouble:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	19
+
+	PUSHF 2.2
+	ret 4,0,0
+ DoubleRetInt:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	23
+
+	PUSHI 2
+	I2F
+	ret 4,0,0
+ DoubleRetChar:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	27
+
+	PUSHB 97
+	B2I
+	I2F
+	ret 4,0,0
+ IntRetInt:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	32
+
+	PUSHI 2
+	ret 2,0,0
+ IntRetChar:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	36
+
+	PUSHB 97
+	B2I
+	ret 2,0,0
+ CharRetChar:
+	' * Parameters
+
+	' * Local variables
+
+	enter 0
+
+#line	40
+
+	PUSHB 97
+	ret 1,0,0
  main:
 	' * Parameters
 
@@ -12,19 +137,203 @@
 
 	enter 0
 
-#line	6
+#line	68
+
+	PUSHB 97
+	PUSHI 2
+	PUSHF 4.4
+	CALL promocionParams
+	POPI
+
+#line	69
+
+	PUSHB 97
+	PUSHB 98
+	B2I
+	PUSHB 99
+	B2I
+	I2F
+	CALL promocionParams
+	POPI
+
+#line	70
+
+	PUSHB 97
+	PUSHB 98
+	B2I
+	PUSHI 1
+	I2F
+	CALL promocionParams
+	POPI
+
+#line	71
+
+	PUSHB 97
+	PUSHB 98
+	B2I
+	PUSHF 3.3
+	CALL promocionParams
+	POPI
+
+#line	72
+
+	PUSHB 97
+	PUSHI 1
+	PUSHB 98
+	B2I
+	I2F
+	CALL promocionParams
+	POPI
+
+#line	74
+
+	CALL DoubleRetDouble
+	POPF
+
+#line	75
+
+	CALL DoubleRetInt
+	POPF
+
+#line	76
+
+	CALL DoubleRetChar
+	POPF
+
+#line	78
+
+	CALL IntRetInt
+	POPI
+
+#line	79
+
+	CALL IntRetChar
+	POPI
+
+#line	81
+
+	CALL CharRetChar
+	POPB
+
+#line	93
+
+	PUSHA 0
+	PUSHI 0
+	STOREI
+
+#line	94
+
+	PUSHA 2
+	PUSHF 1.0
+	STOREF
+
+#line	95
+
+	PUSHA 6
+	PUSHB 97
+	STOREB
+
+#line	97
+
+	PUSHA 2
+	PUSHB 97
+	B2I
+	I2F
+	STOREF
+
+#line	98
+
+	PUSHA 2
+	PUSHI 1
+	I2F
+	STOREF
+
+#line	99
+
+	PUSHA 2
+	PUSHF 2.2
+	STOREF
+
+#line	101
 
 	PUSHA 0
 	PUSHB 97
 	B2I
-	I2F
-	PUSHF 1.2
-	ADDF
-	STOREF
+	STOREI
 
-#line	7
+#line	102
 
 	PUSHA 0
-	LOADF
+	PUSHI 1
+	STOREI
+
+#line	105
+
+	PUSHA 6
+	PUSHB 97
+	STOREB
+
+#line	110
+
+	PUSHB 97
+	B2I
+	PUSHB 98
+	B2I
+	ADDI
+	I2B
+	B2I
+	PUSHB 99
+	B2I
+	SUBI
+	I2B
+	OUTB
+
+#line	111
+
+	PUSHB 10
+	OUTB
+
+#line	112
+
+	PUSHI 1
+	PUSHI 2
+	PUSHI 3
+	DIVI
+	ADDI
+	OUTI
+
+#line	113
+
+	PUSHB 10
+	OUTB
+
+#line	114
+
+	PUSHF 1.2
+	PUSHF 2.3
+	PUSHF 3.4
+	MULF
+	ADDF
+	OUTF
+
+#line	115
+
+	PUSHB 10
+	OUTB
+
+#line	117
+
+	PUSHB 97
+	B2I
+	I2F
+	PUSHI 2
+	I2F
+	PUSHF 3.5
+	MULF
+	PUSHB 118
+	B2I
+	I2F
+	DIVF
+	ADDF
 	OUTF
 	ret 0,0,0

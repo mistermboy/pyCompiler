@@ -5,9 +5,6 @@ import visitor.Visitor;
 
 public class Cast extends AbstractExpression {
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	private Expression expresion;
 	private Type castType;
 

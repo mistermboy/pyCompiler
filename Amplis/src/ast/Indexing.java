@@ -7,9 +7,6 @@ public class Indexing extends AbstractExpression implements Statement {
 	private Expression left;
 	private Expression right;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	public Indexing(int i, int j, Expression left, Expression right) {
 		this.row = i;
 		this.column = j;

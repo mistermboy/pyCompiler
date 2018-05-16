@@ -6,9 +6,6 @@ public class UnaryNot extends AbstractExpression {
 
 	private Expression expresion;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	public UnaryNot(int i, int j, Expression expresion) {
 		this.row = i;
 		this.column = j;

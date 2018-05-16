@@ -7,6 +7,9 @@ public abstract class AbstractExpression implements Expression {
 	private boolean lValue = false;
 	private Type type;
 
+	int row = ASTNode.DEFAULT_ROW_COLUMN;
+	int column = ASTNode.DEFAULT_ROW_COLUMN;
+
 	@Override
 	public boolean getLValue() {
 		return lValue;

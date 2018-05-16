@@ -6,9 +6,6 @@ import visitor.Visitor;
 
 public class Invocation extends AbstractExpression implements Statement{
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	private List<Expression> arguments;
 
 	private Variable funcionName;

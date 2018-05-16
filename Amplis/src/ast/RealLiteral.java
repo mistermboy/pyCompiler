@@ -6,9 +6,6 @@ public class RealLiteral extends AbstractExpression {
 
 	private double value;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	public RealLiteral(int i, int j, double value) {
 		this.row = i;
 		this.column = j;

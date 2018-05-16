@@ -208,11 +208,11 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCodeGeneratorVisitor {
 		i.getExpr().accept(adressCgVisitor, o);
 		i.getExpr().accept(valueCgVisitor, o);
 
-		//char++
+		//char++ || char--
 		if (i.getExpr().getType().suffix() == 'B') {
 			cg.b2i();
 			cg.push(1);
-			cg.add(IntType.getInstance());
+			cg.alter(i.getOperator(),IntType.getInstance());
 			cg.i2b();
 			cg.store(CharType.getInstance());
 		} else {

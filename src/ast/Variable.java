@@ -6,9 +6,6 @@ public class Variable extends AbstractExpression {
 
 	private String nameString;
 
-	private int row = ASTNode.DEFAULT_ROW_COLUMN;
-	private int column = ASTNode.DEFAULT_ROW_COLUMN;
-
 	private Definition varDefinition;
 
 	public Variable(int i, int j, String nameString) {
