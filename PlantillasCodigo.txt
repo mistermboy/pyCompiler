@@ -152,6 +152,7 @@ VALUE[[Invocation: Exp -> Variable Exp*]]()
 	int i=0;
 	for(Expression e:Exp*)
 		VALUE[[e]]()
+		cg.convert(e.Type,Variable.Type.parameters[i++].Type)
 	<CALL> Variable.Name
 	
 
