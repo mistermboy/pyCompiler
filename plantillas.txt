@@ -1,4 +1,4 @@
-PLANTILLAS DE CÓDIGO
+﻿PLANTILLAS DE CÓDIGO
 
 EXECUTE[[Program: Program -> Definition*]]()
 	
@@ -163,7 +163,7 @@ ADDRESS[[Variable: Exp -> ID]]()
 		<PUSHI> Exp.Definition.Offset
 		<ADDI>
 		
-VALUE[[ Indexing: Exp1 -> Exp2 Exp3 ]]()	
+ADDRESS[[ Indexing: Exp1 -> Exp2 Exp3 ]]()	
 
 	ADDRESS[[Exp2]]()
 	VALUE[[Exp3]]()
@@ -171,7 +171,7 @@ VALUE[[ Indexing: Exp1 -> Exp2 Exp3 ]]()
 	<MUL>
 	<ADD>
 	
-VALUE[[FieldAcces: Exp1 -> Exp2 ID]]()
+ADDRESS[[FieldAcces: Exp1 -> Exp2 ID]]()
 
 	ADDRESS[[Exp2]]
 	<PUSH>Exp2.Type.get(ID).Offset
