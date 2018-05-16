@@ -136,4 +136,44 @@ VALUE[[UnaryNot: Exp1 -> Exp2]]()
 	VALUE[[Exp2]]()
 	<NOT>
 	
-VALUE[[FieldAcces: Exp1 -> Exp2]]()	
+VALUE[[FieldAcces: Exp1 -> Exp2 ID]]()	
+	
+	ADDRESS[[Exp1]]()
+	<LOAD>Exp1.Type.Suffix()
+	
+VALUE[[Indexing: Exp1 -> Exp2 Exp3 ]]()	
+
+	ADDRESS[[EXP1]]()
+	<LOAD>Exp1.Type.Suffix()
+	
+VALUE[[Invocation: Exp -> Variable Exp*]]()
+
+	int i=0;
+	for(Expression e:Exp*)
+		VALUE[[e]]()
+	<CALL> Variable.Name
+	
+
+ADDRESS[[Variable: Exp -> ID]]()
+
+	if(Exp.Definition.scope == 0)
+		<PUSHA> Exp.Definition.Offset
+	else
+		<PUSH BP>
+		<PUSHI> Exp.Definition.Offset
+		<ADDI>
+		
+VALUE[[ Indexing: Exp1 -> Exp2 Exp3 ]]()	
+
+	ADDRESS[[Exp2]]()
+	VALUE[[Exp3]]()
+	<PUSH> Exp1.Type.NumberBytes
+	<MUL>
+	<ADD>
+	
+VALUE[[FieldAcces: Exp1 -> Exp2 ID]]()
+
+	ADDRESS[[Exp2]]
+	<PUSH>Exp2.Type.get(ID).Offset
+	<ADD>
+	
