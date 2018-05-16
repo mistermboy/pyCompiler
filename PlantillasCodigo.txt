@@ -3,15 +3,16 @@
 EXECUTE[[Program: Program -> Definition*]]()
 	
 	for(Definition d:Definition)
+		if(d instanceof VarDefinition)
+			EXECUTE[[d]]()
+
+	for(Definition d:Definition)
 		if(d instanceof FunDefinition)
 			EXECUTE[[d]]()
 
 	<CALL MAIN>
 	<HALT>
 	
-	for(Definition d:Definition)
-		if(d instanceof VarDefinition)
-			EXECUTE[[d]]()
 
 EXECUTE[[FunDefinition: Definition -> Type Statement*]]()
 
