@@ -39,7 +39,7 @@ Close the introspector window and check the output file. You should see the inst
 #### MAPL
 At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL. 
 
-Execute "mapl.cmd".
+Execute "MAPL.cmd".
 ```
-Location -> PYCompiler\mapl.cmd
+Location -> PYCompiler\MAPL.cmd
 ```
