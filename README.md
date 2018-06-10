@@ -1,5 +1,5 @@
 # PYCompiler
-PYCompiler is a Compiler for a simple version of python develop in the subject "Diseño de Lenguajes de Programación"
+PYCompiler is a compiler for a simple version of python that was develop in the subject "Diseño de Lenguajes de Programación"
 
 ## Getting Started
 To begin with the project, clone the repository in your computer. To do so, you can use this command:
@@ -32,3 +32,4 @@ Once you have chosen an option, you only have to run the main class, that is in 
       -> Arguments 
         -> programs4Test/big.input.txt output.txt
 ```
+Now you will see the instrospector window, that shows a general vist of the AST (Abstract Syntax Tree) built by the compiler.
