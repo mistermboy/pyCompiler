@@ -12,10 +12,11 @@ git clone https://github.com/mistermboy/PYCompiler.git;
 
 Alternative, you can download the repository as a zip file from the [repository main page](https://github.com/mistermboy/PYCompiler).
 
-### Using PYCompyler
-Once you have the repository import the project into eclipse
+Once you have the repository import the project in eclipse
 
 ```
-File -> Import...
-General -> Archive File
+File -> Import
+  General -> Existing Projects into Workspace
 ```
+
+### Using PYCompyler
