@@ -1,6 +1,6 @@
-﻿PLANTILLAS DE CÓDIGO
+# PLANTILLAS DE CÓDIGO
 
-EXECUTE [Program: Program -> Definition*]
+## EXECUTE [Program: Program -> Definition*]
 	
 	for(Definition d:Definition)
 		if(d instanceof VarDefinition)
@@ -14,7 +14,7 @@ EXECUTE [Program: Program -> Definition*]
 	<HALT>
 	
 
-EXECUTE[[FunDefinition: Definition -> Type Statement*]]()
+## EXECUTE[[FunDefinition: Definition -> Type Statement*]]
 
 	Definition.Name <:>
 	<ENTER> Definition.LocalBytes
