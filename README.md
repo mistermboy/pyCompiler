@@ -18,5 +18,7 @@ File -> Import
 ```
 
 ### Using PYCompyler
-To use PYCompyler there are two alternatives, you can write your own program (PONER AQUÍ ENLACE A LA SINTAXIS) or use a program example.
-I recommend you the last option if it´s your first time.
+To use PYCompyler there are two alternatives, you can write your own program (PONER AQUÍ ENLACE A LA SINTAXIS) or use an example program.
+I recommend you the last option if it´s your first time. There are a few example programs in the folder called "program4Test".
+
+Once you have chosen an option...
