@@ -1,7 +1,7 @@
 # PYCompiler
 PYCompiler is a compiler for a simple version of python that was develop in the subject "Diseño de Lenguajes de Programación"
 
-## Getting Started 🚀
+## Getting Started :rocket:
 To begin with the project, clone the repository in your computer. To do so, you can use this command:
 
 ```
@@ -36,7 +36,7 @@ Now you will see the instrospector window, that shows a general vist of the AST 
 
 Close the introspector window and check the output file. You should see the instructions of the program you passed written in a language based in assembler.
 
-#### MAPL 🔧
+#### MAPL :wrench:
 At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL. 
 
 Execute "MAPL.cmd".
