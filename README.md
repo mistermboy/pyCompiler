@@ -45,4 +45,4 @@ Location -> PYCompiler\MAPL.cmd
 ```
 By default, MAPL charge the "output.txt" file but you can chose other in "File -> Open..."
 
-Using MAPL is very simple. At the left of the window we have the instructions of the program loaded and the buttons to run, debugg, reload...In the middle the static memory and finally in the rigth, the stack memory. Also there is a small terminal bottom left.
+Using MAPL is very simple. At the left of the window we have the instructions of the program loaded and the buttons to run, debugg, reload... In the middle the static memory and finally in the rigth, the stack memory. Also there is a small terminal bottom left.
