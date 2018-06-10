@@ -2,7 +2,7 @@
 PYCompiler is a Compiler for a simple version of python develop in the subject "Diseño de Lenguajes de Programación"
 
 ## Getting Started
-To begin with the project, clone the repository in your computer. To do so, you can use this commands:
+To begin with the project, clone the repository in your computer. To do so, you can use this command:
 
 ```
 git clone https://github.com/mistermboy/PYCompiler.git;
