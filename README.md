@@ -1,4 +1,4 @@
-# PYCompiler:eyes:
+# PYCompiler :eyes:
 PYCompiler is a compiler for a simple version of python that was develop in the subject "Diseño de Lenguajes de Programación"
 
 ## Getting Started :rocket:
