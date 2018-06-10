@@ -18,3 +18,5 @@ File -> Import
 ```
 
 ### Using PYCompyler
+To use PYCompyler there are two alternatives, you can write your own program (PONER AQUÍ ENLACE A LA SINTAXIS) or use a program example.
+I recommend you the last option if it´s your first time.
