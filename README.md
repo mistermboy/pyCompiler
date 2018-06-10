@@ -32,4 +32,8 @@ Once you have chosen an option, you only have to run the main class, that is in 
       -> Arguments 
         -> programs4Test/big.input.txt output.txt
 ```
-Now you will see the instrospector window, that shows a general vist of the AST (Abstract Syntax Tree) built by the compiler.
+Now you will see the instrospector window, that shows a general vist of the AST (Abstract Syntax Tree) built by the compiler. You can take a look if you want but it´s not necesary.
+
+Close the introspector window and look at the output file. Inside, you can see the instructions of the program you passed written in assembly language.
+
+#### MAPL
