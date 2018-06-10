@@ -1,0 +1,106 @@
+#source "input.txt"
+
+	' * IntType i (offset 0)
+	' * RealType r (offset 2)
+	' * CharType c (offset 6)
+
+ ' Invocation to the main function
+	CALL main
+	HALT
+ f:
+	' * Parameters
+	' * IntType pi (offset 8)
+	' * RealType pr (offset 4)
+
+	' * Local variables
+	' * RealType lr (offset -4)
+	' * IntType li (offset -6)
+
+	enter 6
+
+#line	11
+
+	PUSH BP
+	PUSHI -6
+	ADDI
+	PUSH BP
+	PUSHI 8
+	ADDI
+	LOADI
+	STOREI
+
+#line	12
+
+	PUSH BP
+	PUSHI -4
+	ADDI
+	PUSH BP
+	PUSHI 4
+	ADDI
+	LOADF
+	STOREF
+
+#line	13
+
+	PUSH BP
+	PUSHI 8
+	ADDI
+	LOADI
+	ret 2,6,6
+ main:
+	' * Parameters
+
+	' * Local variables
+	' * RecordType [fields=[Field[name:integer,type:IntType offset:0, Field[name:character,type:CharType offset:2]] pair (offset -3)
+
+	enter 3
+
+#line	23
+
+	PUSHA 0
+	PUSHI 3
+	STOREI
+
+#line	24
+
+	PUSHA 6
+	PUSHB 97
+	STOREB
+
+#line	25
+
+	PUSHA 2
+	PUSHF 3.8
+	STOREF
+
+#line	26
+
+	PUSH BP
+	PUSHI -3
+	ADDI
+	PUSHI 0
+	ADDI
+	PUSHA 0
+	LOADI
+	STOREI
+
+#line	27
+
+	PUSH BP
+	PUSHI -3
+	ADDI
+	PUSHI 2
+	ADDI
+	PUSHA 6
+	LOADB
+	STOREB
+
+#line	28
+
+	PUSHA 0
+	LOADI
+	PUSHA 2
+	LOADF
+	CALL f
+	POPI
+	ret 0,3,0
