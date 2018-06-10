@@ -5,8 +5,6 @@ PYCompiler is a Compiler for a simple version of python develop in the subject "
 To begin with the project, clone the repository in your computer. To do so, you can use this commands:
 
 ```
-mkdir PYCompiler;
-cd PYCompyler;
 git clone https://github.com/mistermboy/PYCompiler.git;
 ```
 
@@ -20,3 +18,7 @@ File -> Import
 ```
 
 ### Using PYCompyler
+To use PYCompyler there are two alternatives, you can write your own program (PONER AQUÍ ENLACE A LA SINTAXIS) or use an example program.
+I recommend you the last option if it´s your first time. There are a few example programs in the folder called "program4Test".
+
+Once you have chosen an option...
