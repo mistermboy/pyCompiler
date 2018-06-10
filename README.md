@@ -34,6 +34,7 @@ Once you have chosen an option, you only have to run the main class, that is in 
 ```
 Now you will see the instrospector window, that shows a general vist of the AST (Abstract Syntax Tree) built by the compiler. You can take a look if you want but it´s not necesary.
 
-Close the introspector window and if you look at the output file, you will see the instructions of the program you passed written in assembly language.
+Close the introspector window and check the output file. You should see the instructions of the program you passed written in a language based in assembler.
 
 #### MAPL
+At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL.
