@@ -37,4 +37,9 @@ Now you will see the instrospector window, that shows a general vist of the AST 
 Close the introspector window and check the output file. You should see the instructions of the program you passed written in a language based in assembler.
 
 #### MAPL
-At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL.
+At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL. 
+
+Open "GVM.exe".
+```
+Location -> PYCompiler\mapl\GVM.exe\
+```
