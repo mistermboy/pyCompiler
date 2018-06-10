@@ -1,6 +1,6 @@
 ﻿PLANTILLAS DE CÓDIGO
 
-EXECUTE[[Program: Program -> Definition*]]()
+EXECUTE [Program: Program -> Definition*]
 	
 	for(Definition d:Definition)
 		if(d instanceof VarDefinition)
