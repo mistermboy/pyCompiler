@@ -39,7 +39,7 @@ Close the introspector window and check the output file. You should see the inst
 #### MAPL
 At this point we need to use some tool that is able to interpret the instructions. That tool is MAPL. 
 
-Open "GVM.exe".
+Execute "mapl.cmd".
 ```
-Location -> PYCompiler\mapl\GVM.exe\
+Location -> PYCompiler\mapl.cmd
 ```
