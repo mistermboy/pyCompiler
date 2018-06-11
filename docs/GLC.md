@@ -1,53 +1,7 @@
-// * Declaraciones Yacc
-%token INT_CONSTANT
-%token INPUT
-%token PRINT
-%token DEF
-%token WHILE
-%token IF
-%token ELSE
-%token INT
-%token DOUBLE
-%token CHAR
-%token STRUCT
-%token RETURN
-%token VOID
-%token ID
-%token REAL_CONSTANT
-%token CHAR_CONSTANT
-%token GREATER
-%token SMALLER
-%token EQUALS
-%token NEGATION
-%token MAIN
-%token OR
-%token AND
-
-
-%right '='
-%left OR AND
-
-%left EQUALS NEGATION SMALLER '<' GREATER '>'
-
-%left '-' '+'
-%left '*' '/' '%'
-
-%nonassoc CAST
-%right UNARIO
-%nonassoc '!'
-%left '.'
-%nonassoc '[' ']'
-%nonassoc '(' ')'
-
-%nonassoc ':'
-%nonassoc ELSE
-
-
-
-%%
-// * Gramática y acciones Yacc
+# GLC (context-free grammar)
 
 programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';	
+
 
 definiciones: definiciones definicion 							
 	 | /* empty */												
@@ -174,7 +128,8 @@ while: WHILE expresion ':' '{' sentencias '}' ;
 // *********  IF-ELSE  *********
 
 
-condicionalSimple: IF expresion ':' cuerpo; 		
+condicionalSimple: IF expresion ':' cuerpo;
+
 condicionalComplejo: IF expresion ':' cuerpo else;				
 
 else: ELSE cuerpo ;												
