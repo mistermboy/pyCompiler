@@ -73,82 +73,83 @@ campo: ids ':' tipo ';';
 
 ### Sentences
 
-sentencias: sentencia											
-		| sentencias sentencia									
-		;
+```
+sentencias: sentencia
+	| sentencias sentencia
+	;
 
 
-sentencia: PRINT list ';'										
-		| INPUT list ';'										
-		| RETURN expresion ';'									
-		| condicionalSimple										
-		| condicionalComplejo									
-		| while													
-		| asignacion ';'										
-		| invocacion ';'										
+sentencia: PRINT list ';'
+		| INPUT list ';'
+		| RETURN expresion ';'
+		| condicionalSimple
+		| condicionalComplejo
+		| while
+		| asignacion ';'
+		| invocacion ';'
 		;
-	
 
-expresion: ID 													
-		| INT_CONSTANT											
-		| CHAR_CONSTANT											
-		| REAL_CONSTANT											
-		| '(' expresion ')'										
-		| expresion '[' expresion ']'							
-		|  expresion '.' ID										
-		| '(' tipo ')' expresion  %prec CAST					
-		| '-' expresion %prec UNARIO							
-		| '!' expresion											
-		|  expresion '*' expresion	 							
-		|  expresion '/' expresion	 							
-		|  expresion '%' expresion	 							
-		|  expresion '+' expresion	 							
-		|  expresion '-' expresion	 							
-		| expresion '>' expresion	 							
-		| expresion GREATER expresion 							
-		| expresion '<' expresion								
-		| expresion SMALLER expresion							
-		| expresion NEGATION expresion							
-		| expresion EQUALS expresion							
-		| expresion AND expresion								
-		| expresion OR expresion								
-		| ID '(' args ')'										
-		;
+expresion: ID
+	| INT_CONSTANT
+	| CHAR_CONSTANT
+	| REAL_CONSTANT
+	| '(' expresion ')'
+	| expresion '[' expresion ']'
+	|  expresion '.' ID
+	| '(' tipo ')' expresion  %prec CAST
+	| '-' expresion %prec UNARIO
+	| '!' expresion
+	|  expresion '*' expresion
+	|  expresion '/' expresion
+	|  expresion '%' expresion
+	|  expresion '+' expresion
+	|  expresion '-' expresion
+	| expresion '>' expresion
+	| expresion GREATER expresion
+	| expresion '<' expresion
+	| expresion SMALLER expresion
+	| expresion NEGATION expresion
+	| expresion EQUALS expresion
+	| expresion AND expresion
+	| expresion OR expresion
+	| ID '(' args ')'
+	;
 		
 		
-list: expresion													
-	| list ',' expresion										
+list: expresion
+	| list ',' expresion
 	;
 	
-asignacion: expresion '=' expresion ;							
+asignacion: expresion '=' expresion ;
 
-invocacion: ID '(' args ')'										
+invocacion: ID '(' args ')'
 
 
 ### While
 
-while: WHILE expresion ':' '{' sentencias '}' ;					
+while: WHILE expresion ':' '{' sentencias '}' ;
 
 ### IF-ELSE  
 
 
 condicionalSimple: IF expresion ':' cuerpo;
+condicionalComplejo: IF expresion ':' cuerpo else;
 
-condicionalComplejo: IF expresion ':' cuerpo else;				
+else: ELSE cuerpo ;
 
-else: ELSE cuerpo ;												
-
-cuerpo: sentencia												
-		| '{' sentencias '}'   									
-		;
+cuerpo: sentencia
+	| '{' sentencias '}'
+	;
 		
-				
-### Invocation of functions
+```
 
-args:  /* empty */												
-		| arg													
-		;
+### Function invocation
+```
+args:  /* empty */
+	| arg
+	;
 
-arg: expresion													
-	| arg ',' expresion											
-
+arg: expresion
+   | arg ',' expresion
+   ;
+```   
