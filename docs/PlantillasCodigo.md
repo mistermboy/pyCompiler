@@ -5,13 +5,15 @@
 	for(Definition d:Definition)
 		if(d instanceof VarDefinition)
 			EXECUTE[[d]]()
+			
+	<CALL MAIN>
+	<HALT>
 
 	for(Definition d:Definition)
 		if(d instanceof FunDefinition)
 			EXECUTE[[d]]()
 
-	<CALL MAIN>
-	<HALT>
+	
 	
 
 ### EXECUTE[[FunDefinition: Definition -> Type Statement*]]
