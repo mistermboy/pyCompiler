@@ -1,5 +1,6 @@
 # GLC (context-free grammar)
 
+```
 programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';	
 
 
@@ -11,8 +12,10 @@ definiciones: definiciones definicion
 definicion: def ';'												
 			| funcion											
 			;
+			
+```
 
-// *********  FUNCIONES  *********
+### Functions
 
 funcion: DEF ID '(' params ')' ':' retorno '{' body '}';     	
 
@@ -39,7 +42,7 @@ param: par
 par:  ID ':' tipo;												
 
 
-// *********  DEFINICIONES  *********
+### Definitions
 
 defs: def ';'													
 	| defs def ';'												
@@ -67,7 +70,7 @@ campos: campo
 		
 campo: ids ':' tipo ';';										
 
-// *********  SENTENCIAS  *********
+### Sentences
 
 sentencias: sentencia											
 		| sentencias sentencia									
@@ -121,11 +124,11 @@ asignacion: expresion '=' expresion ;
 invocacion: ID '(' args ')'										
 
 
-// *********  WHILE  *********
+### While
 
 while: WHILE expresion ':' '{' sentencias '}' ;					
 
-// *********  IF-ELSE  *********
+### IF-ELSE  
 
 
 condicionalSimple: IF expresion ':' cuerpo;
@@ -139,7 +142,7 @@ cuerpo: sentencia
 		;
 		
 				
-// *********  INVOCACIÓN DE FUNCIONES  *********
+### Invocation of functions
 
 args:  /* empty */												
 		| arg													
