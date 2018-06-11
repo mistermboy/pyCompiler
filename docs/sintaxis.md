@@ -1,21 +1,24 @@
+# Sintaxis
+
+```
 Un programa es una secuencia de variables y definiciones de funciones.
 
-La sintaxis de la definiciÛn de una variable es una lista, con al menos un elemento, 
+La sintaxis de la definici√≥n de una variable es una lista, con al menos un elemento, 
 de identificadores separados por comas seguido de ':' y un tipo. 
 Las definiciones de variables terminan mediante el caracter ';'
 
 Las funciones se definen mediante la palabra reservada "def" el identificador 
-de la funciÛn, una lista de parametros separados por comas entre '(' y ')' seguido
+de la funci√≥n, una lista de parametros separados por comas entre '(' y ')' seguido
  de ':' y el tipo de retorno o la palabra reservada "void". 
-El tipo de retorno y de los par·metros debe ser de tipo simple (no se permiten 
+El tipo de retorno y de los par√°metros debe ser de tipo simple (no se permiten 
 ni arrays ni registros). El cuerpo de la funcion va entre '{' y '}'.
 El cuerpo de las funciones son secuencias de definiciones de variables seguidos 
 por una secuencia de sentencias. En ambos casos terminan con el caracter ';'
-La funcion "main" debe estar la ˙ltima, retornando void y sin par·metros.
+La funcion "main" debe estar la √∫ltima, retornando void y sin par√°metros.
 Los tipos simples son "int", "double" y "char".
 
 Los arrays se pueden crear con el constructor de tipos "[]", especificando el 
-tamaÒo con un entero (como en C) seguido de cualquier tipo.
+tama√±o con un entero (como en C) seguido de cualquier tipo.
 
 Se usa el constructor de tipos "struct" para la creacion de registros. 
 Los registros no tienen identificador, y los campos son declarados como variables 
@@ -26,15 +29,15 @@ Una escritura es la palabra reservada "print" seguida de una lista de expresione
  separadas por comas.
 Una lectura es la palabra reservada "input" seguida de una lista de expresiones 
 separadas por comas.
-Una asignaciÛn est· compuesta por dos expresiones separadas por el operador '='.
+Una asignaci√≥n est√° compuesta por dos expresiones separadas por el operador '='.
 La sentencia condicional "if"-"else" y la sentencia iterativa "while" siguen la 
 sintaxis del lenguaje Python (sin parentesis y con ':' despues de la condicion).
 Se permite la sentencia 'return' <expresion> (la expresion es obligatoria).
-La invocaciÛn a una funciÛn ser· una nueva expresiÛn cuando retorne un valor 
-(distinto de void). Un procedimiento (retorno void) ser· siempre sentencia.
-La conversiÛn explÌcita a tipos simples (cast) se realizar· utilizando la sintaxis
+La invocaci√≥n a una funci√≥n ser√° una nueva expresi√≥n cuando retorne un valor 
+(distinto de void). Un procedimiento (retorno void) ser√° siempre sentencia.
+La conversi√≥n expl√≠cita a tipos simples (cast) se realizar√° utilizando la sintaxis
  del lenguaje C. 
-Las expresiones est·n formadas por:
+Las expresiones est√°n formadas por:
 - Constantes enteras, reales y caracter sin signo.
 - Identificadores
 - Los siguientes operadores aplicados a una o dos expresiones (por orden de precedencia descendente):
@@ -49,3 +52,5 @@ Las expresiones est·n formadas por:
 	> >= < <= != ==	Left associative
 		&& ||		Left associative
 		= 			Right associative
+		
+```		
