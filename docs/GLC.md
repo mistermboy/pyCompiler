@@ -1,74 +1,75 @@
 # GLC (context-free grammar)
 
 ```
-programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';	
+programa : definiciones DEF MAIN '(' ')'':'VOID '{' body '}';
 
 
-definiciones: definiciones definicion 							
-	 | /* empty */												
+definiciones: definiciones definicion
+	 | /* empty */
 	 ;
 
 
-definicion: def ';'												
-			| funcion											
-			;
-			
+definicion: def ';'
+	| funcion
+	;
+	
 ```
 
 ### Functions
 
-funcion: DEF ID '(' params ')' ':' retorno '{' body '}';     	
+```
+funcion: DEF ID '(' params ')' ':' retorno '{' body '}';
 
-retorno: tipo 													
-		| VOID 													
-		; 											
+retorno: tipo
+	| VOID
+	; 
+
+body: defs
+    | sentencias
+    | defs sentencias
+    |
+    ;
 
 
-
-body: defs														
-	| sentencias												
-	| defs sentencias											
-	|															
+params:  /* empty */
+	| param	
 	;
 
+param: par
+	| param ',' par
+	;
 
-params:  /* empty */											
-		| param													
-		;
-
-param: par														
-	| param ',' par												
-
-par:  ID ':' tipo;												
-
+par:  ID ':' tipo;
+```
 
 ### Definitions
-
-defs: def ';'													
-	| defs def ';'												
-	;
-				
+```
+defs: def ';'
+    | defs def ';'
+    ;
 	
-def: ids ':' tipo												
+
+def: ids ':' tipo
 
 
-ids: ID															
-	| ids ',' ID												
-	;
+ids: ID	
+   | ids ',' ID	
+   ;
 								   
-tipo: INT 														
-	| DOUBLE 													
-	| CHAR														
-	|'['INT_CONSTANT']' tipo									
-	| STRUCT '{' campos '}'										
+tipo: INT
+    | DOUBLE
+    | CHAR
+    |'['INT_CONSTANT']' tipo
+    | STRUCT '{' campos '}'
+    ;
+
+
+campos: campo
+	|campos campo
 	;
-
-
-campos: campo													
-		|campos campo 											
-		;
 		
-campo: ids ':' tipo ';';										
+campo: ids ':' tipo ';';
+```
 
 ### Sentences
 
