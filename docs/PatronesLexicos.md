@@ -1,5 +1,5 @@
 # LEXICAL PATTERNS
-
+```
 Rubbish = [ \t\n\r]
 
 CommentV1 = #.*
@@ -22,6 +22,6 @@ RealConstant = {RealType}|{RealType}E[+|-][0-9]+|[0-9]+e[+|-][0-9]+
 Character = \'.\'
 
 CharacterASCII = [']\\[0-9]*[']
-
+```
 
 																																																																	
