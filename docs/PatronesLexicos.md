@@ -1,4 +1,4 @@
-// ************  Patrones (macros) ********************
+************  Patrones (macros) ********************
 
 Rubbish = [ \t\n\r]
 CommentV1 = #.*
@@ -19,71 +19,4 @@ Character = \'.\'
 CharacterASCII = [']\\[0-9]*[']
 
 
-%%
-// ************  Acciones ********************
-
-// * THINGS TO IGNORE
-
-{Rubbish}			{}
-{CommentV1}			{}
-{CommentV2}			{}
-
-// * RESERVED WORDS
-
-input				
-print				
-def					
-while				
-if				
-else				
-int					
-double				
-char				
-struct				
-return				
-void				
-main									
-					
-// * OPERATORS		
-
-"+" 					
-"-" 					
-"*" 					
-"/" 					
-"%" 					
-">" 					
-"<" 					
-">=" 					
-"<=" 							
-"=" 					
-== 						
-"!=" 								
-"!" 					
-"||" 					
-"&&" 										
-																																																																										
-// * CONSTANTS
-
-{IntConstant}	
-{RealConstant}	
-{Ident}			
-'\\n'			
-'\\t'			
-{CharacterASCII} 	
-{Character}			
-
-// * DELIMITERS 
-
-"{"						
-"}"						
-"(" 					
-")" 					
-"[" 					
-"]" 						  			  
-";"						
-","						
-":"						
-"."						
-  			  		    
-// * Other
-.	
+																																																																	
