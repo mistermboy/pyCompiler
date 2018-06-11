@@ -19,7 +19,7 @@ Once you have the repository, import the project in [eclipse](https://www.eclips
       -> Existing Projects into Workspace...
 ```
 
-### Using PYCompyler
+### Using PYCompyler :checkered_flag:
 To use PYCompyler there are two alternatives, you can write your own program ([View the syntax](docs/syntax.md)) ([Ver la sintaxis](docs/sintaxis.md)) or use an example one.
 I recommend you the second option, if it´s your first time. There are a few example programs in the folder called "program4Test".
 
@@ -49,7 +49,7 @@ Using MAPL is very simple. At the left of the window we have the instructions of
 
 To end with the example, run the program by clicking in the green arrow and look what happends. You should see the Fibonacci sequence calculated in the terminal. :computer:
 
-## Development ⚙️
+## Development :construction: ⚙️
 Now you will learn how the project is composed:
 
 * [Lexical paterns](docs/PatronesLexicos.md)
