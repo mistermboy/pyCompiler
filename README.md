@@ -53,3 +53,5 @@ To end with the example, run the program by clicking in the green arrow and look
 * [Java](https://www.java.com/es/download/)
 * [JFlex](http://jflex.de/)
 * [Byaccj](http://byaccj.sourceforge.net/)
+
+## Syntax
