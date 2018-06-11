@@ -35,14 +35,14 @@ EXECUTE[[Read: Statement -> Exp]]()
 	<IN> Exp.Type.Suffix()
 	<STORE> Exp.Type.Suffix()
 
-EXECUTE[[Assigment: Statement -> Exp1 Exp2]()
+### EXECUTE[[Assigment: Statement -> Exp1 Exp2]
 	
 	ADDRESS[[Exp1]]()
 	VALUE[[Exp2]]()
 	cg.convert(Exp2.Type,Exp1.Type)
 	<STORE> Exp1.Type.Suffix()
 	
-EXECUTE[[IfStatement: Statement	-> Exp if:Statement* else:Statement*]]()
+### EXECUTE[[IfStatement: Statement	-> Exp if:Statement* else:Statement*]]
 	
 	int label =  cg.getLabels(2);
 	VALUE[[Exp]]()
@@ -59,7 +59,7 @@ EXECUTE[[IfStatement: Statement	-> Exp if:Statement* else:Statement*]]()
 		
 	<LABEL> label+1 <:>	
 
-EXECUTE[[WhileStatement: Statement -> Exp Statement*]]()
+### EXECUTE[[WhileStatement: Statement -> Exp Statement*]]
 	
 	int label =  cg.getLabels(2);
 	<LABEL> label <:>
@@ -72,13 +72,13 @@ EXECUTE[[WhileStatement: Statement -> Exp Statement*]]()
 	<JMP><LABEL> label
 	<LABEL> label+1 <:>
 	
-EXECUTE[[ Invocation: Statement -> Variable Exp*]]()
+### EXECUTE[[ Invocation: Statement -> Variable Exp*]]
 
 	VALUE[[ (Expression) Statement]]()
 	if(Variable.Type.ReturnType != IO.VoidType)
 		<POP> Variable.Type.ReturnType.Suffix();
 		
-EXECUTE[[Return: Statement -> Exp]](FunDefinition)
+### EXECUTE[[Return: Statement -> Exp]] Param -> (FunDefinition)
 	
 	VALUE[[Exp]]()
 	cg.convert(Exp.Type,FunDefinition.Type.ReturnType);
@@ -87,24 +87,24 @@ EXECUTE[[Return: Statement -> Exp]](FunDefinition)
 	<,> FunDefinition.ParamBytes
 	
  
-VALUE[[IntLiteral: Exp -> IntConstant]]()
+### VALUE[[IntLiteral: Exp -> IntConstant]]
 	
 	<PUSHI> Exp.VALUE
 	
-VALUE[[ChaLiteral: Exp -> CharConstant]]()
+### VALUE[[ChaLiteral: Exp -> CharConstant]]
 	
 	<PUSHB> Exp.VALUE
 
-VALUE[[RealLiteral: Exp -> RealConstant]]()
+### VALUE[[RealLiteral: Exp -> RealConstant]]
 	
 	<PUSHF> Exp.VALUE
 	
-VALUE[[Variable: Exp -> ID]]()
+### VALUE[[Variable: Exp -> ID]]
 	
 	ADDRESS[[EXP]]()
 	<LOAD> Exp.Type.Suffix() 
 	
-VALUE[[Arithmetic: Exp1 -> Exp2 Exp3 ]]()
+### VALUE[[Arithmetic: Exp1 -> Exp2 Exp3 ]]
 
 	VALUE[[Exp2]]()
 	cg.convert(Exp2.Type,Exp1.Type)
@@ -112,7 +112,7 @@ VALUE[[Arithmetic: Exp1 -> Exp2 Exp3 ]]()
 	cg.convert(Exp3.Type,Exp1.Type)
 	cg.arithmetic(Exp1.operator,Exp1.Type)
 	
-VALUE[[Comparison: Exp1 -> Exp2 Exp3 ]]()
+### VALUE[[Comparison: Exp1 -> Exp2 Exp3 ]]
 
 	supertype = Exp2.Type.SuperType(Exp3.Type)
 	VALUE[[Exp2]]()
@@ -121,33 +121,33 @@ VALUE[[Comparison: Exp1 -> Exp2 Exp3 ]]()
 	cg.convert(Exp3.Type,supertype)
 	cg.comparison(Exp1.operator,supertype)
 
-VALUE[[Cast: Exp1 -> CastType Exp2]]()
+### VALUE[[Cast: Exp1 -> CastType Exp2]]
 
 	VALUE[[Exp2]]()
 	cg.cast(Exp2.Type, CastType)
 	
-VALUE[[Logical: Exp1 -> Exp2 Exp3 ]]()
+### VALUE[[Logical: Exp1 -> Exp2 Exp3 ]]
 
 	VALUE[[Exp2]]()
 	VALUE[[Exp3]]()
 	cg.logig(Exp1.operator)
 	
-VALUE[[UnaryNot: Exp1 -> Exp2]]()
+### VALUE[[UnaryNot: Exp1 -> Exp2]]
 
 	VALUE[[Exp2]]()
 	<NOT>
 	
-VALUE[[FieldAcces: Exp1 -> Exp2 ID]]()	
+### VALUE[[FieldAcces: Exp1 -> Exp2 ID]]	
 	
 	ADDRESS[[Exp1]]()
 	<LOAD>Exp1.Type.Suffix()
 	
-VALUE[[Indexing: Exp1 -> Exp2 Exp3 ]]()	
+### VALUE[[Indexing: Exp1 -> Exp2 Exp3 ]]	
 
 	ADDRESS[[EXP1]]()
 	<LOAD>Exp1.Type.Suffix()
 	
-VALUE[[Invocation: Exp -> Variable Exp*]]()
+### VALUE[[Invocation: Exp -> Variable Exp*]]
 
 	int i=0;
 	for(Expression e:Exp*)
@@ -156,7 +156,7 @@ VALUE[[Invocation: Exp -> Variable Exp*]]()
 	<CALL> Variable.Name
 	
 
-ADDRESS[[Variable: Exp -> ID]]()
+### ADDRESS[[Variable: Exp -> ID]]
 
 	if(Exp.Definition.scope == 0)
 		<PUSHA> Exp.Definition.Offset
@@ -165,7 +165,7 @@ ADDRESS[[Variable: Exp -> ID]]()
 		<PUSHI> Exp.Definition.Offset
 		<ADDI>
 		
-ADDRESS[[ Indexing: Exp1 -> Exp2 Exp3 ]]()	
+### ADDRESS[[ Indexing: Exp1 -> Exp2 Exp3 ]]
 
 	ADDRESS[[Exp2]]()
 	VALUE[[Exp3]]()
@@ -173,7 +173,7 @@ ADDRESS[[ Indexing: Exp1 -> Exp2 Exp3 ]]()
 	<MUL>
 	<ADD>
 	
-ADDRESS[[FieldAcces: Exp1 -> Exp2 ID]]()
+### ADDRESS[[FieldAcces: Exp1 -> Exp2 ID]]
 
 	ADDRESS[[Exp2]]
 	<PUSH>Exp2.Type.get(ID).Offset
