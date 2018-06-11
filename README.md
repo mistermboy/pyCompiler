@@ -49,9 +49,18 @@ Using MAPL is very simple. At the left of the window we have the instructions of
 
 To end with the example, run the program by clicking in the green arrow and look what happends. You should see the Fibonacci sequence calculated in the terminal. :computer:
 
+## Development
+Now you will learn how the project is composed:
+
+* [Lexical paterns](docs/PatronesLexicos.md)
+* [GLC (context-free grammar)] (docs/GLC.md)
+* [Abstract grammar](docs/GramaticaAbstracta.md)
+* [Code templates](docs/PlantillasCodigo.md)
+* [UML] (docs/UML.png)
+
 ## Built With
 * [Java](https://www.java.com/es/download/)
 * [JFlex](http://jflex.de/)
 * [Byaccj](http://byaccj.sourceforge.net/)
 
-## Development
+
