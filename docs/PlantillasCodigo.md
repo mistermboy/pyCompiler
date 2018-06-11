@@ -24,12 +24,12 @@
 	if(Type.ReturnType instanceof VoidType)
 		<RET> 0 <,> Definition.LocalBytes <,> Definition.ParamBytes
 
-EXECUTE[[Write: Statement -> Exp]]()
+### EXECUTE[[Write: Statement -> Exp]]
 	
 	VALUE[[Exp]]()
 	<OUT> Exp.Type.Suffix()
 	
-EXECUTE[[Read: Statement -> Exp]]()
+### EXECUTE[[Read: Statement -> Exp]]
 	
 	VALUE[[Exp]]()
 	<IN> Exp.Type.Suffix()
