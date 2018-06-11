@@ -33,7 +33,7 @@
 	
 ### EXECUTE[[Read: Statement -> Exp]]
 	
-	VALUE[[Exp]]()
+	ADDRESS[[Exp]]()
 	<IN> Exp.Type.Suffix()
 	<STORE> Exp.Type.Suffix()
 
