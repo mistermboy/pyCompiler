@@ -44,11 +44,13 @@ Las expresiones están formadas por:
 		( )			Non associative
 		[]			Non associative
  		.			Left associative
-        CAST     	Non associative
-		- (unary)	Non associative
-        !			Non associative
-		* / %		Left associative
+        	CAST     		Non associative
+		- (unary)		Non associative
+      		!			Non associative
+		* / %			Left associative
 		+ -			Left associative
+		++ --			Left associative			
+	    += -= *= /=			Left associative
 	> >= < <= != ==	Left associative
 		&& ||		Left associative
 		= 			Right associative
