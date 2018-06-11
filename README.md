@@ -20,7 +20,7 @@ Once you have the repository, import the project in [eclipse](https://www.eclips
 ```
 
 ### Using PYCompyler
-To use PYCompyler there are two alternatives, you can write your own program (PONER AQUÍ ENLACE A LA SINTAXIS) or use an example one.
+To use PYCompyler there are two alternatives, you can write your own program ([View the syntax](#syntax)) or use an example one.
 I recommend you the second option, if it´s your first time. There are a few example programs in the folder called "program4Test".
 
 Once you've chosen an option, you only have to run the main class, that is located in the "py" package, passing the name of the input and the output file as a parameters. Here is a example with the program "big.input.txt", that calculates the Fibonacci sequence.
