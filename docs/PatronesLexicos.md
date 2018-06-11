@@ -1,4 +1,4 @@
-************  Patrones (macros) ********************
+# LEXICAL PATTERNS
 
 Rubbish = [ \t\n\r]
 CommentV1 = #.*
