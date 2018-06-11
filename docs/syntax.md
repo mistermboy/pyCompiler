@@ -1,4 +1,5 @@
 # SYNTAX
+```
 A program is a sequence of variable and function  definitions.
 
 The syntax of a variable definition is a non-empty enumeration of comma-separated identifiers followed by a ":" and a type.  Variable definitions must end with the ";" character.
@@ -32,7 +33,7 @@ A function invocation may be an expression or a statement. A procedure invocatio
 The cast expression follows the C syntax.
 
 Expressions are built with:
-```
+
 - Integer, real and character constants without sign.
 - Identifiers.
 - The following operators applied to one or two expressions (descending order of precedence):
