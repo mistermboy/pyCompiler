@@ -1,5 +1,5 @@
 # PYCompiler :eyes:
-PYCompiler is a compiler for a simple version of python that was develop in the subject "Diseño de Lenguajes de Programación"
+PYCompiler is a compiler for a simple version of python that was develop in the subject "Programming Languaje Design"
 
 ## Getting Started :rocket:
 To begin with the project, clone the repository in your own computer. To do so, you can use this command:
